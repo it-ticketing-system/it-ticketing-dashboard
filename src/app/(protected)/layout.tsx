@@ -1,9 +1,10 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { AUTH_COOKIE_NAME, ROUTES } from '@/constants';
+import { DashboardLayout } from '@/layouts';
 import { AuthProvider } from '@/providers';
 
-const Layout: FCC = async ({ children }) => {
+const ProtectedLayout: FCC = async ({ children }) => {
   const cookieStore = await cookies();
   const accessToken = cookieStore.get(AUTH_COOKIE_NAME)?.value;
 
@@ -11,7 +12,11 @@ const Layout: FCC = async ({ children }) => {
     redirect(ROUTES.login);
   }
 
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <AuthProvider>
+      <DashboardLayout>{children}</DashboardLayout>
+    </AuthProvider>
+  );
 };
 
-export default Layout;
+export default ProtectedLayout;

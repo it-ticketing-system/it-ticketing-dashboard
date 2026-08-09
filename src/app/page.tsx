@@ -1,5 +1,8 @@
+import { redirect } from 'next/navigation';
+import { ROUTES } from '@/constants';
+
 const HomePage = () => {
-  return <div className="flex items-center justify-center">Hello World</div>;
+  redirect(ROUTES.dashboard);
 };
 
 export default HomePage;
