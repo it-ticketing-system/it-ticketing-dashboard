@@ -9,7 +9,7 @@ const AuthLayout: FCC = async ({ children }) => {
   const accessToken = cookieStore.get(AUTH_COOKIE_NAME)?.value;
 
   if (accessToken) {
-    redirect(ROUTES.home);
+    redirect(ROUTES.dashboard);
   }
 
   const t = await getTranslations('auth.layout');
