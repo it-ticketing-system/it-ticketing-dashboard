@@ -1,6 +1,5 @@
-const page = () => {
-  return (
-    <div className="flex items-center justify-center">Hello World</div>
-  )
-}
-export default page
+const HomePage = () => {
+  return <div className="flex items-center justify-center">Hello World</div>;
+};
+
+export default HomePage;
