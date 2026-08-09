@@ -61,7 +61,7 @@ const LoginModule = () => {
       await queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.auth.me,
       });
-      router.push(ROUTES.home);
+      router.push(ROUTES.dashboard);
     },
   });
 
