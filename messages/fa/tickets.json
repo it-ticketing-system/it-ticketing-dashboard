@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "title": "مدیریت تیکت‌ها",
+    "description": "مدیریت و پیگیری تیکت‌های پشتیبانی"
+  },
+  "table": {
+    "ariaLabel": "جدول تیکت‌ها",
+    "loading": "در حال بارگذاری...",
+    "columns": {
+      "ticketNumber": "شماره تیکت",
+      "title": "عنوان",
+      "user": "کاربر",
+      "assignedSupport": "پشتیبان",
+      "department": "دپارتمان",
+      "status": "وضعیت",
+      "createdAt": "تاریخ ثبت",
+      "lastUpdated": "تاریخ بروزرسانی",
+      "actions": "عملیات"
+    },
+    "statuses": {
+      "open": "باز",
+      "inProgress": "در حال بررسی",
+      "waitingUser": "منتظر کاربر",
+      "resolved": "حل شده",
+      "closed": "بسته شده"
+    },
+    "pagination": {
+      "previous": "قبلی",
+      "next": "بعدی",
+      "page": "صفحه {page}",
+      "summary": "نمایش {from} تا {to} از {total} تیکت"
+    },
+    "actions": {
+      "viewAriaLabel": "مشاهده تیکت {number}"
+    },
+    "empty": {
+      "title": "تیکتی یافت نشد",
+      "description": "با فیلترهای فعلی هیچ تیکتی یافت نشد."
+    },
+    "error": {
+      "title": "خطا در دریافت تیکت‌ها",
+      "retry": "تلاش مجدد"
+    }
+  },
+  "filters": {
+    "sectionAriaLabel": "فیلترها",
+    "statuses": {
+      "open": "باز",
+      "inProgress": "در حال بررسی",
+      "waitingUser": "منتظر کاربر",
+      "resolved": "حل شده",
+      "closed": "بسته شده"
+    },
+    "status": {
+      "label": "وضعیت",
+      "ariaLabel": "فیلتر وضعیت",
+      "placeholder": "همه وضعیت‌ها"
+    },
+    "department": {
+      "label": "دپارتمان",
+      "ariaLabel": "فیلتر دپارتمان",
+      "placeholder": "همه دپارتمان‌ها"
+    },
+    "support": {
+      "label": "شناسه پشتیبان",
+      "ariaLabel": "فیلتر پشتیبان",
+      "placeholder": "جستجوی شناسه پشتیبان..."
+    },
+    "user": {
+      "label": "شناسه کاربر",
+      "ariaLabel": "فیلتر کاربر",
+      "placeholder": "جستجوی شناسه کاربر..."
+    },
+    "dateRange": {
+      "heading": "بازه زمانی",
+      "description": "یک بازه زمانی انتخاب کنید",
+      "buttonLabel": "انتخاب تاریخ",
+      "fromPrefix": "از",
+      "toPrefix": "تا",
+      "from": "از تاریخ",
+      "to": "تا تاریخ",
+      "clear": "پاک کردن تاریخ"
+    },
+    "createdDateRange": {
+      "heading": "تاریخ ثبت",
+      "buttonLabel": "تاریخ ثبت"
+    },
+    "updatedDateRange": {
+      "heading": "تاریخ بروزرسانی",
+      "buttonLabel": "تاریخ بروزرسانی"
+    },
+    "search": {
+      "ariaLabel": "جستجو",
+      "placeholder": "جستجو در تیکت‌ها...",
+      "clearAriaLabel": "پاک کردن جستجو"
+    },
+    "actions": {
+      "reset": "حذف فیلترها"
+    },
+    "mobile": {
+      "openAriaLabel": "باز کردن فیلترها",
+      "dialogAriaLabel": "دیالوگ فیلترها",
+      "heading": "فیلتر تیکت‌ها",
+      "description": "فیلتر مورد نظر خود را اعمال کنید",
+      "reset": "بازنشانی",
+      "cancel": "انصراف",
+      "apply": "اعمال"
+    }
+  }
+}

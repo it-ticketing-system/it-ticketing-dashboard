@@ -2,6 +2,7 @@ export const ROUTES = {
   login: '/login',
   dashboard: '/dashboard',
   tickets: '/dashboard/tickets',
+  ticketDetails: (id: string) => `/dashboard/tickets/${id}` as const,
   notifications: '/dashboard/notifications',
   profile: '/dashboard/profile',
   users: '/dashboard/users',
