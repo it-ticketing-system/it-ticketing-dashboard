@@ -82,7 +82,7 @@ export const DashboardLayout: FCC = ({ children }) => {
         />
 
         <main className="min-h-0 flex-1 overflow-y-auto bg-neutral-50 p-4 sm:p-6 lg:p-8">
-          <div className="mx-auto max-w-7xl">{children}</div>
+          <div className="mx-auto">{children}</div>
         </main>
       </div>
     </div>
