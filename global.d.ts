@@ -4,11 +4,14 @@ import common from './messages/fa/common.json';
 import mainLayout from './messages/fa/mainLayout.json';
 import tickets from './messages/fa/tickets.json';
 
+import ticketDetails from './messages/fa/ticketDetails.json';
+
 type Messages = {
   common: typeof common;
   mainLayout: typeof mainLayout;
   auth: typeof auth;
   tickets: typeof tickets;
+  ticketDetails: typeof ticketDetails;
 };
 
 declare module 'next-intl' {

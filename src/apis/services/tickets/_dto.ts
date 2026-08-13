@@ -81,7 +81,15 @@ export interface ManagementTicketDetailsDto {
   assignedSupport: TicketSupportDto | null;
   createdAt: string;
   updatedAt: string;
+  availableActions: TicketAvailableActionsDto;
   messages: TicketMessageDto[];
+}
+
+export interface TicketAvailableActionsDto {
+  canReply: boolean;
+  canChangeStatus: boolean;
+  canChangeDepartment: boolean;
+  canChangeAssignment: boolean;
 }
 
 export interface SendTicketMessageRequestDto {
@@ -90,3 +98,48 @@ export interface SendTicketMessageRequestDto {
 }
 
 export type SendTicketMessageResponseDto = TicketMessageDto;
+
+export interface ChangeTicketStatusRequestDto {
+  status: TicketStatusDto;
+}
+
+export interface ChangeTicketAssignmentRequestDto {
+  supportId: number;
+}
+
+export interface ChangeTicketDepartmentRequestDto {
+  departmentId: number;
+}
+
+export interface ChangeTicketStatusResultDto {
+  id: number;
+  oldStatus: TicketStatusDto;
+  newStatus: TicketStatusDto;
+  changedBy: TicketMessageSenderDto;
+  createdAt: string; // The API docs uses changedAt in some, createdAt in others. I'll map it securely
+  changedAt?: string;
+}
+
+export interface ChangeTicketAssignmentResultDto {
+  id: number;
+  oldSupport?: TicketSupportDto | null;
+  newSupport?: TicketSupportDto | null;
+  fromSupport?: TicketSupportDto | null;
+  toSupport?: TicketSupportDto | null;
+  changedBy: TicketMessageSenderDto;
+  createdAt: string;
+  changedAt?: string;
+}
+
+export interface ChangeTicketDepartmentResultDto {
+  id: number;
+  oldDepartment: TicketDepartmentDto;
+  newDepartment: TicketDepartmentDto;
+  changedBy: TicketMessageSenderDto;
+  createdAt: string;
+  changedAt?: string;
+}
+
+export type GetTicketStatusHistoryResponseDto = ChangeTicketStatusResultDto[];
+export type GetTicketAssignmentHistoryResponseDto = ChangeTicketAssignmentResultDto[];
+export type GetTicketDepartmentHistoryResponseDto = ChangeTicketDepartmentResultDto[];

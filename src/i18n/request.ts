@@ -3,6 +3,7 @@ import auth from '../../messages/fa/auth.json';
 import common from '../../messages/fa/common.json';
 import mainLayout from '../../messages/fa/mainLayout.json';
 import tickets from '../../messages/fa/tickets.json';
+import ticketDetails from '../../messages/fa/ticketDetails.json';
 
 export default getRequestConfig(async () => {
   return {
@@ -11,7 +12,8 @@ export default getRequestConfig(async () => {
       mainLayout,
       common,
       auth,
-      tickets
+      tickets,
+      ticketDetails
     },
   };
 });

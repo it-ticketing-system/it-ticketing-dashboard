@@ -3,6 +3,20 @@
     "appName": "سامانه تیکتینگ"
   },
 
+  "search": {
+    "ariaLabel": "جستجو",
+    "placeholder": "جستجو...",
+    "clearAriaLabel": "پاک کردن جستجو"
+  },
+
+  "statuses": {
+    "open": "باز",
+    "inProgress": "در حال بررسی",
+    "waitingUser": "منتظر کاربر",
+    "resolved": "حل شده",
+    "closed": "بسته شده"
+  },
+
   "toast": {
     "successTitle": "عملیات موفق",
     "successDescription": "عملیات با موفقیت انجام شد",
