@@ -13,7 +13,6 @@ import type { TicketTableData } from './ticket-table';
 import type { IDepartmentLookup } from '@/models';
 
 type TicketsInitialData = {
-  initialDepartments: IDepartmentLookup[];
   initialFilters: ReturnType<typeof parseTicketFilters>;
   initialTickets: TicketTableData;
   initialTicketsError: ApiRequestError | null;
@@ -25,13 +24,9 @@ export const getTicketsInitialData = async (
   const initialFilters = parseTicketFilters(searchParams);
   const ticketsParams = createTicketsParams(initialFilters);
 
-  const [departmentsResult, ticketsResult] = await Promise.allSettled([
-    serverLookupServices.getDepartments(),
+  const [ticketsResult] = await Promise.allSettled([
     serverTicketServices.getTickets(ticketsParams),
   ]);
-
-  const initialDepartments: IDepartmentLookup[] =
-    departmentsResult.status === 'fulfilled' ? departmentsResult.value : [];
   const initialTickets: TicketTableData =
     ticketsResult.status === 'fulfilled'
       ? ticketsResult.value
@@ -42,7 +37,6 @@ export const getTicketsInitialData = async (
       : null;
 
   return {
-    initialDepartments,
     initialFilters,
     initialTickets,
     initialTicketsError,

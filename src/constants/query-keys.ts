@@ -7,6 +7,7 @@ export const QUERY_KEYS = {
   },
   lookups: {
     departments: ['lookups', 'departments'] as const,
+    supports: (params?: any) => ['lookups', 'supports', params] as const,
   },
   tickets: {
     lists: TICKET_LISTS_QUERY_KEY,
@@ -19,5 +20,9 @@ export const QUERY_KEYS = {
       from?: string;
       to?: string;
     }) => [...TICKET_LISTS_QUERY_KEY, params] as const,
+    details: (ticketId: string) => ['tickets', 'details', ticketId] as const,
+    statusHistory: (ticketId: string) => ['tickets', 'status-history', ticketId] as const,
+    assignmentHistory: (ticketId: string) => ['tickets', 'assignment-history', ticketId] as const,
+    departmentHistory: (ticketId: string) => ['tickets', 'department-history', ticketId] as const,
   },
 } as const;

@@ -32,6 +32,7 @@ const TicketsTable = ({
   onRetry,
 }: TicketsTableProps) => {
   const t = useTranslations('tickets.table');
+  const tStatuses = useTranslations('common.statuses');
   const router = useRouter();
 
   const headerCells: Array<TableHeaderOptions<TicketTableColumnKey>> = [
@@ -157,7 +158,7 @@ const TicketsTable = ({
             <Table.Cell>
               <TicketStatusChip
                 status={ticket.status}
-                label={t(`statuses.${ticket.status}`)}
+                label={tStatuses(ticket.status)}
               />
             </Table.Cell>
 

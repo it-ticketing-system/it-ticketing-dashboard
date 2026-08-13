@@ -21,14 +21,12 @@ import type { ApiRequestError } from '@/apis/core/api-error';
 import type { IDepartmentLookup } from '@/models';
 
 type TicketsClientProps = {
-  initialDepartments: IDepartmentLookup[];
   initialFilters: TicketFiltersValue & { page: number };
   initialTickets: TicketTableData;
   initialTicketsError: ApiRequestError | null;
 };
 
 const TicketsClient = ({
-  initialDepartments,
   initialFilters,
   initialTickets,
   initialTicketsError,
@@ -49,14 +47,6 @@ const TicketsClient = ({
   });
 
   const ticketsParams = createTicketsParams(filters);
-
-  const departmentsQuery = useGetRequest({
-    queryKey: QUERY_KEYS.lookups.departments,
-    requestFn: async (signal) => clientLookupServices.getDepartments(signal),
-    initialData: initialDepartments,
-    showErrorToast: false,
-    staleTime: 5 * 60_000,
-  });
 
   const ticketsQuery = useGetRequest({
     queryKey: QUERY_KEYS.tickets.list(ticketsParams),
@@ -171,9 +161,8 @@ const TicketsClient = ({
       onRetry={retry}
       topContent={
         <MyTicketsFilters
-          departments={departmentsQuery.data ?? []}
           value={filterValue}
-          isPending={ticketsQuery.isFetching || departmentsQuery.isFetching}
+          isPending={ticketsQuery.isFetching}
           onChange={changeFilters}
           onReset={resetFilters}
         />

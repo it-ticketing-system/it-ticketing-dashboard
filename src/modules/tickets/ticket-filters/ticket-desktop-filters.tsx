@@ -10,16 +10,13 @@ import {
 import { useTranslations } from 'next-intl';
 import { ICON_SIZE_CLASS } from '@/constants';
 import { cn } from '@/utils';
+import { SelectStatus, SelectDepartment, SearchInput } from '@/components/shared';
 import TicketDateField from './ticket-date-field';
-import TicketFilterInputControl from './ticket-filter-input-control';
-import TicketFilterSelect from './ticket-filter-select';
 import { getDateRangeLabel, type TicketFiltersPatch, type TicketFiltersValue } from './types';
 import type { TicketStatus } from '@/models';
 
 type TicketDesktopFiltersProps = {
   value: TicketFiltersValue;
-  statusOptions: readonly SelectOption<TicketStatus>[];
-  departmentOptions: readonly SelectOption[];
   isPending: boolean;
   hasActiveFilters: boolean;
   searchControl: React.ReactNode;
@@ -29,8 +26,6 @@ type TicketDesktopFiltersProps = {
 
 const TicketDesktopFilters = ({
   value,
-  statusOptions,
-  departmentOptions,
   isPending,
   hasActiveFilters,
   searchControl,
@@ -87,38 +82,36 @@ const TicketDesktopFilters = ({
         {searchControl}
       </div>
 
-      <TicketFilterSelect
+      <SelectStatus
         ariaLabel={t('status.ariaLabel')}
         placeholder={t('status.placeholder')}
-        value={status}
-        options={statusOptions}
+        value={status as TicketStatus}
         onChange={handleFilterChange('status')}
       />
 
-      <TicketFilterSelect
+      <SelectDepartment
         ariaLabel={t('department.ariaLabel')}
         placeholder={t('department.placeholder')}
         value={department}
-        options={departmentOptions}
         onChange={handleFilterChange('department')}
       />
 
-      <TicketFilterInputControl
-        label=""
+      <SearchInput
         ariaLabel={t('support.ariaLabel')}
         placeholder={t('support.placeholder')}
-        queryValue={support}
+        queryValue={support || ''}
         onValueChange={handleFilterChange('support')}
         className="h-11"
+        showSearchIcon={false}
       />
 
-      <TicketFilterInputControl
-        label=""
+      <SearchInput
         ariaLabel={t('user.ariaLabel')}
         placeholder={t('user.placeholder')}
-        queryValue={user}
+        queryValue={user || ''}
         onValueChange={handleFilterChange('user')}
         className="h-11"
+        showSearchIcon={false}
       />
 
       <Popover>

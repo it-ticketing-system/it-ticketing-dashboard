@@ -10,3 +10,12 @@ export {
 } from './format-persian-date-time';
 export { toPositiveInteger } from './to-positive-integer';
 export { getSearchParamValue } from './get-search-param-value';
+
+export {
+  formatFileSize,
+  getFileExtension,
+  isAllowedFileExtension,
+  isImageMimeType,
+} from './files';
+
+export { getUserInitials } from './get-user-initials';

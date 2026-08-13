@@ -8,6 +8,11 @@ export {
   ICON_SIZE_CLASS,
 } from './icon-sizes';
 
-
 export { PAGE_SIZE } from './pagination';
 
+export {
+  TICKET_ATTACHMENT_ACCEPT,
+  TICKET_ATTACHMENT_ALLOWED_EXTENSIONS,
+  TICKET_ATTACHMENT_MAX_FILES,
+  TICKET_ATTACHMENT_MAX_SIZE,
+} from './ticket-attachments';
