@@ -7,8 +7,11 @@ import { useState } from 'react';
 import { ICON_SIZE_CLASS } from '@/constants';
 import { cn } from '@/utils';
 import TicketDateField from './ticket-date-field';
-import TicketFilterInputControl from './ticket-filter-input-control';
-import TicketFilterSelect from './ticket-filter-select';
+import {
+  SelectStatus,
+  SelectDepartment,
+  SearchInput,
+} from '@/components/shared';
 import {
   EMPTY_FILTER_DRAFT,
   type FilterDraft,
@@ -25,9 +28,7 @@ type TicketMobileFiltersProps = {
   updatedFrom: string;
   updatedTo: string;
   activeFilterCount: number;
-  departmentOptions: readonly SelectOption[];
   isPending: boolean;
-  statusOptions: readonly SelectOption[];
   onApplyFilters: (patch: TicketFiltersPatch) => void;
 };
 
@@ -41,21 +42,20 @@ const TicketMobileFilters = ({
   updatedFrom,
   updatedTo,
   activeFilterCount,
-  departmentOptions,
   isPending,
-  statusOptions,
   onApplyFilters,
 }: TicketMobileFiltersProps) => {
   const t = useTranslations('tickets.filters');
   const [isOpen, setIsOpen] = useState(false);
   const [draft, setDraft] = useState<FilterDraft>(EMPTY_FILTER_DRAFT);
 
-  const handleDraftChange = (key: keyof FilterDraft) => (value: string) => {
-    setDraft((previous) => ({
-      ...previous,
-      [key]: value,
-    }));
-  };
+  const handleDraftChange =
+    (key: keyof FilterDraft) => (value: string | null) => {
+      setDraft((previous) => ({
+        ...previous,
+        [key]: value || '',
+      }));
+    };
 
   const openFilters = () => {
     setDraft({
@@ -143,38 +143,38 @@ const TicketMobileFilters = ({
                   </Modal.Header>
 
                   <Modal.Body className="flex flex-col gap-5 py-5">
-                    <TicketFilterSelect
+                    <SelectStatus
                       label={t('status.label')}
                       ariaLabel={t('status.ariaLabel')}
                       placeholder={t('status.placeholder')}
-                      value={draft.status}
-                      options={statusOptions}
+                      value={draft.status as any}
                       onChange={handleDraftChange('status')}
                     />
 
-                    <TicketFilterSelect
+                    <SelectDepartment
                       label={t('department.label')}
                       ariaLabel={t('department.ariaLabel')}
                       placeholder={t('department.placeholder')}
                       value={draft.department}
-                      options={departmentOptions}
                       onChange={handleDraftChange('department')}
                     />
 
-                    <TicketFilterInputControl
+                    <SearchInput
                       label={t('support.label')}
                       ariaLabel={t('support.ariaLabel')}
                       placeholder={t('support.placeholder')}
-                      queryValue={draft.support}
+                      queryValue={draft.support || ''}
                       onValueChange={handleDraftChange('support')}
+                      showSearchIcon={false}
                     />
 
-                    <TicketFilterInputControl
+                    <SearchInput
                       label={t('user.label')}
                       ariaLabel={t('user.ariaLabel')}
                       placeholder={t('user.placeholder')}
-                      queryValue={draft.user}
+                      queryValue={draft.user || ''}
                       onValueChange={handleDraftChange('user')}
+                      showSearchIcon={false}
                     />
 
                     <div className="space-y-3">

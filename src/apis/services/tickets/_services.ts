@@ -16,6 +16,9 @@ import {
   toTicket,
   toTicketListItem,
   toTicketMessage,
+  toTicketStatusHistory,
+  toTicketAssignmentHistory,
+  toTicketDepartmentHistory,
 } from './_mappers';
 import type {
   GetManagementTicketsRequest,
@@ -23,7 +26,24 @@ import type {
   GetTicketDetailsResponse,
   SendTicketMessageRequest,
   SendTicketMessageResult,
+  ChangeTicketStatusRequest,
+  ChangeTicketStatusResult,
+  ChangeTicketAssignmentRequest,
+  ChangeTicketAssignmentResult,
+  ChangeTicketDepartmentRequest,
+  ChangeTicketDepartmentResult,
+  GetTicketStatusHistoryResponse,
+  GetTicketAssignmentHistoryResponse,
+  GetTicketDepartmentHistoryResponse,
 } from './_types';
+import type {
+  ChangeTicketStatusRequestDto,
+  ChangeTicketAssignmentRequestDto,
+  ChangeTicketDepartmentRequestDto,
+  GetTicketStatusHistoryResponseDto,
+  GetTicketAssignmentHistoryResponseDto,
+  GetTicketDepartmentHistoryResponseDto,
+} from './_dto';
 
 export function createTicketServices(
   request: ApiRequestFunction,
@@ -88,9 +108,98 @@ export function createTicketServices(
     return toTicketMessage(response);
   }
 
+  async function changeTicketStatus(
+    ticketId: string,
+    payload: ChangeTicketStatusRequest,
+  ): Promise<ChangeTicketStatusResult> {
+    const statusMap = {
+      open: 'OPEN',
+      inProgress: 'IN_PROGRESS',
+      waitingUser: 'WAITING_FOR_USER',
+      resolved: 'RESOLVED',
+      closed: 'CLOSED',
+    } as const;
+
+    await request<void, ChangeTicketStatusRequestDto>({
+      url: TICKET_ENDPOINTS.ticketStatus(ticketId),
+      method: 'PATCH',
+      data: { status: statusMap[payload.status] },
+      meta: { auth: 'required' },
+    });
+  }
+
+  async function changeTicketAssignment(
+    ticketId: string,
+    payload: ChangeTicketAssignmentRequest,
+  ): Promise<ChangeTicketAssignmentResult> {
+    await request<void, ChangeTicketAssignmentRequestDto>({
+      url: TICKET_ENDPOINTS.ticketAssignment(ticketId),
+      method: 'PATCH',
+      data: { supportId: Number(payload.supportId) },
+      meta: { auth: 'required' },
+    });
+  }
+
+  async function changeTicketDepartment(
+    ticketId: string,
+    payload: ChangeTicketDepartmentRequest,
+  ): Promise<ChangeTicketDepartmentResult> {
+    await request<void, ChangeTicketDepartmentRequestDto>({
+      url: TICKET_ENDPOINTS.ticketDepartment(ticketId),
+      method: 'PATCH',
+      data: { departmentId: Number(payload.departmentId) },
+      meta: { auth: 'required' },
+    });
+  }
+
+  async function getStatusHistory(
+    ticketId: string,
+    signal?: AbortSignal,
+  ): Promise<GetTicketStatusHistoryResponse> {
+    const response = await request<GetTicketStatusHistoryResponseDto>({
+      url: TICKET_ENDPOINTS.statusHistory(ticketId),
+      method: 'GET',
+      signal,
+      meta: { auth: 'required' },
+    });
+    return response.map(toTicketStatusHistory);
+  }
+
+  async function getAssignmentHistory(
+    ticketId: string,
+    signal?: AbortSignal,
+  ): Promise<GetTicketAssignmentHistoryResponse> {
+    const response = await request<GetTicketAssignmentHistoryResponseDto>({
+      url: TICKET_ENDPOINTS.assignmentHistory(ticketId),
+      method: 'GET',
+      signal,
+      meta: { auth: 'required' },
+    });
+    return response.map(toTicketAssignmentHistory);
+  }
+
+  async function getDepartmentHistory(
+    ticketId: string,
+    signal?: AbortSignal,
+  ): Promise<GetTicketDepartmentHistoryResponse> {
+    const response = await request<GetTicketDepartmentHistoryResponseDto>({
+      url: TICKET_ENDPOINTS.departmentHistory(ticketId),
+      method: 'GET',
+      signal,
+      meta: { auth: 'required' },
+    });
+    return response.map(toTicketDepartmentHistory);
+  }
+
   return {
     getTickets,
     getTicketDetails,
     sendTicketMessage,
+    changeTicketStatus,
+    changeTicketAssignment,
+    changeTicketDepartment,
+    getStatusHistory,
+    getAssignmentHistory,
+    getDepartmentHistory,
   };
 }

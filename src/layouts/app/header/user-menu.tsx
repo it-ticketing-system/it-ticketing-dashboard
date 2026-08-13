@@ -57,22 +57,22 @@ const UserMenu = () => {
         aria-label={tHeader('userMenu')}
         className="h-12 min-w-0 gap-2.5 rounded-lg px-1.5 lg:px-2.5"
       >
-        <Avatar className="bg-primary-100 text-primary-700 font-bold size-8 shrink-0">
+        <Avatar className="bg-primary-100 text-primary-700 size-8 shrink-0 font-bold">
           {userInitials}
         </Avatar>
 
         <div className="hidden flex-col items-start text-start lg:flex">
-          <span className="text-body-sm text-neutral-900 truncate font-semibold leading-tight">
+          <span className="text-body-sm truncate leading-tight font-semibold text-neutral-900">
             {userName}
           </span>
-          <span className="text-caption text-neutral-500 font-normal leading-tight">
+          <span className="text-caption leading-tight font-normal text-neutral-500">
             {getRoleLabel()}
           </span>
         </div>
 
         <ChevronDown
           className={cn(
-            'text-neutral-400 hidden shrink-0 lg:block',
+            'hidden shrink-0 text-neutral-400 lg:block',
             ICON_SIZE_CLASS.sm,
           )}
         />
@@ -80,12 +80,11 @@ const UserMenu = () => {
 
       <Dropdown.Popover
         placement="bottom left"
-        className="border-neutral-200 bg-white min-w-56 rounded-xl border p-2 shadow-lg dir-rtl"
+        className="dir-rtl min-w-56 rounded-xl border border-neutral-200 bg-white p-2 shadow-lg"
       >
         <Dropdown.Menu
           aria-label={tHeader('userMenu')}
           onAction={handleMenuAction}
-          dir="rtl"
         >
           <Dropdown.Item id="profile" textValue={tHeader('profile')}>
             <UserRound className={ICON_SIZE_CLASS.md} />

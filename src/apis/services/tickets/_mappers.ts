@@ -11,12 +11,15 @@ import type {
   SendTicketMessageRequestDto,
   TicketMessageDto,
   TicketStatusDto,
+  ChangeTicketStatusResultDto,
+  ChangeTicketAssignmentResultDto,
+  ChangeTicketDepartmentResultDto,
 } from './_dto';
 import type {
   GetManagementTicketsRequest,
   SendTicketMessageRequest,
 } from './_types';
-import type { ITicket, ITicketMessage, TicketStatus } from '@/models';
+import type { ITicket, ITicketMessage, TicketStatus, ITicketStatusHistory, ITicketAssignmentHistory, ITicketDepartmentHistory } from '@/models';
 
 const TICKET_STATUS_MAP = {
   OPEN: 'open',
@@ -52,6 +55,7 @@ export const toTicketListItem = (ticket: ManagementTicketListItemDto): ITicket =
   id: String(ticket.id),
   ticketNumber: ticket.ticketNumber,
   title: ticket.title,
+  departmentId: String(ticket.department.id),
   departmentName: ticket.department.name,
   status: TICKET_STATUS_MAP[ticket.status],
   lastUpdatedLabel: formatPersianRelativeDateTime(ticket.updatedAt),
@@ -74,6 +78,7 @@ export const toTicket = (ticket: ManagementTicketDetailsDto): ITicket => ({
   id: String(ticket.id),
   ticketNumber: ticket.ticketNumber,
   title: ticket.title,
+  departmentId: String(ticket.department.id),
   departmentName: ticket.department.name,
   status: TICKET_STATUS_MAP[ticket.status],
   createdAtLabel: formatPersianDateTime(ticket.createdAt),
@@ -90,6 +95,7 @@ export const toTicket = (ticket: ManagementTicketDetailsDto): ITicket => ({
         name: ticket.assignedSupport.name,
       }
     : null,
+  availableActions: ticket.availableActions,
 });
 
 export const toTicketMessage = (
@@ -116,3 +122,33 @@ export const toTicketMessage = (
     })),
   };
 };
+
+export const toTicketStatusHistory = (
+  history: ChangeTicketStatusResultDto,
+): ITicketStatusHistory => ({
+  id: String(history.id),
+  oldStatus: TICKET_STATUS_MAP[history.oldStatus],
+  newStatus: TICKET_STATUS_MAP[history.newStatus],
+  changedByName: history.changedBy.name,
+  createdAtLabel: formatPersianDateTime(history.changedAt || history.createdAt),
+});
+
+export const toTicketAssignmentHistory = (
+  history: ChangeTicketAssignmentResultDto,
+): ITicketAssignmentHistory => ({
+  id: String(history.id),
+  fromSupportName: history.oldSupport?.name || history.fromSupport?.name,
+  toSupportName: history.newSupport?.name || history.toSupport?.name,
+  changedByName: history.changedBy.name,
+  createdAtLabel: formatPersianDateTime(history.changedAt || history.createdAt),
+});
+
+export const toTicketDepartmentHistory = (
+  history: ChangeTicketDepartmentResultDto,
+): ITicketDepartmentHistory => ({
+  id: String(history.id),
+  oldDepartmentName: history.oldDepartment.name,
+  newDepartmentName: history.newDepartment.name,
+  changedByName: history.changedBy.name,
+  createdAtLabel: formatPersianDateTime(history.changedAt || history.createdAt),
+});

@@ -1,0 +1,85 @@
+{
+  "meta": {
+    "title": "جزئیات تیکت",
+    "description": "مشاهده جزئیات و مدیریت تیکت"
+  },
+
+  "information": {
+    "ariaLabel": "اطلاعات تیکت",
+    "ticketNumber": "شماره تیکت",
+    "title": "عنوان",
+    "status": "وضعیت",
+    "createdAt": "تاریخ ایجاد",
+    "lastUpdated": "آخرین بروزرسانی",
+    "user": "کاربر",
+    "department": "دپارتمان",
+    "assignedSupport": "پشتیبان",
+    "unassigned": "اختصاص نیافته"
+  },
+  "operations": {
+    "title": "عملیات تیکت",
+    "changeStatus": "تغییر وضعیت",
+    "changeDepartment": "تغییر دپارتمان",
+    "changeSupport": "تغییر پشتیبان",
+    "history": "تاریخچه تغییرات",
+    "statusHistory": "تاریخچه وضعیت",
+    "departmentHistory": "تاریخچه دپارتمان",
+    "assignmentHistory": "تاریخچه تخصیص",
+    "submit": "ثبت تغییرات",
+    "cancel": "انصراف",
+    "statusChangedSuccess": "وضعیت تیکت با موفقیت تغییر کرد.",
+    "departmentChangedSuccess": "دپارتمان تیکت با موفقیت تغییر کرد.",
+    "assignmentChangedSuccess": "پشتیبان تیکت با موفقیت تغییر کرد.",
+    "selectStatus": "انتخاب وضعیت",
+    "selectDepartment": "انتخاب دپارتمان",
+    "selectSupport": "انتخاب پشتیبان"
+  },
+  "historyModals": {
+    "statusTitle": "تاریخچه وضعیت",
+    "departmentTitle": "تاریخچه دپارتمان",
+    "assignmentTitle": "تاریخچه تخصیص",
+    "empty": "هیچ تاریخچه‌ای یافت نشد.",
+    "changedBy": "تغییر دهنده",
+    "date": "تاریخ",
+    "from": "از",
+    "to": "به"
+  },
+  "conversation": {
+    "title": "تاریخچه گفتگو",
+    "empty": "هنوز پیامی ثبت نشده است.",
+    "you": "شما",
+    "support": "پشتیبانی",
+    "attachments": "پیوست‌ها"
+  },
+  "composer": {
+    "validation": {
+      "body": {
+        "required": "متن پیام الزامی است.",
+        "maxLength": "متن پیام نمی‌تواند بیشتر از 4000 کاراکتر باشد."
+      }
+    },
+    "errors": {
+      "maxFiles": "تعداد فایل‌های انتخابی بیش از حد مجاز است.",
+      "unsupportedFormat": "فرمت فایل پشتیبانی نمی‌شود.",
+      "maxSize": "حجم فایل بیش از حد مجاز است."
+    },
+    "toast": {
+      "success": "پیام با موفقیت ارسال شد."
+    },
+    "closed": {
+      "title": "تیکت بسته شده است",
+      "description": "امکان ارسال پیام جدید در این تیکت وجود ندارد.",
+      "placeholder": "تیکت بسته شده است."
+    },
+    "notAssigned": {
+      "title": "عدم دسترسی به تیکت",
+      "description": "این تیکت به شما اختصاص داده نشده است.",
+      "placeholder": "عدم دسترسی به ارسال پیام..."
+    },
+    "attachment": "پیوست",
+    "send": "ارسال",
+    "label": "متن پیام",
+    "placeholder": "متن پیام خود را بنویسید...",
+    "removeFile": "حذف فایل {name}"
+  }
+}

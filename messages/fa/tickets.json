@@ -17,13 +17,7 @@
       "lastUpdated": "تاریخ بروزرسانی",
       "actions": "عملیات"
     },
-    "statuses": {
-      "open": "باز",
-      "inProgress": "در حال بررسی",
-      "waitingUser": "منتظر کاربر",
-      "resolved": "حل شده",
-      "closed": "بسته شده"
-    },
+
     "pagination": {
       "previous": "قبلی",
       "next": "بعدی",
@@ -44,13 +38,7 @@
   },
   "filters": {
     "sectionAriaLabel": "فیلترها",
-    "statuses": {
-      "open": "باز",
-      "inProgress": "در حال بررسی",
-      "waitingUser": "منتظر کاربر",
-      "resolved": "حل شده",
-      "closed": "بسته شده"
-    },
+
     "status": {
       "label": "وضعیت",
       "ariaLabel": "فیلتر وضعیت",
