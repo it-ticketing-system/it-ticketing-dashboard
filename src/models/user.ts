@@ -17,3 +17,11 @@ export interface IUser {
   createdAt: string | null;
   lastLoginAt: string | null;
 }
+
+export interface IUserListItem {
+  id: number;
+  name: string;
+  username: string;
+  ticketCount: number;
+  createdAt: string;
+}
