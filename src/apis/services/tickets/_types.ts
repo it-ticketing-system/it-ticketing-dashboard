@@ -1,5 +1,12 @@
 import type { PaginatedResult } from '@/apis/core/types/api-response';
-import type { ITicket, ITicketMessage, TicketStatus, ITicketStatusHistory, ITicketAssignmentHistory, ITicketDepartmentHistory } from '@/models';
+import type {
+  ITicket,
+  ITicketMessage,
+  TicketStatus,
+  ITicketStatusHistory,
+  ITicketAssignmentHistory,
+  ITicketDepartmentHistory,
+} from '@/models';
 
 export interface GetManagementTicketsRequest {
   page?: number;

@@ -4,19 +4,20 @@ import { Button, Modal } from '@heroui/react';
 import { Filter, LoaderCircle, RotateCcw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { ICON_SIZE_CLASS } from '@/constants';
-import { cn } from '@/utils';
-import TicketDateField from './ticket-date-field';
 import {
   SelectStatus,
   SelectDepartment,
   SearchInput,
 } from '@/components/shared';
+import { ICON_SIZE_CLASS } from '@/constants';
+import { cn } from '@/utils';
+import TicketDateField from './ticket-date-field';
 import {
   EMPTY_FILTER_DRAFT,
   type FilterDraft,
   type TicketFiltersPatch,
 } from './types';
+import type { TicketStatus } from '@/models';
 
 type TicketMobileFiltersProps = {
   status: string;
@@ -147,7 +148,7 @@ const TicketMobileFilters = ({
                       label={t('status.label')}
                       ariaLabel={t('status.ariaLabel')}
                       placeholder={t('status.placeholder')}
-                      value={draft.status as any}
+                      value={draft.status as TicketStatus}
                       onChange={handleDraftChange('status')}
                     />
 

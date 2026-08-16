@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "title": "مدیریت کاربران | پنل ادمین",
+    "description": "لیست و مدیریت کاربران سیستم پشتیبانی"
+  },
+  "filters": {
+    "title": "فیلترها",
+    "searchPlaceholder": "جستجوی کاربر (نام، نام کاربری)",
+    "searchAriaLabel": "جستجو در کاربران",
+    "ariaLabel": "نوار فیلترهای کاربران"
+  },
+  "table": {
+    "columns": {
+      "name": "نام",
+      "username": "نام کاربری",
+      "ticketCount": "تعداد تیکت",
+      "createdAt": "تاریخ ثبت‌نام"
+    },
+    "ariaLabel": "جدول کاربران",
+    "emptyState": "هیچ کاربری یافت نشد."
+  }
+}

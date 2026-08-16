@@ -4,11 +4,7 @@ interface TicketDepartmentDto {
 }
 
 export type TicketStatusDto =
-  | 'OPEN'
-  | 'IN_PROGRESS'
-  | 'WAITING_FOR_USER'
-  | 'RESOLVED'
-  | 'CLOSED';
+  'OPEN' | 'IN_PROGRESS' | 'WAITING_FOR_USER' | 'RESOLVED' | 'CLOSED';
 
 interface TicketUserDto {
   id: number;
@@ -141,5 +137,7 @@ export interface ChangeTicketDepartmentResultDto {
 }
 
 export type GetTicketStatusHistoryResponseDto = ChangeTicketStatusResultDto[];
-export type GetTicketAssignmentHistoryResponseDto = ChangeTicketAssignmentResultDto[];
-export type GetTicketDepartmentHistoryResponseDto = ChangeTicketDepartmentResultDto[];
+export type GetTicketAssignmentHistoryResponseDto =
+  ChangeTicketAssignmentResultDto[];
+export type GetTicketDepartmentHistoryResponseDto =
+  ChangeTicketDepartmentResultDto[];

@@ -1,13 +1,26 @@
-'use client';
-
+import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import { RoleGuard } from '@/components/shared';
+import UsersModule from '@/modules/users';
+import type { UsersSearchParams } from '@/modules/users/users-query';
 
-const UsersPage = () => {
+type UsersPageProps = {
+  searchParams: Promise<UsersSearchParams>;
+};
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('users.meta');
+
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
+
+const UsersPage = ({ searchParams }: UsersPageProps) => {
   return (
     <RoleGuard adminOnly>
-      <div className="flex items-center justify-center p-6">
-        <h1 className="text-h2 text-neutral-900 font-bold">مدیریت کاربران</h1>
-      </div>
+        <UsersModule searchParams={searchParams} />
     </RoleGuard>
   );
 };

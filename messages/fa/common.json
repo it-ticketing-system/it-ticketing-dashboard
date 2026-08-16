@@ -17,6 +17,21 @@
     "closed": "بسته شده"
   },
 
+  "table": {
+    "loading": "در حال بارگذاری...",
+    "error": {
+      "title": "خطا در بارگذاری اطلاعات",
+      "retry": "تلاش مجدد"
+    }
+  },
+
+  "pagination": {
+    "previous": "قبلی",
+    "next": "بعدی",
+    "page": "صفحه {page}",
+    "summary": "{page} از {totalPages}"
+  },
+
   "toast": {
     "successTitle": "عملیات موفق",
     "successDescription": "عملیات با موفقیت انجام شد",

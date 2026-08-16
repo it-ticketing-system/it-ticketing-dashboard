@@ -1,7 +1,8 @@
 'use client';
 
-import { Pagination, Spinner, Table } from '@heroui/react';
+import { Pagination, Table } from '@heroui/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { Suspense, type ReactNode } from 'react';
 import { ICON_SIZE_CLASS } from '@/constants';
 import { useQueryState } from '@/hooks';
@@ -9,15 +10,11 @@ import type { PaginationMeta } from '@/apis/core/types/api-response';
 
 type TableKey = string | number;
 
-type TableSkeletonType =
-  'text' | 'double-text' | 'action' | 'image-text' | 'badge';
-
 export interface TableHeaderOptions<TColumnKey extends TableKey = TableKey> {
   id: TColumnKey;
   label: ReactNode;
   className?: string;
   isRowHeader?: boolean;
-  skeletonType?: TableSkeletonType;
 }
 
 interface TablePaginationOptions extends PaginationMeta {
@@ -26,25 +23,15 @@ interface TablePaginationOptions extends PaginationMeta {
   onPageChange?: (page: number) => void;
 }
 
-interface TablePaginationLabels {
-  previous: string;
-  next: string;
-  page: (page: number) => string;
-  summary: (data: { from: number; to: number; total: number }) => ReactNode;
-}
-
 interface TableContainerProps<
   TItem extends { id: TableKey },
   TColumnKey extends TableKey = TableKey,
 > {
   ariaLabel: string;
   headerCells: Array<TableHeaderOptions<TColumnKey>>;
-  isLoading?: boolean;
-  loadingLabel?: ReactNode;
   errorComponent?: ReactNode;
   emptyComponent?: ReactNode;
   pagination?: TablePaginationOptions;
-  paginationLabels?: TablePaginationLabels;
   paginationFallback?: ReactNode;
   items: TItem[];
   children: (item: TItem) => ReactNode;
@@ -106,22 +93,17 @@ const TablePaginationFallback = () => {
 
 const TablePagination = ({
   page,
-  perPage,
-  total,
   totalPages,
   pageParam = 'page',
   isPending = false,
   onPageChange,
-  labels,
-}: TablePaginationOptions & { labels: TablePaginationLabels }) => {
+}: TablePaginationOptions) => {
   const { isPending: isNavigationPending, setQuery } = useQueryState();
+  const t = useTranslations('common.pagination');
 
   const safeTotalPages = Math.max(totalPages, 1);
   const safePage = Math.min(Math.max(page, 1), safeTotalPages);
   const isPageChangePending = isPending || isNavigationPending;
-
-  const firstItem = total === 0 ? 0 : (safePage - 1) * perPage + 1;
-  const lastItem = Math.min(safePage * perPage, total);
 
   const paginationItems = createPaginationItems(safePage, safeTotalPages);
 
@@ -149,18 +131,14 @@ const TablePagination = ({
   return (
     <Pagination size="sm">
       <Pagination.Summary>
-        {labels.summary({
-          from: firstItem,
-          to: lastItem,
-          total,
-        })}
+        {t('summary', { page: safePage, totalPages: safeTotalPages })}
       </Pagination.Summary>
 
       {safeTotalPages > 1 && (
         <Pagination.Content dir="rtl">
           <Pagination.Item>
             <Pagination.Previous
-              aria-label={labels.previous}
+              aria-label={t('previous')}
               isDisabled={isPageChangePending || safePage === 1}
               onPress={() => changePage(safePage - 1)}
             >
@@ -180,7 +158,7 @@ const TablePagination = ({
             return (
               <Pagination.Item key={item}>
                 <Pagination.Link
-                  aria-label={labels.page(item)}
+                  aria-label={t('page', { page: item })}
                   isActive={item === safePage}
                   isDisabled={isPageChangePending}
                   onPress={() => changePage(item)}
@@ -193,7 +171,7 @@ const TablePagination = ({
 
           <Pagination.Item>
             <Pagination.Next
-              aria-label={labels.next}
+              aria-label={t('next')}
               isDisabled={isPageChangePending || safePage === safeTotalPages}
               onPress={() => changePage(safePage + 1)}
             >
@@ -212,22 +190,17 @@ const TableContainer = <
 >({
   ariaLabel,
   headerCells,
-  isLoading = false,
-  loadingLabel,
   errorComponent,
   emptyComponent,
   pagination,
-  paginationLabels,
   paginationFallback = <TablePaginationFallback />,
   items,
   children,
 }: TableContainerProps<TItem, TColumnKey>) => {
-  const tableItems = isLoading ? [] : items;
-
   return (
     <Table variant="secondary">
       <Table.ScrollContainer>
-        <Table.Content dir="rtl" aria-busy={isLoading} aria-label={ariaLabel}>
+        <Table.Content dir="rtl" aria-label={ariaLabel}>
           <Table.Header>
             {headerCells.map((cell) => (
               <Table.Column
@@ -242,22 +215,10 @@ const TableContainer = <
           </Table.Header>
 
           <Table.Body
-            items={tableItems}
+            items={items}
             renderEmptyState={() => {
               if (errorComponent) {
                 return errorComponent;
-              }
-
-              if (isLoading) {
-                return (
-                  <div className="flex min-h-52 flex-col items-center justify-center gap-3 px-6 py-10 text-center">
-                    <Spinner size="lg" color="accent" />
-
-                    {loadingLabel && (
-                      <p className="text-body-sm text-muted">{loadingLabel}</p>
-                    )}
-                  </div>
-                );
               }
 
               return emptyComponent ?? null;
@@ -266,12 +227,12 @@ const TableContainer = <
             {children}
           </Table.Body>
         </Table.Content>
-      </Table.ScrollContainer>
+        </Table.ScrollContainer>
 
-      {!isLoading && pagination && pagination.total > 0 && paginationLabels && (
+      {pagination && pagination.total > 0 && (
         <Table.Footer>
           <Suspense fallback={paginationFallback}>
-            <TablePagination {...pagination} labels={paginationLabels} />
+            <TablePagination {...pagination} />
           </Suspense>
         </Table.Footer>
       )}

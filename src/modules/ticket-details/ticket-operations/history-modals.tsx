@@ -1,12 +1,12 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
-import { Modal, Spinner } from '@heroui/react';
-import { useGetRequest } from '@/hooks';
-import { QUERY_KEYS } from '@/constants';
-import { clientTicketServices } from '@/apis/services/tickets/client';
+import { Modal, Skeleton } from '@heroui/react';
 import { ArrowLeft } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { clientTicketServices } from '@/apis/services/tickets/client';
 import { TicketStatusChip } from '@/components/shared';
+import { QUERY_KEYS } from '@/constants';
+import { useGetRequest } from '@/hooks';
 
 interface HistoryModalsProps {
   ticketId: string;
@@ -14,7 +14,11 @@ interface HistoryModalsProps {
   onClose: () => void;
 }
 
-const HistoryModals = ({ ticketId, activeHistory, onClose }: HistoryModalsProps) => {
+const HistoryModals = ({
+  ticketId,
+  activeHistory,
+  onClose,
+}: HistoryModalsProps) => {
   const t = useTranslations('ticketDetails.historyModals');
   const tStatuses = useTranslations('common.statuses');
 
@@ -24,35 +28,72 @@ const HistoryModals = ({ ticketId, activeHistory, onClose }: HistoryModalsProps)
     enabled: activeHistory === 'status',
   });
 
-  const { data: departmentHistory, isLoading: isLoadingDepartment } = useGetRequest({
-    queryKey: QUERY_KEYS.tickets.departmentHistory(ticketId),
-    requestFn: () => clientTicketServices.getDepartmentHistory(ticketId),
-    enabled: activeHistory === 'department',
-  });
+  const { data: departmentHistory, isLoading: isLoadingDepartment } =
+    useGetRequest({
+      queryKey: QUERY_KEYS.tickets.departmentHistory(ticketId),
+      requestFn: () => clientTicketServices.getDepartmentHistory(ticketId),
+      enabled: activeHistory === 'department',
+    });
 
-  const { data: assignmentHistory, isLoading: isLoadingAssignment } = useGetRequest({
-    queryKey: QUERY_KEYS.tickets.assignmentHistory(ticketId),
-    requestFn: () => clientTicketServices.getAssignmentHistory(ticketId),
-    enabled: activeHistory === 'assignment',
-  });
+  const { data: assignmentHistory, isLoading: isLoadingAssignment } =
+    useGetRequest({
+      queryKey: QUERY_KEYS.tickets.assignmentHistory(ticketId),
+      requestFn: () => clientTicketServices.getAssignmentHistory(ticketId),
+      enabled: activeHistory === 'assignment',
+    });
+
+  const HistorySkeleton = () => (
+    <div className="flex flex-col gap-4 py-4">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <div
+          key={i}
+          className="border-border flex flex-col gap-2 rounded-lg border p-3"
+        >
+          <div className="flex items-center justify-between">
+            <Skeleton className="h-4 w-24 rounded-sm" />
+            <Skeleton className="h-4 w-20 rounded-sm" />
+          </div>
+          <div className="mt-2 flex items-center gap-2">
+            <Skeleton className="h-6 w-20 rounded-full" />
+            <Skeleton className="size-4 rounded-full" />
+            <Skeleton className="h-6 w-20 rounded-full" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 
   const renderContent = () => {
     if (activeHistory === 'status') {
-      if (isLoadingStatus) return <Spinner className="my-8" />;
-      if (!statusHistory?.length) return <p className="my-8 text-center text-muted">{t('empty')}</p>;
-      
+      if (isLoadingStatus) return <HistorySkeleton />;
+      if (!statusHistory?.length)
+        return <p className="text-muted my-8 text-center">{t('empty')}</p>;
+
       return (
         <div className="flex flex-col gap-4 py-4">
           {statusHistory.map((item) => (
-            <div key={item.id} className="flex flex-col gap-2 rounded-lg border border-border p-3">
+            <div
+              key={item.id}
+              className="border-border flex flex-col gap-2 rounded-lg border p-3"
+            >
               <div className="flex items-center justify-between">
-                <span className="text-body-sm font-medium">{item.changedByName}</span>
-                <span className="text-caption text-muted" dir="ltr">{item.createdAtLabel}</span>
+                <span className="text-body-sm font-medium">
+                  {item.changedByName}
+                </span>
+                <span className="text-caption text-muted" dir="ltr">
+                  {item.createdAtLabel}
+                </span>
               </div>
-              <div className="flex items-center gap-2 mt-2">
-                <TicketStatusChip status={item.oldStatus} label={tStatuses(item.oldStatus)} />
+              <div className="mt-2 flex items-center gap-2">
+                <TicketStatusChip
+                  status={item.oldStatus}
+                  label={tStatuses(item.oldStatus)}
+                />
                 <ArrowLeft className="text-muted size-4" />
-                <TicketStatusChip status={item.newStatus} label={tStatuses(item.newStatus)} />
+                <TicketStatusChip
+                  status={item.newStatus}
+                  label={tStatuses(item.newStatus)}
+                />
               </div>
             </div>
           ))}
@@ -61,19 +102,29 @@ const HistoryModals = ({ ticketId, activeHistory, onClose }: HistoryModalsProps)
     }
 
     if (activeHistory === 'department') {
-      if (isLoadingDepartment) return <Spinner className="my-8" />;
-      if (!departmentHistory?.length) return <p className="my-8 text-center text-muted">{t('empty')}</p>;
+      if (isLoadingDepartment) return <HistorySkeleton />;
+      if (!departmentHistory?.length)
+        return <p className="text-muted my-8 text-center">{t('empty')}</p>;
 
       return (
         <div className="flex flex-col gap-4 py-4">
           {departmentHistory.map((item) => (
-            <div key={item.id} className="flex flex-col gap-2 rounded-lg border border-border p-3">
+            <div
+              key={item.id}
+              className="border-border flex flex-col gap-2 rounded-lg border p-3"
+            >
               <div className="flex items-center justify-between">
-                <span className="text-body-sm font-medium">{item.changedByName}</span>
-                <span className="text-caption text-muted" dir="ltr">{item.createdAtLabel}</span>
+                <span className="text-body-sm font-medium">
+                  {item.changedByName}
+                </span>
+                <span className="text-caption text-muted" dir="ltr">
+                  {item.createdAtLabel}
+                </span>
               </div>
-              <div className="flex items-center gap-2 mt-2 text-body-sm">
-                <span className="text-muted line-through">{item.oldDepartmentName}</span>
+              <div className="text-body-sm mt-2 flex items-center gap-2">
+                <span className="text-muted line-through">
+                  {item.oldDepartmentName}
+                </span>
                 <ArrowLeft className="text-muted size-4 shrink-0" />
                 <span className="font-medium">{item.newDepartmentName}</span>
               </div>
@@ -84,19 +135,29 @@ const HistoryModals = ({ ticketId, activeHistory, onClose }: HistoryModalsProps)
     }
 
     if (activeHistory === 'assignment') {
-      if (isLoadingAssignment) return <Spinner className="my-8" />;
-      if (!assignmentHistory?.length) return <p className="my-8 text-center text-muted">{t('empty')}</p>;
+      if (isLoadingAssignment) return <HistorySkeleton />;
+      if (!assignmentHistory?.length)
+        return <p className="text-muted my-8 text-center">{t('empty')}</p>;
 
       return (
         <div className="flex flex-col gap-4 py-4">
           {assignmentHistory.map((item) => (
-            <div key={item.id} className="flex flex-col gap-2 rounded-lg border border-border p-3">
+            <div
+              key={item.id}
+              className="border-border flex flex-col gap-2 rounded-lg border p-3"
+            >
               <div className="flex items-center justify-between">
-                <span className="text-body-sm font-medium">{item.changedByName}</span>
-                <span className="text-caption text-muted" dir="ltr">{item.createdAtLabel}</span>
+                <span className="text-body-sm font-medium">
+                  {item.changedByName}
+                </span>
+                <span className="text-caption text-muted" dir="ltr">
+                  {item.createdAtLabel}
+                </span>
               </div>
-              <div className="flex items-center gap-2 mt-2 text-body-sm">
-                <span className="text-muted line-through">{item.fromSupportName || '-'}</span>
+              <div className="text-body-sm mt-2 flex items-center gap-2">
+                <span className="text-muted line-through">
+                  {item.fromSupportName || '-'}
+                </span>
                 <ArrowLeft className="text-muted size-4 shrink-0" />
                 <span className="font-medium">{item.toSupportName || '-'}</span>
               </div>
@@ -117,13 +178,18 @@ const HistoryModals = ({ ticketId, activeHistory, onClose }: HistoryModalsProps)
 
   return (
     <Modal>
-      <Modal.Backdrop isOpen={!!activeHistory} onOpenChange={(isOpen) => !isOpen && onClose()}>
+      <Modal.Backdrop
+        isOpen={!!activeHistory}
+        onOpenChange={(isOpen) => !isOpen && onClose()}
+      >
         <Modal.Container>
           <Modal.Dialog className="bg-surface rounded-xl shadow-xl">
-            <Modal.Header className="border-b border-border py-4 px-6">
-              <Modal.Heading className="text-h3">{activeHistory ? titles[activeHistory] : ''}</Modal.Heading>
+            <Modal.Header className="border-border border-b px-6 py-4">
+              <Modal.Heading className="text-h3">
+                {activeHistory ? titles[activeHistory] : ''}
+              </Modal.Heading>
             </Modal.Header>
-            <Modal.Body className="py-4 px-6 max-h-[70vh] overflow-y-auto">
+            <Modal.Body className="max-h-[70vh] overflow-y-auto px-6 py-4">
               {renderContent()}
             </Modal.Body>
           </Modal.Dialog>

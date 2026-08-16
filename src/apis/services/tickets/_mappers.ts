@@ -19,7 +19,14 @@ import type {
   GetManagementTicketsRequest,
   SendTicketMessageRequest,
 } from './_types';
-import type { ITicket, ITicketMessage, TicketStatus, ITicketStatusHistory, ITicketAssignmentHistory, ITicketDepartmentHistory } from '@/models';
+import type {
+  ITicket,
+  ITicketMessage,
+  TicketStatus,
+  ITicketStatusHistory,
+  ITicketAssignmentHistory,
+  ITicketDepartmentHistory,
+} from '@/models';
 
 const TICKET_STATUS_MAP = {
   OPEN: 'open',
@@ -51,7 +58,9 @@ export const toSendTicketMessageRequestDto = (
   fileIds: payload.fileIds,
 });
 
-export const toTicketListItem = (ticket: ManagementTicketListItemDto): ITicket => ({
+export const toTicketListItem = (
+  ticket: ManagementTicketListItemDto,
+): ITicket => ({
   id: String(ticket.id),
   ticketNumber: ticket.ticketNumber,
   title: ticket.title,
@@ -98,9 +107,7 @@ export const toTicket = (ticket: ManagementTicketDetailsDto): ITicket => ({
   availableActions: ticket.availableActions,
 });
 
-export const toTicketMessage = (
-  message: TicketMessageDto,
-): ITicketMessage => {
+export const toTicketMessage = (message: TicketMessageDto): ITicketMessage => {
   const isUser = message.sender.role === 'USER';
 
   return {

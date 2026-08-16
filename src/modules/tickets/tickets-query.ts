@@ -1,7 +1,11 @@
 import { PAGE_SIZE } from '@/constants';
-import { getSearchParamValue, toPositiveInteger } from '@/utils';
+import {
+  createEmptyPaginatedData,
+  getSearchParamValue,
+  toPositiveInteger,
+} from '@/utils';
+import { TicketTableData } from './ticket-table/types';
 import type { TicketFiltersValue } from './ticket-filters/types';
-import type { TicketTableData } from './ticket-table';
 import type { GetManagementTicketsRequest } from '@/apis/services/tickets/client';
 import type { TicketStatus } from '@/models';
 
@@ -75,15 +79,8 @@ export const createTicketsParams = (
   };
 };
 
-export const createEmptyTickets = (page: number): TicketTableData => ({
-  items: [],
-  meta: {
-    page,
-    perPage: PAGE_SIZE,
-    total: 0,
-    totalPages: 0,
-  },
-});
+export const createEmptyTickets = (page: number): TicketTableData =>
+  createEmptyPaginatedData(page, PAGE_SIZE);
 
 export const areTicketFiltersEqual = (
   first: TicketFiltersValue & { page: number },

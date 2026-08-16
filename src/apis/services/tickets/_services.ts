@@ -21,6 +21,14 @@ import {
   toTicketDepartmentHistory,
 } from './_mappers';
 import type {
+  ChangeTicketStatusRequestDto,
+  ChangeTicketAssignmentRequestDto,
+  ChangeTicketDepartmentRequestDto,
+  GetTicketStatusHistoryResponseDto,
+  GetTicketAssignmentHistoryResponseDto,
+  GetTicketDepartmentHistoryResponseDto,
+} from './_dto';
+import type {
   GetManagementTicketsRequest,
   GetManagementTicketsResponse,
   GetTicketDetailsResponse,
@@ -36,14 +44,6 @@ import type {
   GetTicketAssignmentHistoryResponse,
   GetTicketDepartmentHistoryResponse,
 } from './_types';
-import type {
-  ChangeTicketStatusRequestDto,
-  ChangeTicketAssignmentRequestDto,
-  ChangeTicketDepartmentRequestDto,
-  GetTicketStatusHistoryResponseDto,
-  GetTicketAssignmentHistoryResponseDto,
-  GetTicketDepartmentHistoryResponseDto,
-} from './_dto';
 
 export function createTicketServices(
   request: ApiRequestFunction,

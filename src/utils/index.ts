@@ -10,6 +10,7 @@ export {
 } from './format-persian-date-time';
 export { toPositiveInteger } from './to-positive-integer';
 export { getSearchParamValue } from './get-search-param-value';
+export { createEmptyPaginatedData } from './pagination';
 
 export {
   formatFileSize,

@@ -1,10 +1,10 @@
 'use client';
 
 import { SearchField, Label } from '@heroui/react';
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useTranslations } from 'next-intl';
+import { useEffect, useRef, useState } from 'react';
 import { useDebounce } from '@/hooks';
 import { cn } from '@/utils';
-import { useTranslations } from 'next-intl';
 
 interface SearchInputProps {
   queryValue: string;
@@ -67,7 +67,9 @@ export const SearchInput = ({
       <SearchField.Group>
         {showSearchIcon && <SearchField.SearchIcon />}
         <SearchField.Input placeholder={placeholder} />
-        <SearchField.ClearButton aria-label={tCommon('search.clearAriaLabel')} />
+        <SearchField.ClearButton
+          aria-label={tCommon('search.clearAriaLabel')}
+        />
       </SearchField.Group>
     </SearchField>
   );

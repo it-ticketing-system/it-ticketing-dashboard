@@ -8,9 +8,7 @@ export const toDepartmentLookup = (
   name: department.name,
 });
 
-export const toSupportLookup = (
-  support: SupportLookupDto,
-): ISupportLookup => ({
+export const toSupportLookup = (support: SupportLookupDto): ISupportLookup => ({
   id: String(support.id),
   name: support.name,
 });

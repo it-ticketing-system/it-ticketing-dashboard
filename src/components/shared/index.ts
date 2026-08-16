@@ -4,6 +4,7 @@ export { default as PasswordField } from './password-field';
 export { default as RoleGuard } from './role-guard';
 export type { RoleGuardProps } from './role-guard';
 export { default as TicketStatusChip } from './ticket-status-chip';
+export { TableErrorState, TableEmptyState } from './table-states';
 export { default as FileAttachmentLink } from './file-attachment-link';
 export { default as SelectedFilesList } from './selected-files-list';
 export * from './select-status';
