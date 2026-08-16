@@ -1,6 +1,5 @@
 'use client';
 
-import { clientLookupServices } from '@/apis/services/lookups/client';
 import { clientTicketServices } from '@/apis/services/tickets/client';
 import { QUERY_KEYS } from '@/constants';
 import { useGetRequest, useQueryState } from '@/hooks';
@@ -10,7 +9,8 @@ import {
   type TicketFiltersPatch,
   type TicketFiltersValue,
 } from './ticket-filters/types';
-import { TicketsTable, type TicketTableData } from './ticket-table';
+import TicketsTable from './ticket-table';
+import { TicketTableData } from './ticket-table/types';
 import {
   areTicketFiltersEqual,
   createTicketsParams,
@@ -18,7 +18,6 @@ import {
   parseTicketFilters,
 } from './tickets-query';
 import type { ApiRequestError } from '@/apis/core/api-error';
-import type { IDepartmentLookup } from '@/models';
 
 type TicketsClientProps = {
   initialFilters: TicketFiltersValue & { page: number };

@@ -1,16 +1,14 @@
 import 'server-only';
 
 import { toApiRequestError, type ApiRequestError } from '@/apis/core/api-error';
-import { serverLookupServices } from '@/apis/services/lookups/server';
 import { serverTicketServices } from '@/apis/services/tickets/server';
+import { TicketTableData } from './ticket-table/types';
 import {
   createEmptyTickets,
   createTicketsParams,
   parseTicketFilters,
   type TicketsSearchParams,
 } from './tickets-query';
-import type { TicketTableData } from './ticket-table';
-import type { IDepartmentLookup } from '@/models';
 
 type TicketsInitialData = {
   initialFilters: ReturnType<typeof parseTicketFilters>;

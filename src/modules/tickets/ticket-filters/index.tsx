@@ -2,8 +2,8 @@
 
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
-import { useMediaQuery } from '@/hooks';
 import { SearchInput } from '@/components/shared';
+import { useMediaQuery } from '@/hooks';
 import {
   createTicketFilterPatch,
   type TicketFiltersPatch,
@@ -61,7 +61,7 @@ const MyTicketsFilters = ({
       onValueChange={(nextSearch) => {
         onChange(createTicketFilterPatch('search', nextSearch));
       }}
-      className="min-w-0 h-11"
+      className="h-11 min-w-0"
       placeholder={t('search.placeholder')}
       ariaLabel={t('search.ariaLabel')}
       showSearchIcon
@@ -75,24 +75,24 @@ const MyTicketsFilters = ({
           aria-hidden="true"
           className="flex items-center gap-3 lg:hidden"
         >
-          <div className="border-border bg-primary-50 h-11 min-w-0 flex-1 rounded-md border animate-pulse" />
-          <div className="border-border bg-primary-50 size-11 shrink-0 rounded-md border animate-pulse" />
+          <div className="border-border bg-primary-50 h-11 min-w-0 flex-1 animate-pulse rounded-md border" />
+          <div className="border-border bg-primary-50 size-11 shrink-0 animate-pulse rounded-md border" />
         </section>
 
         <section
           aria-hidden="true"
           className="border-border bg-surface hidden gap-4 rounded-xl border p-4 shadow-sm lg:grid lg:grid-cols-2 xl:grid-cols-4"
         >
-          <div className="border-border bg-primary-50 h-11 rounded-md border animate-pulse lg:col-span-2 xl:col-span-2" />
-          <div className="border-border bg-primary-50 h-11 rounded-md border animate-pulse" />
-          <div className="border-border bg-primary-50 h-11 rounded-md border animate-pulse" />
-          <div className="border-border bg-primary-50 h-11 rounded-md border animate-pulse" />
-          <div className="border-border bg-primary-50 h-11 rounded-md border animate-pulse" />
-          <div className="border-border bg-primary-50 h-11 rounded-md border animate-pulse" />
-          <div className="border-border bg-primary-50 h-11 rounded-md border animate-pulse" />
-          
-          <div className="flex justify-end lg:col-span-2 xl:col-span-4 mt-1">
-            <div className="border-border bg-primary-50 h-11 w-[160px] rounded-md border animate-pulse" />
+          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border lg:col-span-2 xl:col-span-2" />
+          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
+          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
+          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
+          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
+          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
+          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
+
+          <div className="mt-1 flex justify-end lg:col-span-2 xl:col-span-4">
+            <div className="border-border bg-primary-50 h-11 w-[160px] animate-pulse rounded-md border" />
           </div>
         </section>
       </>
@@ -106,19 +106,19 @@ const MyTicketsFilters = ({
           <div className="flex items-center gap-3">
             <div className="min-w-0 flex-1">{searchControl}</div>
 
-              <TicketMobileFilters
-                status={status || ''}
-                department={department || ''}
-                support={support || ''}
-                user={user || ''}
-                createdFrom={createdFrom || ''}
-                createdTo={createdTo || ''}
-                updatedFrom={updatedFrom || ''}
-                updatedTo={updatedTo || ''}
-                activeFilterCount={activeFilterCount}
-                isPending={isPending}
-                onApplyFilters={onChange}
-              />
+            <TicketMobileFilters
+              status={status || ''}
+              department={department || ''}
+              support={support || ''}
+              user={user || ''}
+              createdFrom={createdFrom || ''}
+              createdTo={createdTo || ''}
+              updatedFrom={updatedFrom || ''}
+              updatedTo={updatedTo || ''}
+              activeFilterCount={activeFilterCount}
+              isPending={isPending}
+              onApplyFilters={onChange}
+            />
           </div>
         </section>
       )}

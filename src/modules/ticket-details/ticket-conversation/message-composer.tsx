@@ -35,7 +35,11 @@ interface MessageComposerProps {
   disabledReason: 'closed' | 'notAssigned';
 }
 
-const MessageComposer = ({ ticketId, isDisabled, disabledReason }: MessageComposerProps) => {
+const MessageComposer = ({
+  ticketId,
+  isDisabled,
+  disabledReason,
+}: MessageComposerProps) => {
   const t = useTranslations('ticketDetails.composer');
   const queryClient = useQueryClient();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -169,8 +173,7 @@ const MessageComposer = ({ ticketId, isDisabled, disabledReason }: MessageCompos
     await sendMessage(data);
   };
 
-  const isSubmitDisabled =
-    isDisabled || isPending || !message.trim();
+  const isSubmitDisabled = isDisabled || isPending || !message.trim();
 
   if (isDisabled) {
     return (

@@ -8,11 +8,19 @@ import {
   RotateCcw,
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import {
+  SelectStatus,
+  SelectDepartment,
+  SearchInput,
+} from '@/components/shared';
 import { ICON_SIZE_CLASS } from '@/constants';
 import { cn } from '@/utils';
-import { SelectStatus, SelectDepartment, SearchInput } from '@/components/shared';
 import TicketDateField from './ticket-date-field';
-import { getDateRangeLabel, type TicketFiltersPatch, type TicketFiltersValue } from './types';
+import {
+  getDateRangeLabel,
+  type TicketFiltersPatch,
+  type TicketFiltersValue,
+} from './types';
 import type { TicketStatus } from '@/models';
 
 type TicketDesktopFiltersProps = {
@@ -76,11 +84,9 @@ const TicketDesktopFilters = ({
   return (
     <section
       aria-label={t('sectionAriaLabel')}
-      className="border-border bg-surface grid gap-4 rounded-xl border p-4 shadow-sm lg:grid-cols-2 xl:grid-cols-4 items-end"
+      className="border-border bg-surface grid items-end gap-4 rounded-xl border p-4 shadow-sm lg:grid-cols-2 xl:grid-cols-4"
     >
-      <div className="min-w-0 lg:col-span-2 xl:col-span-2">
-        {searchControl}
-      </div>
+      <div className="min-w-0 lg:col-span-2 xl:col-span-2">{searchControl}</div>
 
       <SelectStatus
         ariaLabel={t('status.ariaLabel')}
@@ -125,9 +131,7 @@ const TicketDesktopFilters = ({
               aria-hidden="true"
               className={cn('text-muted shrink-0', ICON_SIZE_CLASS.md)}
             />
-            <span className="min-w-0 flex-1 truncate">
-              {createdDateLabel}
-            </span>
+            <span className="min-w-0 flex-1 truncate">{createdDateLabel}</span>
             <ChevronDown
               aria-hidden="true"
               className={cn('text-muted shrink-0', ICON_SIZE_CLASS.sm)}
@@ -169,10 +173,7 @@ const TicketDesktopFilters = ({
                 onPress={resetCreatedDateRange}
                 className="text-danger h-10"
               >
-                <RotateCcw
-                  aria-hidden="true"
-                  className={ICON_SIZE_CLASS.sm}
-                />
+                <RotateCcw aria-hidden="true" className={ICON_SIZE_CLASS.sm} />
                 {t('dateRange.clear')}
               </Button>
             ) : null}
@@ -191,9 +192,7 @@ const TicketDesktopFilters = ({
               aria-hidden="true"
               className={cn('text-muted shrink-0', ICON_SIZE_CLASS.md)}
             />
-            <span className="min-w-0 flex-1 truncate">
-              {updatedDateLabel}
-            </span>
+            <span className="min-w-0 flex-1 truncate">{updatedDateLabel}</span>
             <ChevronDown
               aria-hidden="true"
               className={cn('text-muted shrink-0', ICON_SIZE_CLASS.sm)}
@@ -235,10 +234,7 @@ const TicketDesktopFilters = ({
                 onPress={resetUpdatedDateRange}
                 className="text-danger h-10"
               >
-                <RotateCcw
-                  aria-hidden="true"
-                  className={ICON_SIZE_CLASS.sm}
-                />
+                <RotateCcw aria-hidden="true" className={ICON_SIZE_CLASS.sm} />
                 {t('dateRange.clear')}
               </Button>
             ) : null}

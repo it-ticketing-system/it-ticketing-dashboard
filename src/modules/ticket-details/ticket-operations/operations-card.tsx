@@ -1,17 +1,21 @@
 'use client';
 
-import { useState } from 'react';
-import { useTranslations } from 'next-intl';
-import { Select, ListBox, Button, Dropdown, Label, Modal } from '@heroui/react';
-import { History, ChevronDown, Settings } from 'lucide-react';
+import { Button, Dropdown, Modal } from '@heroui/react';
 import { useQueryClient } from '@tanstack/react-query';
+import { History, Settings } from 'lucide-react';
+import dynamic from 'next/dynamic';
+import { useTranslations } from 'next-intl';
+import { useState } from 'react';
 import { clientTicketServices } from '@/apis/services/tickets/client';
+import {
+  SelectStatus,
+  SelectDepartment,
+  SelectSupport,
+} from '@/components/shared';
 import { QUERY_KEYS } from '@/constants';
 import { usePostRequest } from '@/hooks';
-import { SelectStatus, SelectDepartment, SelectSupport } from '@/components/shared';
 import type { TicketDetails } from '../types';
 import type { TicketStatus } from '@/models';
-import dynamic from 'next/dynamic';
 
 const HistoryModals = dynamic(() => import('./history-modals'), { ssr: false });
 
@@ -22,7 +26,7 @@ interface OperationsCardProps {
 const OperationsCard = ({ ticket }: OperationsCardProps) => {
   const t = useTranslations('ticketDetails');
   const queryClient = useQueryClient();
-  const { availableActions, departmentName, status } = ticket;
+  const { availableActions } = ticket;
 
   const [activeHistory, setActiveHistory] = useState<
     'status' | 'department' | 'assignment' | null
@@ -66,7 +70,7 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
         queryClient.invalidateQueries({
           queryKey: QUERY_KEYS.tickets.details(ticket.id),
         });
-      },  
+      },
     });
 
   if (!availableActions) return null;
@@ -120,7 +124,9 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
         }}
         label={t('operations.changeDepartment')}
         placeholder={t('operations.selectDepartment')}
-        isDisabled={!availableActions.canChangeDepartment || isChangingDepartment}
+        isDisabled={
+          !availableActions.canChangeDepartment || isChangingDepartment
+        }
       />
 
       <SelectSupport
