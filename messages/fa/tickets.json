@@ -18,22 +18,12 @@
       "actions": "عملیات"
     },
 
-    "pagination": {
-      "previous": "قبلی",
-      "next": "بعدی",
-      "page": "صفحه {page}",
-      "summary": "نمایش {from} تا {to} از {total} تیکت"
-    },
     "actions": {
       "viewAriaLabel": "مشاهده تیکت {number}"
     },
     "empty": {
       "title": "تیکتی یافت نشد",
       "description": "با فیلترهای فعلی هیچ تیکتی یافت نشد."
-    },
-    "error": {
-      "title": "خطا در دریافت تیکت‌ها",
-      "retry": "تلاش مجدد"
     }
   },
   "filters": {
