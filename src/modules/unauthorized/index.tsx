@@ -17,13 +17,9 @@ const UnauthorizedModule = () => {
             <ShieldAlert className={ICON_SIZE_CLASS.lg} />
           </div>
 
-          <h2 className="text-h2 text-neutral-900 font-bold">
-            {t('title')}
-          </h2>
+          <h2 className="text-h2 font-bold text-neutral-900">{t('title')}</h2>
 
-          <p className="text-body-sm text-neutral-600">
-            {t('description')}
-          </p>
+          <p className="text-body-sm text-neutral-600">{t('description')}</p>
 
           <Link href={ROUTES.dashboard}>
             <Button variant="primary" className="mt-2 font-semibold">
