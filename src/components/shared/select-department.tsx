@@ -2,10 +2,10 @@
 
 import { Select, ListBox, Label } from '@heroui/react';
 import { ChevronDown, LoaderCircle } from 'lucide-react';
-import { ICON_SIZE_CLASS, QUERY_KEYS } from '@/constants';
-import { cn } from '@/utils';
-import { useGetRequest } from '@/hooks';
 import { clientLookupServices } from '@/apis/services/lookups/client';
+import { ICON_SIZE_CLASS, QUERY_KEYS } from '@/constants';
+import { useGetRequest } from '@/hooks';
+import { cn } from '@/utils';
 
 interface SelectDepartmentProps {
   value?: string | null;
@@ -48,18 +48,21 @@ export const SelectDepartment = ({
       className={cn(fullWidth && 'w-full', 'min-w-0', className)}
     >
       {label ? <Label>{label}</Label> : null}
-      
+
       <Select.Trigger>
         <Select.Value />
         <Select.Indicator>
           {isLoading ? (
-            <LoaderCircle aria-hidden="true" className={cn(ICON_SIZE_CLASS.sm, 'animate-spin')} />
+            <LoaderCircle
+              aria-hidden="true"
+              className={cn(ICON_SIZE_CLASS.sm, 'animate-spin')}
+            />
           ) : (
             <ChevronDown aria-hidden="true" className={ICON_SIZE_CLASS.sm} />
           )}
         </Select.Indicator>
       </Select.Trigger>
-      
+
       <Select.Popover placement="bottom end">
         <ListBox aria-label={ariaLabel}>
           {(departments || []).map((dep) => (

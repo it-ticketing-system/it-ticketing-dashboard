@@ -1,8 +1,8 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { Select, ListBox, Label } from '@heroui/react';
 import { ChevronDown } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { ICON_SIZE_CLASS } from '@/constants';
 import { cn } from '@/utils';
 import type { TicketStatus } from '@/models';
@@ -20,7 +20,11 @@ interface SelectStatusProps {
 }
 
 const STATUS_OPTIONS: TicketStatus[] = [
-  'open', 'inProgress', 'waitingUser', 'resolved', 'closed'
+  'open',
+  'inProgress',
+  'waitingUser',
+  'resolved',
+  'closed',
 ];
 
 export const SelectStatus = ({
@@ -49,14 +53,14 @@ export const SelectStatus = ({
       className={cn(fullWidth && 'w-full', 'min-w-0', className)}
     >
       {label ? <Label>{label}</Label> : null}
-      
+
       <Select.Trigger>
         <Select.Value />
         <Select.Indicator>
           <ChevronDown aria-hidden="true" className={ICON_SIZE_CLASS.sm} />
         </Select.Indicator>
       </Select.Trigger>
-      
+
       <Select.Popover placement="bottom end">
         <ListBox aria-label={ariaLabel}>
           {STATUS_OPTIONS.map((st) => (

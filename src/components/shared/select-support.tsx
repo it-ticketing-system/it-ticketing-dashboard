@@ -2,10 +2,10 @@
 
 import { Select, ListBox, Label } from '@heroui/react';
 import { ChevronDown, LoaderCircle } from 'lucide-react';
-import { ICON_SIZE_CLASS, QUERY_KEYS } from '@/constants';
-import { cn } from '@/utils';
-import { useGetRequest } from '@/hooks';
 import { clientLookupServices } from '@/apis/services/lookups/client';
+import { ICON_SIZE_CLASS, QUERY_KEYS } from '@/constants';
+import { useGetRequest } from '@/hooks';
+import { cn } from '@/utils';
 
 interface SelectSupportProps {
   departmentId?: string | null;

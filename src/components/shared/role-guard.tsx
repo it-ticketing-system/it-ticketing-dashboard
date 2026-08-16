@@ -39,8 +39,8 @@ const RoleGuard: FCC<RoleGuardProps> = ({
 
   if (isLoading) {
     return (
-      <div className="flex min-h-64 w-full items-center justify-center p-8">
-        <Spinner size="lg" color="accent" />
+      <div className="flex min-h-[60vh] w-full items-center justify-center p-8">
+        <Spinner size="lg" />
       </div>
     );
   }
