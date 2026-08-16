@@ -2,7 +2,11 @@ import { ApiRequestFunction } from '@/apis/core/types/api-request.types';
 import { LOOKUP_ENDPOINTS } from './_endpoints';
 import { toDepartmentLookup, toSupportLookup } from './_mappers';
 import type { DepartmentLookupDto, SupportLookupDto } from './_dto';
-import type { GetDepartmentsResponse, GetSupportsRequest, GetSupportsResponse } from './_types';
+import type {
+  GetDepartmentsResponse,
+  GetSupportsRequest,
+  GetSupportsResponse,
+} from './_types';
 
 export function createLookupServices(request: ApiRequestFunction) {
   async function getDepartments(
