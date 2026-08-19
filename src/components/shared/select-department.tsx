@@ -35,6 +35,8 @@ export const SelectDepartment = ({
     requestFn: () => clientLookupServices.getDepartments(),
   });
 
+  const computedAriaLabel = ariaLabel || label || placeholder || 'Select department';
+
   return (
     <Select
       value={value || null}
@@ -44,7 +46,7 @@ export const SelectDepartment = ({
       placeholder={placeholder}
       isDisabled={isDisabled || isLoading || !departments}
       variant={variant}
-      aria-label={label ? undefined : ariaLabel}
+      aria-label={label ? undefined : computedAriaLabel}
       className={cn(fullWidth && 'w-full', 'min-w-0', className)}
     >
       {label ? <Label>{label}</Label> : null}
