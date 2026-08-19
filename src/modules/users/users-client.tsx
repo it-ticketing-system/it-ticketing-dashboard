@@ -95,6 +95,7 @@ const UsersClient = ({
           <div className="border-border bg-surface rounded-xl border p-4 shadow-sm">
             <SearchInput
               label=""
+              ariaLabel={t('searchAriaLabel')}
               placeholder={t('searchPlaceholder')}
               queryValue={filters.search || ''}
               onValueChange={(search) => updateFilters({ search })}
