@@ -1,5 +1,7 @@
 export { default as LoginModule } from './login';
 export { default as UnauthorizedModule } from './unauthorized';
 export { default as TicketsModule } from './tickets';
-export type { TicketsSearchParams } from './tickets/tickets-query';
 export { default as TicketDetailsModule } from './ticket-details';
+export { default as UsersModule } from './users';
+export { default as SupportsModule } from './supports';
+export { default as SupportManageModule } from './support-manage';
