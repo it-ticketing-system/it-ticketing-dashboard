@@ -1,9 +1,9 @@
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
-import { TicketsModule, type TicketsSearchParams } from '@/modules';
+import { TicketsModule } from '@/modules';
 
 type TicketsPageProps = {
-  searchParams: Promise<TicketsSearchParams>;
+  searchParams: Promise<PageSearchParams>;
 };
 
 export async function generateMetadata(): Promise<Metadata> {

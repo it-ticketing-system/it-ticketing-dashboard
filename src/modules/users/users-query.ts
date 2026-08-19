@@ -9,14 +9,13 @@ import { UserTableData } from './user-table/types';
 
 export const FILTER_QUERY_KEYS = ['search', 'page'] as const;
 
-export type UsersSearchParams = Record<string, string | string[] | undefined>;
 
 export type UsersFiltersValue = {
   search: string;
 };
 
 export const parseUsersFilters = (
-  searchParams: UsersSearchParams,
+  searchParams: PageSearchParams,
 ): UsersFiltersValue & { page: number } => {
   return {
     search: getSearchParamValue(searchParams, 'search'),

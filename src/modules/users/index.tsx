@@ -3,10 +3,9 @@ import { Suspense } from 'react';
 import UsersClientFallback from './skeleton/users-client-fallback';
 import UsersClient from './users-client';
 import { getUsersInitialData } from './users.server';
-import type { UsersSearchParams } from './users-query';
 
 type UsersModuleProps = {
-  searchParams: Promise<UsersSearchParams>;
+  searchParams: Promise<PageSearchParams>;
 };
 
 const UsersModule = async ({ searchParams }: UsersModuleProps) => {

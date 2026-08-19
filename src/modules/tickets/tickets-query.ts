@@ -30,14 +30,13 @@ export const FILTER_QUERY_KEYS = [
   'page',
 ] as const;
 
-export type TicketsSearchParams = Record<string, string | string[] | undefined>;
 
 const isTicketStatus = (value: string): value is TicketStatus => {
   return TICKET_STATUS_VALUES.includes(value as TicketStatus);
 };
 
 export const parseTicketFilters = (
-  searchParams: TicketsSearchParams,
+  searchParams: PageSearchParams,
 ): TicketFiltersValue & { page: number } => {
   const status = getSearchParamValue(searchParams, 'status');
 

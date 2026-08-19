@@ -3,10 +3,9 @@ import { Suspense } from 'react';
 import TicketsClientFallback from './skeleton/tickets-client-fallback';
 import TicketsClient from './tickets-client';
 import { getTicketsInitialData } from './tickets.server';
-import type { TicketsSearchParams } from './tickets-query';
 
 type TicketsModuleProps = {
-  searchParams: Promise<TicketsSearchParams>;
+  searchParams: Promise<PageSearchParams>;
 };
 
 const TicketsModule = async ({ searchParams }: TicketsModuleProps) => {

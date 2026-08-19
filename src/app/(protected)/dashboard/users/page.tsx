@@ -1,11 +1,10 @@
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { RoleGuard } from '@/components/shared';
-import UsersModule from '@/modules/users';
-import type { UsersSearchParams } from '@/modules/users/users-query';
+import { UsersModule } from '@/modules';
 
 type UsersPageProps = {
-  searchParams: Promise<UsersSearchParams>;
+  searchParams: Promise<PageSearchParams>;
 };
 
 export async function generateMetadata(): Promise<Metadata> {

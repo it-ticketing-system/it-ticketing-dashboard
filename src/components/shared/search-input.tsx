@@ -55,18 +55,23 @@ export const SearchInput = ({
     onValueChange(debouncedValue);
   }, [debouncedValue, onValueChange, queryValue]);
 
+  const computedAriaLabel = ariaLabel || (label ? label : placeholder);
+
   return (
     <SearchField
-      aria-label={label ? undefined : ariaLabel}
+      aria-label={label ? undefined : computedAriaLabel}
       value={value}
       onChange={setValue}
       variant="secondary"
       className={cn('w-full', className)}
     >
-      {label && <Label>{label}</Label>}
+      {label ? <Label>{label}</Label> : null}
       <SearchField.Group>
         {showSearchIcon && <SearchField.SearchIcon />}
-        <SearchField.Input placeholder={placeholder} />
+        <SearchField.Input
+          placeholder={placeholder}
+          aria-label={label ? undefined : computedAriaLabel}
+        />
         <SearchField.ClearButton
           aria-label={tCommon('search.clearAriaLabel')}
         />
