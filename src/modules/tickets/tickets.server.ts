@@ -7,7 +7,6 @@ import {
   createEmptyTickets,
   createTicketsParams,
   parseTicketFilters,
-  type TicketsSearchParams,
 } from './tickets-query';
 
 type TicketsInitialData = {
@@ -17,7 +16,7 @@ type TicketsInitialData = {
 };
 
 export const getTicketsInitialData = async (
-  searchParams: TicketsSearchParams,
+  searchParams: PageSearchParams,
 ): Promise<TicketsInitialData> => {
   const initialFilters = parseTicketFilters(searchParams);
   const ticketsParams = createTicketsParams(initialFilters);

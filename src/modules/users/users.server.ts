@@ -7,7 +7,6 @@ import {
   createEmptyUsers,
   createUsersParams,
   parseUsersFilters,
-  type UsersSearchParams,
 } from './users-query';
 
 type UsersInitialData = {
@@ -17,7 +16,7 @@ type UsersInitialData = {
 };
 
 export const getUsersInitialData = async (
-  searchParams: UsersSearchParams,
+  searchParams: PageSearchParams,
 ): Promise<UsersInitialData> => {
   const initialFilters = parseUsersFilters(searchParams);
   const usersParams = createUsersParams(initialFilters);
