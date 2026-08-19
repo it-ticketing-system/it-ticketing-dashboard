@@ -1,14 +1,10 @@
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { RoleGuard } from '@/components/shared';
-import { SupportsModule } from '@/modules';
-
-type PageProps = {
-  searchParams: Promise<PageSearchParams>;
-};
+import { SupportManageModule } from '@/modules';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('supports.meta');
+  const t = await getTranslations('supports.addMeta');
 
   return {
     title: t('title'),
@@ -16,12 +12,12 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const SupportsPage = ({ searchParams }: PageProps) => {
+const AddSupportPage = () => {
   return (
     <RoleGuard adminOnly>
-      <SupportsModule searchParams={searchParams} />
+        <SupportManageModule mode="add" />
     </RoleGuard>
   );
 };
 
-export default SupportsPage;
+export default AddSupportPage;
