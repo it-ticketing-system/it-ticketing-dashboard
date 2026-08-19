@@ -7,6 +7,8 @@ export const ROUTES = {
   profile: '/dashboard/profile',
   users: '/dashboard/users',
   supports: '/dashboard/supports',
+  supportAdd: '/dashboard/supports/add',
+  supportDetails: (id: string | number) => `/dashboard/supports/${id}` as const,
   departments: '/dashboard/departments',
   reports: '/dashboard/reports',
   unauthorized: '/dashboard/unauthorized',

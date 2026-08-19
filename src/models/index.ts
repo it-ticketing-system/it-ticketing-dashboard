@@ -13,3 +13,5 @@ export type {
   ITicketAssignmentHistory,
   ITicketDepartmentHistory,
 } from './ticket';
+
+export type { ISupportListItem, ISupportDetails } from './support';

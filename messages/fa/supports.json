@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "title": "مدیریت پشتیبانان",
+    "description": "لیست و مدیریت پشتیبانان سیستم"
+  },
+  "addMeta": {
+    "title": "افزودن پشتیبان | پنل ادمین",
+    "description": "افزودن پشتیبان جدید به سیستم"
+  },
+  "editMeta": {
+    "title": "ویرایش پشتیبان | پنل ادمین",
+    "description": "ویرایش اطلاعات پشتیبان"
+  },
+  "filters": {
+    "title": "فیلترها",
+    "searchPlaceholder": "جستجوی نام (نام خانوادگی)",
+    "searchAriaLabel": "جستجو در پشتیبانان",
+    "ariaLabel": "نوار فیلترهای پشتیبانان",
+    "departmentLabel": "دپارتمان",
+    "departmentPlaceholder": "همه دپارتمان‌ها",
+    "availabilityLabel": "وضعیت حضور",
+    "availabilityPlaceholder": "همه وضعیت‌ها",
+    "addSupport": "افزودن پشتیبان",
+    "reset": "بازنشانی فیلترها",
+    "mobile": {
+      "title": "فیلترها",
+      "heading": "فیلترها",
+      "description": "فیلتر پشتیبانان بر اساس دپارتمان و وضعیت حضور",
+      "openAriaLabel": "باز کردن فیلترها",
+      "dialogAriaLabel": "مدال فیلترهای پشتیبانان",
+      "reset": "پاک‌سازی",
+      "apply": "اعمال فیلتر",
+      "cancel": "انصراف"
+    }
+  },
+  "table": {
+    "columns": {
+      "name": "نام",
+      "username": "نام کاربری",
+      "departments": "دپارتمان‌ها",
+      "availabilityStatus": "وضعیت حضور",
+      "activeTicketCount": "تیکت‌های فعال",
+      "lastActivityAt": "آخرین فعالیت",
+      "actions": "عملیات"
+    },
+    "ariaLabel": "جدول پشتیبانان",
+    "emptyState": "هیچ پشتیبانی یافت نشد."
+  },
+  "status": {
+    "AVAILABLE": "در دسترس",
+    "ON_LEAVE": "مرخصی",
+    "INACTIVE": "غیرفعال"
+  },
+  "permissions": {
+    "VIEW_TICKET": "مشاهده تیکت",
+    "REPLY_TICKET": "پاسخ به تیکت",
+    "CHANGE_TICKET_STATUS": "تغییر وضعیت تیکت",
+    "CHANGE_TICKET_DEPARTMENT": "تغییر دپارتمان تیکت",
+    "CHANGE_TICKET_ASSIGNMENT": "ارجاع تیکت"
+  },
+  "form": {
+    "titleAdd": "افزودن پشتیبان جدید",
+    "titleEdit": "ویرایش پشتیبان",
+    "basicInfo": "اطلاعات پایه",
+    "accessInfo": "سطوح دسترسی و دپارتمان‌ها",
+    "permissionsLabel": "دسترسی‌ها",
+    "fields": {
+      "name": "نام و نام خانوادگی",
+      "username": "نام کاربری",
+      "password": "رمز عبور",
+      "passwordEditPlaceholder": "برای تغییر، رمز جدید را وارد کنید",
+      "departmentIds": "دپارتمان‌ها",
+      "availabilityStatus": "وضعیت حضور"
+    },
+    "submitAdd": "ثبت پشتیبان",
+    "submitEdit": "ذخیره تغییرات",
+    "cancel": "انصراف",
+    "successAdd": "پشتیبان با موفقیت افزوده شد.",
+    "successEdit": "اطلاعات پشتیبان با موفقیت بروزرسانی شد."
+  },
+  "validation": {
+    "nameRequired": "نام الزامی است",
+    "usernameRequired": "نام کاربری الزامی است",
+    "passwordRequired": "رمز عبور الزامی است",
+    "passwordMin": "رمز عبور باید حداقل 8 کاراکتر باشد",
+    "departmentsRequired": "انتخاب حداقل یک دپارتمان الزامی است",
+    "statusRequired": "انتخاب وضعیت الزامی است"
+  }
+}
