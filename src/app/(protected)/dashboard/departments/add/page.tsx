@@ -1,14 +1,10 @@
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { RoleGuard } from '@/components/shared';
-import { DepartmentsModule } from '@/modules';
-
-type PageProps = {
-  searchParams: Promise<PageSearchParams>;
-};
+import { DepartmentManageModule } from '@/modules';
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations('departments.meta');
+  const t = await getTranslations('departments.addMeta');
 
   return {
     title: t('title'),
@@ -16,12 +12,12 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-const DepartmentsPage = ({ searchParams }: PageProps) => {
+const AddDepartmentPage = () => {
   return (
     <RoleGuard adminOnly>
-      <DepartmentsModule searchParams={searchParams} />
+      <DepartmentManageModule mode="add" />
     </RoleGuard>
   );
 };
 
-export default DepartmentsPage;
+export default AddDepartmentPage;

@@ -1,9 +1,9 @@
+import { notFound } from 'next/navigation';
+import { connection } from 'next/server';
 import { Suspense } from 'react';
+import { serverSupportServices } from '@/apis/services/supports/server';
 import SupportManageClientFallback from './skeleton/support-manage-client-fallback';
 import SupportManageClient from './support-manage-client';
-import { connection } from 'next/server';
-import { notFound } from 'next/navigation';
-import { serverSupportServices } from '@/apis/services/supports/server';
 
 type SupportManageModuleProps = {
   mode: 'add' | 'edit';
