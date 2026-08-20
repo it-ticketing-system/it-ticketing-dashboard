@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "title": "مرکز اعلانات",
+    "description": "مشاهده و مدیریت اعلانات و پیام‌های سیستم"
+  },
+  "filters": {
+    "ariaLabel": "فیلتر اعلانات",
+    "markAllRead": "خواندن همه",
+    "tabs": {
+      "all": "همه",
+      "unread": "خوانده نشده",
+      "messages": "پیام‌ها",
+      "assignments": "ارجاعات",
+      "system": "سیستم"
+    }
+  },
+  "list": {
+    "ariaLabel": "لیست اعلانات",
+    "loading": "در حال بارگذاری...",
+    "columns": {
+      "status": "وضعیت",
+      "title": "عنوان",
+      "body": "متن اعلان",
+      "related": "موجودیت مرتبط",
+      "time": "زمان",
+      "actions": "عملیات"
+    },
+    "related": {
+      "system": "سیستمی"
+    },
+    "actions": {
+      "open": "مشاهده",
+      "openAriaLabel": "مشاهده اعلان {title}"
+    },
+    "pagination": {
+      "previous": "قبلی",
+      "next": "بعدی",
+      "page": "صفحه {page}",
+      "summary": "نمایش {from} تا {to} از {total} اعلان"
+    },
+    "empty": {
+      "title": "اعلانی وجود ندارد",
+      "description": "در حال حاضر هیچ اعلانی برای نمایش وجود ندارد.",
+      "action": "مشاهده تیکت‌ها"
+    },
+    "noResult": {
+      "title": "نتیجه‌ای یافت نشد",
+      "description": "با فیلتر انتخابی هیچ اعلانی یافت نشد.",
+      "action": "حذف فیلترها"
+    },
+    "error": {
+      "title": "خطا در دریافت اعلانات",
+      "retry": "تلاش مجدد"
+    }
+  }
+}
