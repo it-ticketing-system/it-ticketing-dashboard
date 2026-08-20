@@ -22,3 +22,9 @@ export type {
   NotificationTab,
   NotificationType,
 } from './notification';
+export type {
+  IManagementOverviewCards,
+  IOverviewTrend,
+  IOverviewTrendPoint,
+  OverviewTrendRange,
+} from './overview';

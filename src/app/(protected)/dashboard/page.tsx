@@ -1,9 +1,18 @@
+import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
+import { DashboardOverviewModule } from '@/modules';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('dashboard.meta');
+
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
+
 const DashboardPage = () => {
-  return (
-    <div className="flex items-center justify-center p-6">
-      <h1 className="text-h2 font-bold text-neutral-900">داشبورد</h1>
-    </div>
-  );
+  return <DashboardOverviewModule />;
 };
 
 export default DashboardPage;

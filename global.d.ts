@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren } from 'react';
 import auth from './messages/fa/auth.json';
 import common from './messages/fa/common.json';
+import dashboard from './messages/fa/dashboard.json';
 import departments from './messages/fa/departments.json';
 import mainLayout from './messages/fa/mainLayout.json';
 import notifications from './messages/fa/notifications.json';
@@ -14,6 +15,7 @@ type Messages = {
   common: typeof common;
   mainLayout: typeof mainLayout;
   auth: typeof auth;
+  dashboard: typeof dashboard;
   tickets: typeof tickets;
   ticketDetails: typeof ticketDetails;
   users: typeof users;
