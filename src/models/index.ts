@@ -16,3 +16,9 @@ export type {
 
 export type { ISupportListItem, ISupportDetails } from './support';
 export type { IDepartmentListItem, IDepartmentDetails } from './department';
+export type {
+  INotification,
+  INotificationRelatedEntity,
+  NotificationTab,
+  NotificationType,
+} from './notification';

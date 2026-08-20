@@ -3,6 +3,7 @@ import auth from '../../messages/fa/auth.json';
 import common from '../../messages/fa/common.json';
 import departments from '../../messages/fa/departments.json';
 import mainLayout from '../../messages/fa/mainLayout.json';
+import notifications from '../../messages/fa/notifications.json';
 import supports from '../../messages/fa/supports.json';
 import ticketDetails from '../../messages/fa/ticketDetails.json';
 import tickets from '../../messages/fa/tickets.json';
@@ -20,6 +21,7 @@ export default getRequestConfig(async () => {
       users,
       supports,
       departments,
+      notifications,
     },
   };
 });

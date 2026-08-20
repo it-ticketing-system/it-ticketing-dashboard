@@ -7,3 +7,4 @@ export { default as SupportsModule } from './supports';
 export { default as SupportManageModule } from './support-manage';
 export { default as DepartmentsModule } from './departments';
 export { default as DepartmentManageModule } from './department-manage';
+export { default as NotificationsModule } from './notifications';

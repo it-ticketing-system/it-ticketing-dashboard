@@ -4,11 +4,12 @@ import { Bell } from 'lucide-react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { ICON_SIZE_CLASS, ROUTES } from '@/constants';
+import { useUnreadNotificationsCount } from '@/hooks';
 import NotificationBadge from './notification-badge';
 
 const NotificationLink = () => {
   const t = useTranslations('mainLayout.header');
-  const unreadNotificationsCount = 0;
+  const unreadNotificationsCount = useUnreadNotificationsCount();
 
   return (
     <div className="relative shrink-0">

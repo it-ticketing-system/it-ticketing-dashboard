@@ -33,4 +33,11 @@ export const QUERY_KEYS = {
     list: (params: { page?: number; perPage?: number; search?: string }) =>
       ['users', 'list', params] as const,
   },
+  notifications: {
+    root: ['notifications'] as const,
+    lists: ['notifications', 'list'] as const,
+    list: (params?: Record<string, unknown>) =>
+      ['notifications', 'list', params] as const,
+    unreadCount: ['notifications', 'unread-count'] as const,
+  },
 } as const;
