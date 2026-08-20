@@ -1,11 +1,13 @@
 import { FC, PropsWithChildren } from 'react';
 import auth from './messages/fa/auth.json';
 import common from './messages/fa/common.json';
+import departments from './messages/fa/departments.json';
 import mainLayout from './messages/fa/mainLayout.json';
 import supports from './messages/fa/supports.json';
 import ticketDetails from './messages/fa/ticketDetails.json';
 import tickets from './messages/fa/tickets.json';
 import users from './messages/fa/users.json';
+
 
 type Messages = {
   common: typeof common;
@@ -15,6 +17,7 @@ type Messages = {
   ticketDetails: typeof ticketDetails;
   users: typeof users;
   supports: typeof supports;
+  departments: typeof departments;
 };
 
 declare module 'next-intl' {

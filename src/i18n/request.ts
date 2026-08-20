@@ -1,6 +1,7 @@
 import { getRequestConfig } from 'next-intl/server';
 import auth from '../../messages/fa/auth.json';
 import common from '../../messages/fa/common.json';
+import departments from '../../messages/fa/departments.json';
 import mainLayout from '../../messages/fa/mainLayout.json';
 import supports from '../../messages/fa/supports.json';
 import ticketDetails from '../../messages/fa/ticketDetails.json';
@@ -18,6 +19,7 @@ export default getRequestConfig(async () => {
       ticketDetails,
       users,
       supports,
+      departments,
     },
   };
 });

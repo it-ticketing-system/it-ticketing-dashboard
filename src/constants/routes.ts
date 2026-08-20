@@ -10,6 +10,8 @@ export const ROUTES = {
   supportAdd: '/dashboard/supports/add',
   supportDetails: (id: string | number) => `/dashboard/supports/${id}` as const,
   departments: '/dashboard/departments',
+  departmentAdd: '/dashboard/departments/add',
+  departmentDetails: (id: string | number) => `/dashboard/departments/${id}` as const,
   reports: '/dashboard/reports',
   unauthorized: '/dashboard/unauthorized',
 } as const;
