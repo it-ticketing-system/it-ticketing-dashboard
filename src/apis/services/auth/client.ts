@@ -10,4 +10,8 @@ export type {
   LoginResult,
   LogoutResult,
   GetMeResponse,
+  UpdateProfileRequest,
+  UpdateProfileResult,
+  ChangePasswordRequest,
+  ChangePasswordResult,
 } from './_types';
