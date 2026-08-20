@@ -15,3 +15,4 @@ export type {
 } from './ticket';
 
 export type { ISupportListItem, ISupportDetails } from './support';
+export type { IDepartmentListItem, IDepartmentDetails } from './department';
