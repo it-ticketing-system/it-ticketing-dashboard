@@ -1,5 +1,5 @@
-import { Suspense } from 'react';
 import { connection } from 'next/server';
+import { Suspense } from 'react';
 import TicketDetailsClientFallback from './skeleton/ticket-details-client-fallback';
 import TicketDetailsClient from './ticket-details-client';
 import { getTicketDetailsInitialData } from './ticket-details.server';

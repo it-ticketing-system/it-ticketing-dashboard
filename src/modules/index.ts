@@ -5,3 +5,5 @@ export { default as TicketDetailsModule } from './ticket-details';
 export { default as UsersModule } from './users';
 export { default as SupportsModule } from './supports';
 export { default as SupportManageModule } from './support-manage';
+export { default as DepartmentsModule } from './departments';
+export { default as DepartmentManageModule } from './department-manage';
