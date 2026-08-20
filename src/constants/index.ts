@@ -16,3 +16,10 @@ export {
   TICKET_ATTACHMENT_MAX_FILES,
   TICKET_ATTACHMENT_MAX_SIZE,
 } from './ticket-attachments';
+
+export {
+  PROFILE_IMAGE_ACCEPT,
+  PROFILE_IMAGE_ALLOWED_EXTENSIONS,
+  PROFILE_IMAGE_MAX_SIZE,
+} from './profile';
+

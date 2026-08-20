@@ -37,3 +37,21 @@ export interface LogoutResponseDto {
 }
 
 export type GetMeResponseDto = AuthUserDto;
+
+export interface UpdateProfileRequestDto {
+  name?: string;
+  username?: string;
+  profileImageFileId?: number;
+}
+
+export type UpdateProfileResponseDto = AuthUserDto;
+
+export interface ChangePasswordRequestDto {
+  currentPassword: string;
+  newPassword: string;
+  newPasswordConfirmation: string;
+}
+
+export interface ChangePasswordResponseDto {
+  message: string;
+}

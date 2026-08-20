@@ -4,11 +4,11 @@ import common from './messages/fa/common.json';
 import departments from './messages/fa/departments.json';
 import mainLayout from './messages/fa/mainLayout.json';
 import notifications from './messages/fa/notifications.json';
+import profile from './messages/fa/profile.json';
 import supports from './messages/fa/supports.json';
 import ticketDetails from './messages/fa/ticketDetails.json';
 import tickets from './messages/fa/tickets.json';
 import users from './messages/fa/users.json';
-
 
 type Messages = {
   common: typeof common;
@@ -20,6 +20,7 @@ type Messages = {
   supports: typeof supports;
   departments: typeof departments;
   notifications: typeof notifications;
+  profile: typeof profile;
 };
 
 declare module 'next-intl' {
