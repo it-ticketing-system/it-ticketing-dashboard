@@ -16,12 +16,13 @@ const PERSIAN_LOCALE = 'fa-IR-u-ca-persian';
 const PERSIAN_CALENDAR = new PersianCalendar();
 const GREGORIAN_CALENDAR = new GregorianCalendar();
 
-type TicketDateFieldProps = {
+type PersianDateFieldProps = {
   label: string;
   value: string;
   onChange: (value: string) => void;
   min?: string;
   max?: string;
+  isDisabled?: boolean;
 };
 
 const toPersianDateValue = (value?: string): DateValue | null => {
@@ -40,13 +41,14 @@ const toIsoDateString = (value: DateValue): string => {
   return toCalendar(value, GREGORIAN_CALENDAR).toString();
 };
 
-const TicketDateField = ({
+const PersianDateField = ({
   label,
   value,
   onChange,
   min,
   max,
-}: TicketDateFieldProps) => {
+  isDisabled,
+}: PersianDateFieldProps) => {
   const selectedDate = toPersianDateValue(value);
   const minValue = toPersianDateValue(min);
   const maxValue = toPersianDateValue(max);
@@ -62,6 +64,7 @@ const TicketDateField = ({
         minValue={minValue ?? undefined}
         maxValue={maxValue ?? undefined}
         onChange={handleChange}
+        isDisabled={isDisabled}
         shouldCloseOnSelect
       >
         <Label>{label}</Label>
@@ -114,4 +117,4 @@ const TicketDateField = ({
   );
 };
 
-export default TicketDateField;
+export default PersianDateField;

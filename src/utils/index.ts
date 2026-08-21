@@ -1,5 +1,5 @@
 export { cn } from './cn';
-export { toBackendProxyHref } from './backend-href';
+export { toBackendProxyHref, toSafeBackendProxyHref } from './backend-href';
 export { canAccessRoute, hasPermission, hasRole } from './permissions';
 export type { RouteAccessOptions } from './permissions';
 export { getPatchValue } from './get-patch-value';

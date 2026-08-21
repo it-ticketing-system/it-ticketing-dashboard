@@ -7,11 +7,11 @@ import { useState } from 'react';
 import {
   SelectStatus,
   SelectDepartment,
+  PersianDateField,
   SearchInput,
 } from '@/components/shared';
 import { ICON_SIZE_CLASS } from '@/constants';
 import { cn } from '@/utils';
-import TicketDateField from './ticket-date-field';
 import {
   EMPTY_FILTER_DRAFT,
   type FilterDraft,
@@ -183,13 +183,13 @@ const TicketMobileFilters = ({
                         {t('createdDateRange.heading')}
                       </p>
                       <div className="grid grid-cols-2 gap-3">
-                        <TicketDateField
+                        <PersianDateField
                           label={t('dateRange.from')}
                           value={draft.createdFrom}
                           max={draft.createdTo || undefined}
                           onChange={handleDraftChange('createdFrom')}
                         />
-                        <TicketDateField
+                        <PersianDateField
                           label={t('dateRange.to')}
                           value={draft.createdTo}
                           min={draft.createdFrom || undefined}
@@ -203,13 +203,13 @@ const TicketMobileFilters = ({
                         {t('updatedDateRange.heading')}
                       </p>
                       <div className="grid grid-cols-2 gap-3">
-                        <TicketDateField
+                        <PersianDateField
                           label={t('dateRange.from')}
                           value={draft.updatedFrom}
                           max={draft.updatedTo || undefined}
                           onChange={handleDraftChange('updatedFrom')}
                         />
-                        <TicketDateField
+                        <PersianDateField
                           label={t('dateRange.to')}
                           value={draft.updatedTo}
                           min={draft.updatedFrom || undefined}
