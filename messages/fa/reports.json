@@ -1,0 +1,110 @@
+{
+  "meta": {
+    "title": "گزارش‌ها",
+    "description": "تحلیل و خروجی‌گیری گزارش‌های مدیریتی تیکت‌ها"
+  },
+  "eyebrow": "تحلیل مدیریتی",
+  "title": "گزارش‌ها",
+  "description": "وضعیت تیکت‌ها، دپارتمان‌ها و عملکرد پشتیبان‌ها را با فیلترهای مدیریتی بررسی کنید.",
+  "actions": {
+    "retry": "تلاش دوباره",
+    "reset": "بازنشانی"
+  },
+  "ranges": {
+    "today": "امروز",
+    "week": "هفته",
+    "month": "ماه",
+    "year": "سال"
+  },
+  "granularities": {
+    "day": "روزانه",
+    "week": "هفتگی",
+    "month": "ماهانه"
+  },
+  "reportTypes": {
+    "generalTickets": "گزارش کلی تیکت‌ها",
+    "supportPerformance": "عملکرد پشتیبان‌ها",
+    "departmentStatistics": "آمار دپارتمان‌ها",
+    "responseTime": "زمان پاسخ‌گویی"
+  },
+  "filters": {
+    "range": {
+      "ariaLabel": "انتخاب بازه گزارش"
+    },
+    "department": {
+      "label": "دپارتمان",
+      "ariaLabel": "فیلتر دپارتمان",
+      "placeholder": "همه دپارتمان‌ها"
+    },
+    "support": {
+      "label": "پشتیبان",
+      "ariaLabel": "فیلتر پشتیبان",
+      "placeholder": "همه پشتیبان‌ها"
+    }
+  },
+  "summary": {
+    "totalTickets": {
+      "title": "کل تیکت‌ها",
+      "description": "مجموع تیکت‌های بازه"
+    },
+    "openTickets": {
+      "title": "باز",
+      "description": "در انتظار رسیدگی"
+    },
+    "inProgressTickets": {
+      "title": "در حال رسیدگی",
+      "description": "تیکت‌های فعال"
+    },
+    "closedTickets": {
+      "title": "بسته‌شده",
+      "description": "خاتمه‌یافته"
+    }
+  },
+  "charts": {
+    "ticketTrend": {
+      "title": "روند تیکت‌ها",
+      "description": "تعداد تیکت‌های ایجادشده در بازه انتخابی",
+      "datasetLabel": "تیکت‌ها",
+      "ariaLabel": "نمودار روند تیکت‌ها"
+    },
+    "departmentStatistics": {
+      "title": "آمار دپارتمان‌ها",
+      "description": "حجم تیکت‌ها به تفکیک دپارتمان",
+      "datasetLabel": "تیکت‌ها",
+      "ariaLabel": "نمودار آمار دپارتمان‌ها"
+    },
+    "supportPerformance": {
+      "title": "عملکرد پشتیبان‌ها",
+      "description": "تعداد تیکت‌های بسته‌شده به تفکیک پشتیبان",
+      "datasetLabel": "تیکت‌های بسته‌شده",
+      "ariaLabel": "نمودار عملکرد پشتیبان‌ها"
+    }
+  },
+  "states": {
+    "cardsErrorTitle": "دریافت کارت‌های گزارش ناموفق بود",
+    "chartEmptyTitle": "داده‌ای برای نمایش وجود ندارد",
+    "chartEmptyDescription": "با تغییر فیلترها یا پس از ثبت داده جدید، نمودار این بخش نمایش داده می‌شود."
+  },
+  "export": {
+    "open": "خروجی گزارش",
+    "dialogAriaLabel": "تنظیمات خروجی گزارش",
+    "title": "خروجی گزارش",
+    "cancel": "انصراف",
+    "submit": "ساخت گزارش",
+    "successTitle": "گزارش آماده شد",
+    "download": "دانلود گزارش",
+    "unsafeUrl": "لینک دانلود برگشتی معتبر نیست.",
+    "fields": {
+      "reportType": "نوع گزارش",
+      "granularity": "بازه تجمیع",
+      "dateFrom": "از تاریخ",
+      "dateTo": "تا تاریخ"
+    }
+  },
+  "validation": {
+    "reportTypeRequired": "نوع گزارش را انتخاب کنید.",
+    "dateFromRequired": "تاریخ شروع را انتخاب کنید.",
+    "dateToRequired": "تاریخ پایان را انتخاب کنید.",
+    "dateRangeInvalid": "تاریخ پایان باید بعد از تاریخ شروع باشد."
+  }
+}

@@ -44,4 +44,14 @@ export const QUERY_KEYS = {
     cards: ['management-overview', 'cards'] as const,
     trend: (range: string) => ['management-overview', 'trend', range] as const,
   },
+  reports: {
+    cards: (params: Record<string, unknown>) =>
+      ['reports', 'cards', params] as const,
+    ticketTrend: (params: Record<string, unknown>) =>
+      ['reports', 'ticket-trend', params] as const,
+    departmentStatistics: (params: Record<string, unknown>) =>
+      ['reports', 'department-statistics', params] as const,
+    supportPerformance: (params: Record<string, unknown>) =>
+      ['reports', 'support-performance', params] as const,
+  },
 } as const;

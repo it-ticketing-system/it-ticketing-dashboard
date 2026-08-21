@@ -11,11 +11,11 @@ import { useTranslations } from 'next-intl';
 import {
   SelectStatus,
   SelectDepartment,
+  PersianDateField,
   SearchInput,
 } from '@/components/shared';
 import { ICON_SIZE_CLASS } from '@/constants';
 import { cn } from '@/utils';
-import TicketDateField from './ticket-date-field';
 import {
   getDateRangeLabel,
   type TicketFiltersPatch,
@@ -153,13 +153,13 @@ const TicketDesktopFilters = ({
               </p>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <TicketDateField
+              <PersianDateField
                 label={t('dateRange.from')}
                 value={createdFrom}
                 max={createdTo || undefined}
                 onChange={handleFilterChange('createdFrom')}
               />
-              <TicketDateField
+              <PersianDateField
                 label={t('dateRange.to')}
                 value={createdTo}
                 min={createdFrom || undefined}
@@ -214,13 +214,13 @@ const TicketDesktopFilters = ({
               </p>
             </div>
             <div className="grid grid-cols-2 gap-3">
-              <TicketDateField
+              <PersianDateField
                 label={t('dateRange.from')}
                 value={updatedFrom}
                 max={updatedTo || undefined}
                 onChange={handleFilterChange('updatedFrom')}
               />
-              <TicketDateField
+              <PersianDateField
                 label={t('dateRange.to')}
                 value={updatedTo}
                 min={updatedFrom || undefined}

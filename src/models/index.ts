@@ -28,3 +28,14 @@ export type {
   IOverviewTrendPoint,
   OverviewTrendRange,
 } from './overview';
+export type {
+  IGeneratedReport,
+  IReportCards,
+  IReportDepartmentStatistic,
+  IReportSupportPerformance,
+  IReportTicketTrend,
+  IReportTrendPoint,
+  ReportGranularity,
+  ReportRange,
+  ReportType,
+} from './report';

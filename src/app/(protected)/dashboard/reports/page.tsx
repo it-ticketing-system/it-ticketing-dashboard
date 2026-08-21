@@ -1,15 +1,22 @@
-'use client';
+import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
+import { ReportsModule } from '@/modules';
 
-import { RoleGuard } from '@/components/shared';
+type ReportsPageProps = {
+  searchParams: Promise<PageSearchParams>;
+};
 
-const ReportsPage = () => {
-  return (
-    <RoleGuard adminOnly>
-      <div className="flex items-center justify-center p-6">
-        <h1 className="text-h2 font-bold text-neutral-900">گزارش‌ها</h1>
-      </div>
-    </RoleGuard>
-  );
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations('reports.meta');
+
+  return {
+    title: t('title'),
+    description: t('description'),
+  };
+}
+
+const ReportsPage = ({ searchParams }: ReportsPageProps) => {
+  return <ReportsModule searchParams={searchParams} />;
 };
 
 export default ReportsPage;

@@ -21,3 +21,11 @@ export const toBackendProxyHref = (href: string): string => {
     return `${BACKEND_PROXY_PREFIX}/${href.replace(/^\/+/, '')}`;
   }
 };
+
+export const toSafeBackendProxyHref = (href: string): string | null => {
+  if (!href || !href.startsWith('/')) {
+    return null;
+  }
+
+  return toBackendProxyHref(href);
+};
