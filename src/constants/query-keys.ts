@@ -40,4 +40,8 @@ export const QUERY_KEYS = {
       ['notifications', 'list', params] as const,
     unreadCount: ['notifications', 'unread-count'] as const,
   },
+  managementOverview: {
+    cards: ['management-overview', 'cards'] as const,
+    trend: (range: string) => ['management-overview', 'trend', range] as const,
+  },
 } as const;

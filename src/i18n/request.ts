@@ -1,6 +1,7 @@
 import { getRequestConfig } from 'next-intl/server';
 import auth from '../../messages/fa/auth.json';
 import common from '../../messages/fa/common.json';
+import dashboard from '../../messages/fa/dashboard.json';
 import departments from '../../messages/fa/departments.json';
 import mainLayout from '../../messages/fa/mainLayout.json';
 import notifications from '../../messages/fa/notifications.json';
@@ -17,6 +18,7 @@ export default getRequestConfig(async () => {
       mainLayout,
       common,
       auth,
+      dashboard,
       tickets,
       ticketDetails,
       users,

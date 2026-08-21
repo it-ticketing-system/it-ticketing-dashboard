@@ -1,4 +1,5 @@
 export { default as LoginModule } from './login';
+export { default as DashboardOverviewModule } from './dashboard-overview';
 export { default as UnauthorizedModule } from './unauthorized';
 export { default as TicketsModule } from './tickets';
 export { default as TicketDetailsModule } from './ticket-details';

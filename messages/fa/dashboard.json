@@ -1,0 +1,56 @@
+{
+  "meta": {
+    "title": "داشبورد",
+    "description": "نمای کلی وضعیت تیکت‌ها در پنل مدیریت"
+  },
+  "actions": {
+    "retry": "تلاش دوباره"
+  },
+  "ranges": {
+    "today": "امروز",
+    "week": "هفته",
+    "month": "ماه",
+    "year": "سال"
+  },
+  "metrics": {
+    "totalTickets": {
+      "title": "کل تیکت‌ها",
+      "description": "مجموع تیکت‌های قابل مشاهده"
+    },
+    "openTickets": {
+      "title": "تیکت‌های باز",
+      "description": "در انتظار شروع رسیدگی"
+    },
+    "inProgressTickets": {
+      "title": "در حال رسیدگی",
+      "description": "تیکت‌های فعال در جریان"
+    },
+    "closedTickets": {
+      "title": "بسته‌شده",
+      "description": "تیکت‌های خاتمه‌یافته"
+    }
+  },
+  "secondaryMetrics": {
+    "waitingForUserTickets": "در انتظار کاربر",
+    "unassignedTickets": "بدون پشتیبان",
+    "needsReplyTickets": "نیازمند پاسخ",
+    "overdueTickets": "معوق"
+  },
+  "trend": {
+    "title": "روند تیکت‌ها",
+    "description": "تعداد تیکت‌های ثبت‌شده در بازه انتخابی",
+    "datasetLabel": "تیکت‌ها",
+    "tooltipLabel": "تعداد",
+    "totalInRange": "مجموع بازه انتخابی",
+    "chartAriaLabel": "نمودار روند تعداد تیکت‌ها",
+    "rangeAriaLabel": "انتخاب بازه نمودار روند"
+  },
+  "states": {
+    "overviewErrorTitle": "دریافت آمار داشبورد ناموفق بود",
+    "trendErrorTitle": "دریافت روند تیکت‌ها ناموفق بود",
+    "overviewEmptyTitle": "هنوز آماری برای نمایش وجود ندارد",
+    "overviewEmptyDescription": "پس از ثبت یا تخصیص تیکت‌ها، خلاصه وضعیت در این بخش نمایش داده می‌شود.",
+    "trendEmptyTitle": "داده‌ای برای نمودار وجود ندارد",
+    "trendEmptyDescription": "در بازه انتخابی فعلاً تیکتی ثبت نشده است."
+  }
+}
