@@ -25,11 +25,8 @@ export const FILTER_QUERY_KEYS = [
   'user',
   'createdFrom',
   'createdTo',
-  'updatedFrom',
-  'updatedTo',
   'page',
 ] as const;
-
 
 const isTicketStatus = (value: string): value is TicketStatus => {
   return TICKET_STATUS_VALUES.includes(value as TicketStatus);
@@ -48,8 +45,6 @@ export const parseTicketFilters = (
     user: getSearchParamValue(searchParams, 'user'),
     createdFrom: getSearchParamValue(searchParams, 'createdFrom'),
     createdTo: getSearchParamValue(searchParams, 'createdTo'),
-    updatedFrom: getSearchParamValue(searchParams, 'updatedFrom'),
-    updatedTo: getSearchParamValue(searchParams, 'updatedTo'),
     page: toPositiveInteger(getSearchParamValue(searchParams, 'page')) ?? 1,
   };
 };
@@ -73,8 +68,6 @@ export const createTicketsParams = (
     userId,
     createdFrom: filters.createdFrom || undefined,
     createdTo: filters.createdTo || undefined,
-    updatedFrom: filters.updatedFrom || undefined,
-    updatedTo: filters.updatedTo || undefined,
   };
 };
 
@@ -93,8 +86,6 @@ export const areTicketFiltersEqual = (
     first.user === second.user &&
     first.createdFrom === second.createdFrom &&
     first.createdTo === second.createdTo &&
-    first.updatedFrom === second.updatedFrom &&
-    first.updatedTo === second.updatedTo &&
     first.page === second.page
   );
 };

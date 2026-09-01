@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, Modal } from '@heroui/react';
-import { Filter, LoaderCircle, RotateCcw } from 'lucide-react';
+import { Filter, LoaderCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import {
@@ -26,8 +26,6 @@ type TicketMobileFiltersProps = {
   user: string;
   createdFrom: string;
   createdTo: string;
-  updatedFrom: string;
-  updatedTo: string;
   activeFilterCount: number;
   isPending: boolean;
   onApplyFilters: (patch: TicketFiltersPatch) => void;
@@ -40,8 +38,6 @@ const TicketMobileFilters = ({
   user,
   createdFrom,
   createdTo,
-  updatedFrom,
-  updatedTo,
   activeFilterCount,
   isPending,
   onApplyFilters,
@@ -66,14 +62,8 @@ const TicketMobileFilters = ({
       user,
       createdFrom,
       createdTo,
-      updatedFrom,
-      updatedTo,
     });
     setIsOpen(true);
-  };
-
-  const resetDraft = () => {
-    setDraft(EMPTY_FILTER_DRAFT);
   };
 
   const applyFilters = (close: () => void) => {
@@ -84,8 +74,6 @@ const TicketMobileFilters = ({
       user: draft.user || null,
       createdFrom: draft.createdFrom || null,
       createdTo: draft.createdTo || null,
-      updatedFrom: draft.updatedFrom || null,
-      updatedTo: draft.updatedTo || null,
     });
     close();
   };
@@ -150,6 +138,7 @@ const TicketMobileFilters = ({
                       placeholder={t('status.placeholder')}
                       value={draft.status as TicketStatus}
                       onChange={handleDraftChange('status')}
+                      emptyOptionLabel={t('status.allOption')}
                     />
 
                     <SelectDepartment
@@ -158,6 +147,7 @@ const TicketMobileFilters = ({
                       placeholder={t('department.placeholder')}
                       value={draft.department}
                       onChange={handleDraftChange('department')}
+                      emptyOptionLabel={t('department.allOption')}
                     />
 
                     <SearchInput
@@ -197,69 +187,34 @@ const TicketMobileFilters = ({
                         />
                       </div>
                     </div>
-
-                    <div className="space-y-3">
-                      <p className="text-body-sm text-foreground font-medium">
-                        {t('updatedDateRange.heading')}
-                      </p>
-                      <div className="grid grid-cols-2 gap-3">
-                        <PersianDateField
-                          label={t('dateRange.from')}
-                          value={draft.updatedFrom}
-                          max={draft.updatedTo || undefined}
-                          onChange={handleDraftChange('updatedFrom')}
-                        />
-                        <PersianDateField
-                          label={t('dateRange.to')}
-                          value={draft.updatedTo}
-                          min={draft.updatedFrom || undefined}
-                          onChange={handleDraftChange('updatedTo')}
-                        />
-                      </div>
-                    </div>
                   </Modal.Body>
 
                   <Modal.Footer className="border-separator border-t pt-4 pb-[calc(16px+env(safe-area-inset-bottom))]">
-                    <div className="flex w-full items-center justify-between gap-3">
+                    <div className="flex w-full items-center justify-end gap-2">
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="md"
-                        onPress={resetDraft}
-                        className="text-danger h-11 px-2"
+                        onPress={close}
+                        className="border-field-border h-11 rounded-md"
                       >
-                        <RotateCcw
-                          aria-hidden="true"
-                          className={ICON_SIZE_CLASS.sm}
-                        />
-                        {t('mobile.reset')}
+                        {t('mobile.cancel')}
                       </Button>
 
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="outline"
-                          size="md"
-                          onPress={close}
-                          className="border-field-border h-11 rounded-md"
-                        >
-                          {t('mobile.cancel')}
-                        </Button>
-
-                        <Button
-                          variant="primary"
-                          size="md"
-                          isPending={isPending}
-                          onPress={() => applyFilters(close)}
-                          className="h-11 rounded-md px-5"
-                        >
-                          {isPending ? (
-                            <LoaderCircle
-                              aria-hidden="true"
-                              className={cn(ICON_SIZE_CLASS.sm, 'animate-spin')}
-                            />
-                          ) : null}
-                          {t('mobile.apply')}
-                        </Button>
-                      </div>
+                      <Button
+                        variant="primary"
+                        size="md"
+                        isPending={isPending}
+                        onPress={() => applyFilters(close)}
+                        className="h-11 rounded-md px-5"
+                      >
+                        {isPending ? (
+                          <LoaderCircle
+                            aria-hidden="true"
+                            className={cn(ICON_SIZE_CLASS.sm, 'animate-spin')}
+                          />
+                        ) : null}
+                        {t('mobile.apply')}
+                      </Button>
                     </div>
                   </Modal.Footer>
                 </>
