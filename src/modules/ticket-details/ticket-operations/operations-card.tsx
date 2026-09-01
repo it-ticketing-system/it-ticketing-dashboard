@@ -4,6 +4,7 @@ import { Button, Dropdown, Modal } from '@heroui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { History, Settings } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { clientTicketServices } from '@/apis/services/tickets/client';
@@ -12,7 +13,7 @@ import {
   SelectDepartment,
   SelectSupport,
 } from '@/components/shared';
-import { QUERY_KEYS } from '@/constants';
+import { QUERY_KEYS, ROUTES } from '@/constants';
 import { usePostRequest } from '@/hooks';
 import type { TicketDetails } from '../types';
 import type { TicketStatus } from '@/models';
@@ -25,6 +26,7 @@ interface OperationsCardProps {
 
 const OperationsCard = ({ ticket }: OperationsCardProps) => {
   const t = useTranslations('ticketDetails');
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { availableActions } = ticket;
 
@@ -33,6 +35,17 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
   >(null);
   const [isMobileOperationsOpen, setIsMobileOperationsOpen] = useState(false);
 
+  const invalidateTicketQueries = async () => {
+    await Promise.all([
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.tickets.details(ticket.id),
+      }),
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.tickets.lists,
+      }),
+    ]);
+  };
+
   const { mutateAsync: changeStatus, isPending: isChangingStatus } =
     usePostRequest<TicketStatus, void>({
       requestFn: (newStatus: TicketStatus) =>
@@ -40,10 +53,8 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
           status: newStatus,
         }),
       getSuccessDescription: () => t('operations.statusChangedSuccess'),
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: QUERY_KEYS.tickets.details(ticket.id),
-        });
+      onSuccess: async () => {
+        await invalidateTicketQueries();
       },
     });
 
@@ -54,10 +65,9 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
           departmentId,
         }),
       getSuccessDescription: () => t('operations.departmentChangedSuccess'),
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: QUERY_KEYS.tickets.details(ticket.id),
-        });
+      onSuccess: async () => {
+        await invalidateTicketQueries();
+        router.push(ROUTES.tickets);
       },
     });
 
@@ -66,10 +76,8 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
       requestFn: (supportId: string) =>
         clientTicketServices.changeTicketAssignment(ticket.id, { supportId }),
       getSuccessDescription: () => t('operations.assignmentChangedSuccess'),
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: QUERY_KEYS.tickets.details(ticket.id),
-        });
+      onSuccess: async () => {
+        await invalidateTicketQueries();
       },
     });
 

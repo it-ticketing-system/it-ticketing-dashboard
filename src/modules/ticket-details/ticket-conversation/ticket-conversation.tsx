@@ -1,5 +1,6 @@
 import { Card } from '@heroui/react';
 import { useTranslations } from 'next-intl';
+import { useAuth } from '@/hooks';
 import MessageComposer from './message-composer';
 import TicketMessage from './ticket-message';
 import type { TicketMessage as TicketMessageData } from '../types';
@@ -19,9 +20,23 @@ const TicketConversation = ({
   canReply,
 }: TicketConversationProps) => {
   const t = useTranslations('ticketDetails.conversation');
+  const { hasPermission, user } = useAuth();
 
-  const isDisabled = status === 'closed' || canReply === false;
-  const disabledReason = status === 'closed' ? 'closed' : 'notAssigned';
+  const hasReplyPermission = hasPermission('REPLY_TICKET');
+  const isOnLeave = user?.availabilityStatus === 'ON_LEAVE';
+  const isDisabled =
+    status === 'closed' ||
+    !hasReplyPermission ||
+    isOnLeave ||
+    canReply === false;
+  const disabledReason =
+    status === 'closed'
+      ? 'closed'
+      : !hasReplyPermission
+        ? 'noPermission'
+        : isOnLeave
+          ? 'onLeave'
+          : 'notAssigned';
 
   return (
     <section className="flex min-h-0 flex-1 flex-col overflow-hidden">
@@ -40,7 +55,11 @@ const TicketConversation = ({
         <Card.Content className="min-h-0 flex-1 space-y-3 overflow-y-auto p-0 pb-4 lg:p-6">
           {messages.length ? (
             messages.map((message) => (
-              <TicketMessage key={message.id} message={message} />
+              <TicketMessage
+                key={message.id}
+                message={message}
+                isOwnMessage={message.senderId === String(user?.id)}
+              />
             ))
           ) : (
             <div className="flex min-h-40 items-center justify-center text-center">

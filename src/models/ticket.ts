@@ -8,6 +8,7 @@ export type TicketSystemMessageTone = 'info' | 'warning' | 'neutral';
 export interface ITicketMessage {
   id: string;
   type: TicketMessageType;
+  senderId: string;
   senderName?: string;
   senderAvatarUrl?: string;
   body: string;
