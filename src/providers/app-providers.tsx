@@ -14,7 +14,7 @@ const AppProviders: FCC = ({ children }) => {
         >
           <Toast.Provider
             maxVisibleToasts={3}
-            placement="top end"
+            placement="top start"
             className="rtl z-100 text-right [direction:rtl]"
           />
 
