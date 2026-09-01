@@ -1,17 +1,8 @@
-import {
-  getSearchParamValue,
-  toPositiveInteger,
-} from '@/utils';
+import { getSearchParamValue, toPositiveInteger } from '@/utils';
 import type { GetReportsDashboardRequest } from '@/apis/services/reports/client';
 import type { ReportGranularity, ReportRange } from '@/models';
 
 const REPORT_RANGE_VALUES = ['today', 'week', 'month', 'year'] as const;
-
-export const REPORT_FILTER_QUERY_KEYS = [
-  'range',
-  'department',
-  'support',
-] as const;
 
 export type ReportsFiltersValue = {
   range: ReportRange;

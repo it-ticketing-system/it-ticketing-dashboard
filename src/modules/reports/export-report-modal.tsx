@@ -15,11 +15,18 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { clientReportServices } from '@/apis/services/reports/client';
-import { PersianDateField, SelectDepartment, SelectSupport } from '@/components/shared';
+import {
+  PersianDateField,
+  SelectDepartment,
+  SelectSupport,
+} from '@/components/shared';
 import { ICON_SIZE_CLASS } from '@/constants';
 import { usePostRequest } from '@/hooks';
 import { cn, formatFileSize } from '@/utils';
-import { exportReportSchema, type ExportReportFormValues } from './reports.schema';
+import {
+  exportReportSchema,
+  type ExportReportFormValues,
+} from './reports.schema';
 import type { IGeneratedReport, ReportGranularity, ReportType } from '@/models';
 
 const REPORT_TYPES: ReportType[] = [
@@ -42,9 +49,8 @@ const ExportReportModal = ({
 }: ExportReportModalProps) => {
   const t = useTranslations('reports');
   const [isOpen, setIsOpen] = useState(false);
-  const [generatedReport, setGeneratedReport] = useState<IGeneratedReport | null>(
-    null,
-  );
+  const [generatedReport, setGeneratedReport] =
+    useState<IGeneratedReport | null>(null);
 
   const {
     control,
@@ -151,8 +157,9 @@ const ExportReportModal = ({
                           <FieldError>
                             {errors.reportType &&
                               t(
-                                errors.reportType
-                                  .message as Parameters<typeof t>[0],
+                                errors.reportType.message as Parameters<
+                                  typeof t
+                                >[0],
                               )}
                           </FieldError>
                         </Select>
@@ -172,7 +179,9 @@ const ExportReportModal = ({
                             <Select.Value />
                           </Select.Trigger>
                           <Select.Popover placement="bottom end">
-                            <ListBox aria-label={t('export.fields.granularity')}>
+                            <ListBox
+                              aria-label={t('export.fields.granularity')}
+                            >
                               {GRANULARITIES.map((granularity) => (
                                 <ListBox.Item
                                   key={granularity}
@@ -203,8 +212,9 @@ const ExportReportModal = ({
                           <FieldError>
                             {errors.dateFrom &&
                               t(
-                                errors.dateFrom
-                                  .message as Parameters<typeof t>[0],
+                                errors.dateFrom.message as Parameters<
+                                  typeof t
+                                >[0],
                               )}
                           </FieldError>
                         </TextField>
@@ -224,7 +234,11 @@ const ExportReportModal = ({
                           />
                           <FieldError>
                             {errors.dateTo &&
-                              t(errors.dateTo.message as Parameters<typeof t>[0])}
+                              t(
+                                errors.dateTo.message as Parameters<
+                                  typeof t
+                                >[0],
+                              )}
                           </FieldError>
                         </TextField>
                       )}
@@ -258,7 +272,7 @@ const ExportReportModal = ({
                     />
 
                     {generatedReport ? (
-                      <div className="border-success-200 bg-success-50 md:col-span-2 rounded-xl border p-4">
+                      <div className="border-success-200 bg-success-50 rounded-xl border p-4 md:col-span-2">
                         <p className="text-title text-success-900">
                           {t('export.successTitle')}
                         </p>
