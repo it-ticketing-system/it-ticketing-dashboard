@@ -253,6 +253,7 @@ const ExportReportModal = ({
                           placeholder={t('filters.department.placeholder')}
                           value={field.value}
                           onChange={(value) => field.onChange(value || '')}
+                          emptyOptionLabel={t('filters.department.allOption')}
                         />
                       )}
                     />
@@ -267,6 +268,7 @@ const ExportReportModal = ({
                           departmentId={selectedDepartmentId}
                           value={field.value}
                           onChange={(value) => field.onChange(value || '')}
+                          emptyOptionLabel={t('filters.support.allOption')}
                         />
                       )}
                     />

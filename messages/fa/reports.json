@@ -33,12 +33,14 @@
     "department": {
       "label": "دپارتمان",
       "ariaLabel": "فیلتر دپارتمان",
-      "placeholder": "همه دپارتمان‌ها"
+      "placeholder": "همه دپارتمان‌ها",
+      "allOption": "همه"
     },
     "support": {
       "label": "پشتیبان",
       "ariaLabel": "فیلتر پشتیبان",
-      "placeholder": "همه پشتیبان‌ها"
+      "placeholder": "همه پشتیبان‌ها",
+      "allOption": "همه"
     },
     "mobile": {
       "title": "فیلترها",

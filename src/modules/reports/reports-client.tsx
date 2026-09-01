@@ -134,6 +134,7 @@ const ReportsClient = ({ initialSearchParams }: ReportsClientProps) => {
               onChange={(department) =>
                 updateFilter({ department: department || '', support: '' })
               }
+              emptyOptionLabel={t('filters.department.allOption')}
             />
 
             <SelectSupport
@@ -143,6 +144,7 @@ const ReportsClient = ({ initialSearchParams }: ReportsClientProps) => {
               departmentId={filters.department}
               value={filters.support}
               onChange={(support) => updateFilter({ support: support || '' })}
+              emptyOptionLabel={t('filters.support.allOption')}
             />
 
             <ExportReportModal

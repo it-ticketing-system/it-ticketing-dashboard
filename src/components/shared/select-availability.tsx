@@ -12,6 +12,7 @@ interface SelectAvailabilityProps {
   value?: AvailabilityStatus | null;
   onChange: (value: AvailabilityStatus | null) => void;
   placeholder?: string;
+  emptyOptionLabel?: string;
   label?: string;
   ariaLabel?: string;
   isDisabled?: boolean;
@@ -26,10 +27,13 @@ const STATUS_OPTIONS: AvailabilityStatus[] = [
   'INACTIVE',
 ];
 
+const EMPTY_OPTION_VALUE = '__all__';
+
 export const SelectAvailability = ({
   value,
   onChange,
   placeholder,
+  emptyOptionLabel,
   label,
   ariaLabel,
   isDisabled,
@@ -39,13 +43,20 @@ export const SelectAvailability = ({
 }: SelectAvailabilityProps) => {
   const t = useTranslations('supports.status');
 
-  const computedAriaLabel = ariaLabel || label || placeholder || 'Select availability';
+  const computedAriaLabel =
+    ariaLabel || label || placeholder || 'Select availability';
 
   return (
     <Select
       value={value || null}
       onChange={(val) => {
-        onChange(val ? (String(val) as AvailabilityStatus) : null);
+        const nextValue = val ? String(val) : '';
+
+        onChange(
+          nextValue && nextValue !== EMPTY_OPTION_VALUE
+            ? (nextValue as AvailabilityStatus)
+            : null,
+        );
       }}
       placeholder={placeholder}
       isDisabled={isDisabled}
@@ -64,6 +75,19 @@ export const SelectAvailability = ({
 
       <Select.Popover placement="bottom end">
         <ListBox aria-label={ariaLabel}>
+          {emptyOptionLabel ? (
+            <ListBox.Item
+              key={EMPTY_OPTION_VALUE}
+              id={EMPTY_OPTION_VALUE}
+              textValue={emptyOptionLabel}
+            >
+              <span className="min-w-0 flex-1 truncate">
+                {emptyOptionLabel}
+              </span>
+              <ListBox.ItemIndicator />
+            </ListBox.Item>
+          ) : null}
+
           {STATUS_OPTIONS.map((st) => (
             <ListBox.Item key={st} id={st} textValue={t(st)}>
               <span className="min-w-0 flex-1 truncate">{t(st)}</span>

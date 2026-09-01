@@ -12,6 +12,7 @@ interface SelectSupportProps {
   value?: string | null;
   onChange: (value: string | null) => void;
   placeholder?: string;
+  emptyOptionLabel?: string;
   label?: string;
   ariaLabel?: string;
   isDisabled?: boolean;
@@ -20,11 +21,14 @@ interface SelectSupportProps {
   fullWidth?: boolean;
 }
 
+const EMPTY_OPTION_VALUE = '__all__';
+
 export const SelectSupport = ({
   departmentId,
   value,
   onChange,
   placeholder,
+  emptyOptionLabel,
   label,
   ariaLabel,
   isDisabled,
@@ -46,7 +50,11 @@ export const SelectSupport = ({
     <Select
       value={value || null}
       onChange={(val) => {
-        onChange(val ? String(val) : null);
+        const nextValue = val ? String(val) : '';
+
+        onChange(
+          nextValue && nextValue !== EMPTY_OPTION_VALUE ? nextValue : null,
+        );
       }}
       placeholder={placeholder}
       isDisabled={isDisabled || isLoading || !supports}
@@ -72,6 +80,19 @@ export const SelectSupport = ({
 
       <Select.Popover placement="bottom end">
         <ListBox aria-label={ariaLabel}>
+          {emptyOptionLabel ? (
+            <ListBox.Item
+              key={EMPTY_OPTION_VALUE}
+              id={EMPTY_OPTION_VALUE}
+              textValue={emptyOptionLabel}
+            >
+              <span className="min-w-0 flex-1 truncate">
+                {emptyOptionLabel}
+              </span>
+              <ListBox.ItemIndicator />
+            </ListBox.Item>
+          ) : null}
+
           {(supports || []).map((sup) => (
             <ListBox.Item key={sup.id} id={sup.id} textValue={sup.name}>
               <span className="min-w-0 flex-1 truncate">{sup.name}</span>

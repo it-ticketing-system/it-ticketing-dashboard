@@ -1,7 +1,7 @@
 'use client';
 
 import { Button, Modal } from '@heroui/react';
-import { Filter, RotateCcw } from 'lucide-react';
+import { Filter } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { SelectDepartment, SelectAvailability } from '@/components/shared';
@@ -36,21 +36,13 @@ const SupportMobileFilters = ({
     handleClose();
   };
 
-  const handleReset = () => {
-    setDraft({
-      search: undefined,
-      departmentId: undefined,
-      availabilityStatus: undefined,
-    });
-  };
-
   const activeCount = [filters.departmentId, filters.availabilityStatus].filter(
     Boolean,
   ).length;
 
   return (
     <>
-      <section aria-label={t('ariaLabel')} className="sm:hidden w-full">
+      <section aria-label={t('ariaLabel')} className="w-full sm:hidden">
         <Button
           variant="outline"
           className="flex w-full justify-between sm:hidden"
@@ -87,7 +79,7 @@ const SupportMobileFilters = ({
             >
               {({ close }) => (
                 <>
-                  <Modal.Header className="border-b py-4 px-6 flex flex-col items-start gap-1">
+                  <Modal.Header className="flex flex-col items-start gap-1 border-b px-6 py-4">
                     <Modal.Heading className="text-h4 font-bold">
                       {t('mobile.heading')}
                     </Modal.Heading>
@@ -96,7 +88,7 @@ const SupportMobileFilters = ({
                     </p>
                   </Modal.Header>
 
-                  <Modal.Body className="flex flex-col gap-5 py-5 px-6">
+                  <Modal.Body className="flex flex-col gap-5 px-6 py-5">
                     <SelectDepartment
                       label={t('departmentLabel')}
                       ariaLabel={t('departmentLabel')}
@@ -110,6 +102,7 @@ const SupportMobileFilters = ({
                         }))
                       }
                       placeholder={t('departmentPlaceholder')}
+                      emptyOptionLabel={t('allOption')}
                     />
 
                     <SelectAvailability
@@ -123,45 +116,32 @@ const SupportMobileFilters = ({
                         }))
                       }
                       placeholder={t('availabilityPlaceholder')}
+                      emptyOptionLabel={t('allOption')}
                     />
                   </Modal.Body>
 
-                  <Modal.Footer className="border-t pt-4 pb-[calc(16px+env(safe-area-inset-bottom))] px-6">
-                    <div className="flex w-full items-center justify-between gap-3">
+                  <Modal.Footer className="border-t px-6 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))]">
+                    <div className="flex w-full items-center justify-end gap-2">
                       <Button
-                        variant="ghost"
+                        variant="outline"
                         size="md"
-                        onPress={handleReset}
-                        className="text-danger h-11 px-2"
+                        onPress={close}
+                        className="h-11 rounded-md"
                       >
-                        <RotateCcw
-                          aria-hidden="true"
-                          className={ICON_SIZE_CLASS.sm}
-                        />
-                        <span>{t('mobile.reset')}</span>
+                        {t('mobile.cancel')}
                       </Button>
 
-                      <div className="flex items-center gap-2">
-                        <Button
-                          variant="outline"
-                          size="md"
-                          onPress={close}
-                          className="h-11 rounded-md"
-                        >
-                          {t('mobile.cancel')}
-                        </Button>
-                        <Button
-                          variant="primary"
-                          size="md"
-                          onPress={() => {
-                            handleApply();
-                            close();
-                          }}
-                          className="h-11 rounded-md px-5"
-                        >
-                          {t('mobile.apply')}
-                        </Button>
-                      </div>
+                      <Button
+                        variant="primary"
+                        size="md"
+                        onPress={() => {
+                          handleApply();
+                          close();
+                        }}
+                        className="h-11 rounded-md px-5"
+                      >
+                        {t('mobile.apply')}
+                      </Button>
                     </div>
                   </Modal.Footer>
                 </>

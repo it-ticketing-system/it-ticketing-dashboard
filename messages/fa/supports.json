@@ -20,15 +20,14 @@
     "departmentPlaceholder": "همه دپارتمان‌ها",
     "availabilityLabel": "وضعیت حضور",
     "availabilityPlaceholder": "همه وضعیت‌ها",
+    "allOption": "همه",
     "addSupport": "افزودن پشتیبان",
-    "reset": "بازنشانی فیلترها",
     "mobile": {
       "title": "فیلترها",
       "heading": "فیلترها",
       "description": "فیلتر پشتیبانان بر اساس دپارتمان و وضعیت حضور",
       "openAriaLabel": "باز کردن فیلترها",
       "dialogAriaLabel": "مدال فیلترهای پشتیبانان",
-      "reset": "پاک‌سازی",
       "apply": "اعمال فیلتر",
       "cancel": "انصراف"
     }

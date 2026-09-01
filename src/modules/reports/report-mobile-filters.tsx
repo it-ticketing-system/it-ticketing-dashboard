@@ -121,6 +121,7 @@ const ReportMobileFilters = ({
                           support: '',
                         }))
                       }
+                      emptyOptionLabel={t('filters.department.allOption')}
                     />
 
                     <SelectSupport
@@ -135,6 +136,7 @@ const ReportMobileFilters = ({
                           support: support || '',
                         }))
                       }
+                      emptyOptionLabel={t('filters.support.allOption')}
                     />
                   </Modal.Body>
 
