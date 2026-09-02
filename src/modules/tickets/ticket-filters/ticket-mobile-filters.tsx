@@ -1,10 +1,10 @@
 'use client';
 
-import { Button } from '@heroui/react';
-import { Filter, LoaderCircle } from 'lucide-react';
+import { LoaderCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import {
+  MobileFilterTrigger,
   SelectStatus,
   SelectDepartment,
   PersianDateField,
@@ -82,24 +82,14 @@ const TicketMobileFilters = ({
     <>
       <section aria-label={t('sectionAriaLabel')} className="lg:hidden">
         <div className="flex items-center gap-3">
-          <Button
-            isIconOnly
-            aria-label={t('mobile.openAriaLabel')}
-            variant="outline"
-            size="md"
+          <MobileFilterTrigger
+            variant="icon"
+            label={t('mobile.heading')}
+            ariaLabel={t('mobile.openAriaLabel')}
+            activeCount={activeFilterCount}
             onPress={openFilters}
-            className="border-field-border bg-surface relative h-11 min-h-11 w-11 min-w-11 shrink-0 rounded-md"
-          >
-            <Filter aria-hidden="true" className={ICON_SIZE_CLASS.md} />
-            {activeFilterCount > 0 ? (
-              <span
-                aria-hidden="true"
-                className="bg-danger text-badge text-danger-foreground absolute -start-1 -top-1 flex size-5 items-center justify-center rounded-full"
-              >
-                {activeFilterCount}
-              </span>
-            ) : null}
-          </Button>
+            badgeClassName="bg-danger text-badge text-danger-foreground text-[10px]"
+          />
         </div>
       </section>
 

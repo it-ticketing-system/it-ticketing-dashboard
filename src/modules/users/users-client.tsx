@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { clientUserServices } from '@/apis/services/users/client';
-import { SearchInput } from '@/components/shared';
+import { FilterToolbar, SearchInput } from '@/components/shared';
 import { useGetRequest, useQueryState } from '@/hooks';
 import UsersTable from './user-table';
 import {
@@ -92,15 +92,18 @@ const UsersClient = ({
         onPageChange={handlePageChange}
         onRetry={retry}
         topContent={
-          <div className="border-border bg-surface rounded-xl border p-4 shadow-sm">
-            <SearchInput
-              label=""
-              ariaLabel={t('searchAriaLabel')}
-              placeholder={t('searchPlaceholder')}
-              queryValue={filters.search || ''}
-              onValueChange={(search) => updateFilters({ search })}
-            />
-          </div>
+          <FilterToolbar>
+            <div className="flex w-full flex-1 gap-2 sm:max-w-md">
+              <SearchInput
+                label=""
+                ariaLabel={t('searchAriaLabel')}
+                placeholder={t('searchPlaceholder')}
+                queryValue={filters.search || ''}
+                onValueChange={(search) => updateFilters({ search })}
+                className="flex-1"
+              />
+            </div>
+          </FilterToolbar>
         }
       />
     </div>

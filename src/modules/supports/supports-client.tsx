@@ -1,17 +1,17 @@
 'use client';
 
-import { Button } from '@heroui/react';
-import { Plus } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { clientSupportServices } from '@/apis/services/supports/client';
 import {
+  FilterToolbar,
   SearchInput,
   SelectDepartment,
   SelectAvailability,
+  ToolbarAddButton,
 } from '@/components/shared';
-import { ICON_SIZE_CLASS, ROUTES } from '@/constants';
+import { ROUTES } from '@/constants';
 import { useGetRequest, useQueryState } from '@/hooks';
 import SupportsTable from './support-table';
 import {
@@ -121,35 +121,41 @@ const SupportsClient = ({
 
   return (
     <div className="flex flex-col gap-4">
-      <div className="border-border bg-surface flex flex-col gap-4 rounded-xl border p-4 shadow-sm sm:flex-row sm:items-center">
-        <div className="flex w-full flex-1 gap-2">
-          <SearchInput
-            label=""
-            ariaLabel={t('searchAriaLabel')}
-            placeholder={t('searchPlaceholder')}
-            queryValue={filters.search || ''}
-            onValueChange={(search) => updateFilters({ search })}
-            className="flex-1"
-          />
-          <Button
-            onPress={() => router.push(ROUTES.supportAdd)}
-            variant="primary"
-            className="min-w-0 px-3 sm:hidden"
-            isIconOnly
-            aria-label={t('addSupport')}
-          >
-            <Plus className={ICON_SIZE_CLASS.sm} />
-          </Button>
-        </div>
+      <FilterToolbar className="space-y-4">
+        <div className="flex items-center gap-3 lg:hidden">
+          <div className="min-w-0 flex-1">
+            <SearchInput
+              label=""
+              ariaLabel={t('searchAriaLabel')}
+              placeholder={t('searchPlaceholder')}
+              queryValue={filters.search || ''}
+              onValueChange={(search) => updateFilters({ search })}
+              className="h-11 min-w-0"
+            />
+          </div>
 
-        <div className="sm:hidden">
+          <ToolbarAddButton
+            label={t('addSupport')}
+            onPress={() => router.push(ROUTES.supportAdd)}
+          />
+
           <SupportMobileFilters
             filters={filters}
             onApplyFilters={updateFilters}
           />
         </div>
 
-        <div className="hidden w-full flex-row items-center gap-4 sm:flex sm:w-auto">
+        <div className="hidden w-full items-end gap-4 lg:flex">
+          <div className="min-w-0 flex-1">
+            <SearchInput
+              label=""
+              ariaLabel={t('searchAriaLabel')}
+              placeholder={t('searchPlaceholder')}
+              queryValue={filters.search || ''}
+              onValueChange={(search) => updateFilters({ search })}
+              className="h-11 min-w-0"
+            />
+          </div>
           <div className="w-64">
             <SelectDepartment
               ariaLabel={t('departmentPlaceholder')}
@@ -176,17 +182,12 @@ const SupportsClient = ({
               emptyOptionLabel={t('allOption')}
             />
           </div>
-          <Button
+          <ToolbarAddButton
+            label={t('addSupport')}
             onPress={() => router.push(ROUTES.supportAdd)}
-            variant="primary"
-          >
-            <div className="flex items-center gap-2">
-              <Plus className={ICON_SIZE_CLASS.sm} />
-              <span>{t('addSupport')}</span>
-            </div>
-          </Button>
+          />
         </div>
-      </div>
+      </FilterToolbar>
 
       <SupportsTable
         data={supportsQuery.data || createEmptySupports(apiParams.page)}

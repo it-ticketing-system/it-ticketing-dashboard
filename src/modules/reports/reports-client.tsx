@@ -1,17 +1,15 @@
 'use client';
 
-import { Card, CardContent, Tabs } from '@heroui/react';
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { clientReportServices } from '@/apis/services/reports/client';
 import {
-  SelectDepartment,
-  SelectSupport,
+  FilterToolbar,
   TableErrorState,
 } from '@/components/shared';
 import { QUERY_KEYS } from '@/constants';
 import { useGetRequest, useQueryState } from '@/hooks';
-import ExportReportModal from './export-report-modal';
+import ReportFilterFields from './report-filter-fields';
 import ReportSummaryCards from './report-summary-cards';
 import {
   DepartmentStatisticsChart,
@@ -23,9 +21,10 @@ import {
   parseReportsFilters,
   type ReportsFiltersValue,
 } from './reports-query';
-import type { ReportRange } from '@/models';
 
-const RANGE_OPTIONS: ReportRange[] = ['today', 'week', 'month', 'year'];
+const ExportReportModal = dynamic(() => import('./export-report-modal'), {
+  ssr: false,
+});
 const ReportMobileFilters = dynamic(() => import('./report-mobile-filters'), {
   ssr: false,
 });
@@ -93,67 +92,32 @@ const ReportsClient = ({ initialSearchParams }: ReportsClientProps) => {
 
   return (
     <section className="flex flex-col gap-6">
-      <Card className="border-neutral-200/80 shadow-xs">
-        <CardContent className="space-y-4">
-          <div className="flex items-center gap-3 lg:hidden">
-            <ReportMobileFilters
-              filters={filters}
-              activeFilterCount={activeFilterCount}
-              onApplyFilters={updateFilter}
-            />
+      <FilterToolbar
+        ariaLabel={t('filters.mobile.heading')}
+        className="space-y-4"
+      >
+        <div className="flex items-center gap-3 lg:hidden">
+          <ReportMobileFilters
+            filters={filters}
+            activeFilterCount={activeFilterCount}
+            onApplyFilters={updateFilter}
+          />
 
-            <ExportReportModal
-              defaultDepartmentId={filters.department}
-              defaultSupportId={filters.support}
-            />
-          </div>
+          <ExportReportModal
+            defaultDepartmentId={filters.department}
+            defaultSupportId={filters.support}
+          />
+        </div>
 
-          <div className="hidden gap-4 lg:grid lg:grid-cols-[1fr_220px_220px_auto] lg:items-end">
-            <Tabs
-              selectedKey={filters.range}
-              onSelectionChange={(key) =>
-                updateFilter({ range: key as ReportRange })
-              }
-              variant="secondary"
-              aria-label={t('filters.range.ariaLabel')}
-            >
-              <Tabs.List className="grid w-full grid-cols-4">
-                {RANGE_OPTIONS.map((range) => (
-                  <Tabs.Tab key={range} id={range} className="justify-center">
-                    {t(`ranges.${range}`)}
-                  </Tabs.Tab>
-                ))}
-              </Tabs.List>
-            </Tabs>
+        <div className="hidden gap-4 lg:grid lg:grid-cols-[1fr_220px_220px_auto] lg:items-end">
+          <ReportFilterFields filters={filters} onChange={updateFilter} />
 
-            <SelectDepartment
-              label={t('filters.department.label')}
-              placeholder={t('filters.department.placeholder')}
-              ariaLabel={t('filters.department.ariaLabel')}
-              value={filters.department}
-              onChange={(department) =>
-                updateFilter({ department: department || '', support: '' })
-              }
-              emptyOptionLabel={t('filters.department.allOption')}
-            />
-
-            <SelectSupport
-              label={t('filters.support.label')}
-              placeholder={t('filters.support.placeholder')}
-              ariaLabel={t('filters.support.ariaLabel')}
-              departmentId={filters.department}
-              value={filters.support}
-              onChange={(support) => updateFilter({ support: support || '' })}
-              emptyOptionLabel={t('filters.support.allOption')}
-            />
-
-            <ExportReportModal
-              defaultDepartmentId={filters.department}
-              defaultSupportId={filters.support}
-            />
-          </div>
-        </CardContent>
-      </Card>
+          <ExportReportModal
+            defaultDepartmentId={filters.department}
+            defaultSupportId={filters.support}
+          />
+        </div>
+      </FilterToolbar>
 
       {cardsRequest.error ? (
         <TableErrorState

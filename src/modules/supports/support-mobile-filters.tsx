@@ -1,12 +1,13 @@
 'use client';
 
-import { Button } from '@heroui/react';
-import { Filter } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { SelectDepartment, SelectAvailability } from '@/components/shared';
+import {
+  MobileFilterTrigger,
+  SelectAvailability,
+  SelectDepartment,
+} from '@/components/shared';
 import { PModal } from '@/components/ui';
-import { ICON_SIZE_CLASS } from '@/constants';
 import type { SupportsFiltersValue } from './supports-query';
 
 type SupportMobileFiltersProps = {
@@ -43,25 +44,6 @@ const SupportMobileFilters = ({
 
   return (
     <>
-      <section aria-label={t('ariaLabel')} className="w-full sm:hidden">
-        <Button
-          variant="outline"
-          className="flex w-full justify-between sm:hidden"
-          onPress={handleOpen}
-          aria-label={t('mobile.openAriaLabel')}
-        >
-          <div className="flex items-center gap-2">
-            <Filter aria-hidden="true" className={ICON_SIZE_CLASS.sm} />
-            <span>{t('mobile.title')}</span>
-          </div>
-          {activeCount > 0 && (
-            <span className="bg-primary text-primary-foreground flex size-5 items-center justify-center rounded-full text-xs">
-              {activeCount}
-            </span>
-          )}
-        </Button>
-      </section>
-
       <PModal
         isOpen={isOpen}
         onOpenChange={setIsOpen}
@@ -72,9 +54,9 @@ const SupportMobileFilters = ({
         scroll="inside"
         size="lg"
         classNames={{
-          backdrop: 'sm:hidden',
-          container: 'sm:hidden',
-          dialog: 'sm:hidden',
+          backdrop: 'lg:hidden',
+          container: 'lg:hidden',
+          dialog: 'lg:hidden',
           body: 'flex flex-col gap-5 px-6 py-5',
         }}
         footer={{
@@ -111,6 +93,14 @@ const SupportMobileFilters = ({
           emptyOptionLabel={t('allOption')}
         />
       </PModal>
+
+      <MobileFilterTrigger
+        variant="icon"
+        label={t('mobile.heading')}
+        ariaLabel={t('mobile.openAriaLabel')}
+        activeCount={activeCount}
+        onPress={handleOpen}
+      />
     </>
   );
 };

@@ -9,17 +9,20 @@ import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { clientTicketServices } from '@/apis/services/tickets/client';
 import {
-  SelectStatus,
   SelectDepartment,
+  SelectStatus,
   SelectSupport,
 } from '@/components/shared';
-import { PModal } from '@/components/ui';
 import { QUERY_KEYS, ROUTES } from '@/constants';
 import { usePostRequest } from '@/hooks';
 import type { TicketDetails } from '../types';
 import type { TicketStatus } from '@/models';
 
 const HistoryModals = dynamic(() => import('./history-modals'), { ssr: false });
+const MobileOperationsModal = dynamic(
+  () => import('./mobile-operations-modal'),
+  { ssr: false },
+);
 
 interface OperationsCardProps {
   ticket: TicketDetails;
@@ -110,49 +113,6 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
     </Dropdown>
   );
 
-  const operationsContent = (
-    <div className="flex flex-col gap-4">
-      <SelectStatus
-        value={ticket.status}
-        onChange={(val) => {
-          if (val && val !== ticket.status) {
-            changeStatus(val as TicketStatus);
-          }
-        }}
-        label={t('operations.changeStatus')}
-        placeholder={t('operations.selectStatus')}
-        isDisabled={!availableActions.canChangeStatus || isChangingStatus}
-      />
-
-      <SelectDepartment
-        value={ticket.departmentId || null}
-        onChange={(val) => {
-          if (val && val !== ticket.departmentId) {
-            changeDepartment(String(val));
-          }
-        }}
-        label={t('operations.changeDepartment')}
-        placeholder={t('operations.selectDepartment')}
-        isDisabled={
-          !availableActions.canChangeDepartment || isChangingDepartment
-        }
-      />
-
-      <SelectSupport
-        departmentId={ticket.departmentId}
-        value={ticket.assignedSupport?.id || null}
-        onChange={(val) => {
-          if (val && val !== ticket.assignedSupport?.id) {
-            changeSupport(String(val));
-          }
-        }}
-        label={t('operations.changeSupport')}
-        placeholder={t('operations.selectSupport')}
-        isDisabled={!availableActions.canChangeAssignment || isChangingSupport}
-      />
-    </div>
-  );
-
   return (
     <>
       <div className="mb-2 flex items-center gap-2 lg:hidden">
@@ -167,31 +127,89 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
         </Button>
       </div>
 
-      <PModal
+      <MobileOperationsModal
         isOpen={isMobileOperationsOpen}
         onOpenChange={setIsMobileOperationsOpen}
-        intent="action"
         title={t('operations.title')}
-        ariaLabel={t('operations.title')}
-        classNames={{
-          backdrop: 'lg:hidden',
-          container: 'lg:hidden',
-          dialog: 'flex flex-col overflow-hidden lg:hidden',
-          header: 'shrink-0',
-          body: 'overflow-y-auto px-6 py-6',
+        status={ticket.status}
+        departmentId={ticket.departmentId}
+        assignedSupportId={ticket.assignedSupport?.id}
+        canChangeStatus={availableActions.canChangeStatus}
+        canChangeDepartment={availableActions.canChangeDepartment}
+        canChangeAssignment={availableActions.canChangeAssignment}
+        isChangingStatus={isChangingStatus}
+        isChangingDepartment={isChangingDepartment}
+        isChangingSupport={isChangingSupport}
+        changeStatusLabel={t('operations.changeStatus')}
+        selectStatusLabel={t('operations.selectStatus')}
+        changeDepartmentLabel={t('operations.changeDepartment')}
+        selectDepartmentLabel={t('operations.selectDepartment')}
+        changeSupportLabel={t('operations.changeSupport')}
+        selectSupportLabel={t('operations.selectSupport')}
+        onChangeStatus={(val) => {
+          if (val && val !== ticket.status) {
+            changeStatus(val as TicketStatus);
+          }
         }}
-        footer={false}
-      >
-        {operationsContent}
-      </PModal>
+        onChangeDepartment={(val) => {
+          if (val && val !== ticket.departmentId) {
+            changeDepartment(String(val));
+          }
+        }}
+        onChangeSupport={(val) => {
+          if (val && val !== ticket.assignedSupport?.id) {
+            changeSupport(String(val));
+          }
+        }}
+      />
 
       <section className="border-border bg-surface hidden w-80 shrink-0 flex-col gap-6 rounded-xl border p-6 lg:flex">
         <div className="flex items-center justify-between">
           <h2 className="text-h3">{t('operations.title')}</h2>
           {historyDropdown}
         </div>
+        <div className="flex flex-col gap-4">
+          <SelectStatus
+            value={ticket.status}
+            onChange={(val) => {
+              if (val && val !== ticket.status) {
+                changeStatus(val as TicketStatus);
+              }
+            }}
+            label={t('operations.changeStatus')}
+            placeholder={t('operations.selectStatus')}
+            isDisabled={!availableActions.canChangeStatus || isChangingStatus}
+          />
 
-        {operationsContent}
+          <SelectDepartment
+            value={ticket.departmentId || null}
+            onChange={(val) => {
+              if (val && val !== ticket.departmentId) {
+                changeDepartment(String(val));
+              }
+            }}
+            label={t('operations.changeDepartment')}
+            placeholder={t('operations.selectDepartment')}
+            isDisabled={
+              !availableActions.canChangeDepartment || isChangingDepartment
+            }
+          />
+
+          <SelectSupport
+            departmentId={ticket.departmentId}
+            value={ticket.assignedSupport?.id || null}
+            onChange={(val) => {
+              if (val && val !== ticket.assignedSupport?.id) {
+                changeSupport(String(val));
+              }
+            }}
+            label={t('operations.changeSupport')}
+            placeholder={t('operations.selectSupport')}
+            isDisabled={
+              !availableActions.canChangeAssignment || isChangingSupport
+            }
+          />
+        </div>
       </section>
 
       <HistoryModals

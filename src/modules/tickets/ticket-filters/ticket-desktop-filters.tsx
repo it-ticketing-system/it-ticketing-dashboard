@@ -4,6 +4,7 @@ import { Button, Popover } from '@heroui/react';
 import { CalendarDays, ChevronDown, RotateCcw } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import {
+  FilterToolbar,
   SelectStatus,
   SelectDepartment,
   PersianDateField,
@@ -50,9 +51,9 @@ const TicketDesktopFilters = ({
   });
 
   return (
-    <section
+    <FilterToolbar
       aria-label={t('sectionAriaLabel')}
-      className="border-border bg-surface grid items-end gap-4 rounded-xl border p-4 shadow-sm lg:grid-cols-2 xl:grid-cols-4"
+      className="grid items-end gap-4 lg:grid-cols-2 xl:grid-cols-4"
     >
       <div className="min-w-0 lg:col-span-2 xl:col-span-2">{searchControl}</div>
 
@@ -150,7 +151,7 @@ const TicketDesktopFilters = ({
           </Popover.Dialog>
         </Popover.Content>
       </Popover>
-    </section>
+    </FilterToolbar>
   );
 };
 

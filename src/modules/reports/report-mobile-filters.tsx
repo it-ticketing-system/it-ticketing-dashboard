@@ -1,16 +1,11 @@
 'use client';
 
-import { Button, Tabs } from '@heroui/react';
-import { Filter } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
-import { SelectDepartment, SelectSupport } from '@/components/shared';
+import { MobileFilterTrigger } from '@/components/shared';
 import { PModal } from '@/components/ui';
-import { ICON_SIZE_CLASS } from '@/constants';
+import ReportFilterFields from './report-filter-fields';
 import type { ReportsFiltersValue } from './reports-query';
-import type { ReportRange } from '@/models';
-
-const RANGE_OPTIONS: ReportRange[] = ['today', 'week', 'month', 'year'];
 
 type ReportMobileFiltersProps = {
   filters: ReportsFiltersValue;
@@ -38,23 +33,13 @@ const ReportMobileFilters = ({
 
   return (
     <>
-      <Button
-        variant="outline"
+      <MobileFilterTrigger
+        label={t('filters.mobile.title')}
+        ariaLabel={t('filters.mobile.openAriaLabel')}
+        activeCount={activeFilterCount}
         onPress={openFilters}
-        aria-label={t('filters.mobile.openAriaLabel')}
         className="border-field-border h-11 min-w-0 flex-1 justify-between rounded-md"
-      >
-        <span className="flex min-w-0 items-center gap-2">
-          <Filter aria-hidden="true" className={ICON_SIZE_CLASS.sm} />
-          <span className="truncate">{t('filters.mobile.title')}</span>
-        </span>
-
-        {activeFilterCount > 0 ? (
-          <span className="bg-primary text-primary-foreground flex size-5 shrink-0 items-center justify-center rounded-full text-xs">
-            {activeFilterCount}
-          </span>
-        ) : null}
-      </Button>
+      />
 
       <PModal
         isOpen={isOpen}
@@ -77,55 +62,7 @@ const ReportMobileFilters = ({
           },
         }}
       >
-        <Tabs
-          selectedKey={draft.range}
-          onSelectionChange={(key) =>
-            setDraft((previous) => ({
-              ...previous,
-              range: key as ReportRange,
-            }))
-          }
-          variant="secondary"
-          aria-label={t('filters.range.ariaLabel')}
-        >
-          <Tabs.List className="grid w-full grid-cols-4">
-            {RANGE_OPTIONS.map((range) => (
-              <Tabs.Tab key={range} id={range} className="justify-center">
-                {t(`ranges.${range}`)}
-              </Tabs.Tab>
-            ))}
-          </Tabs.List>
-        </Tabs>
-
-        <SelectDepartment
-          label={t('filters.department.label')}
-          placeholder={t('filters.department.placeholder')}
-          ariaLabel={t('filters.department.ariaLabel')}
-          value={draft.department}
-          onChange={(department) =>
-            setDraft((previous) => ({
-              ...previous,
-              department: department || '',
-              support: '',
-            }))
-          }
-          emptyOptionLabel={t('filters.department.allOption')}
-        />
-
-        <SelectSupport
-          label={t('filters.support.label')}
-          placeholder={t('filters.support.placeholder')}
-          ariaLabel={t('filters.support.ariaLabel')}
-          departmentId={draft.department}
-          value={draft.support}
-          onChange={(support) =>
-            setDraft((previous) => ({
-              ...previous,
-              support: support || '',
-            }))
-          }
-          emptyOptionLabel={t('filters.support.allOption')}
-        />
+        <ReportFilterFields filters={draft} onChange={setDraft} />
       </PModal>
     </>
   );
