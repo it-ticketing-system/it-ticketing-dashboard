@@ -9,6 +9,12 @@
     "clearAriaLabel": "پاک کردن جستجو"
   },
 
+  "actions": {
+    "apply": "اعمال",
+    "cancel": "انصراف",
+    "submit": "ثبت"
+  },
+
   "statuses": {
     "open": "باز",
     "inProgress": "در حال بررسی",

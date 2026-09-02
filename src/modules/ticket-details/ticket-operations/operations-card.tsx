@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Dropdown, Modal } from '@heroui/react';
+import { Button, Dropdown } from '@heroui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { History, Settings } from 'lucide-react';
 import dynamic from 'next/dynamic';
@@ -13,6 +13,7 @@ import {
   SelectDepartment,
   SelectSupport,
 } from '@/components/shared';
+import { PModal } from '@/components/ui';
 import { QUERY_KEYS, ROUTES } from '@/constants';
 import { usePostRequest } from '@/hooks';
 import type { TicketDetails } from '../types';
@@ -166,25 +167,23 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
         </Button>
       </div>
 
-      <Modal>
-        <Modal.Backdrop
-          isOpen={isMobileOperationsOpen}
-          onOpenChange={setIsMobileOperationsOpen}
-        >
-          <Modal.Container placement="bottom" className="lg:hidden">
-            <Modal.Dialog className="bg-surface flex max-h-[85vh] flex-col overflow-hidden rounded-t-xl rounded-b-none">
-              <Modal.Header className="border-border shrink-0 border-b px-6 py-4">
-                <Modal.Heading className="text-h3">
-                  {t('operations.title')}
-                </Modal.Heading>
-              </Modal.Header>
-              <Modal.Body className="overflow-y-auto px-6 py-6">
-                {operationsContent}
-              </Modal.Body>
-            </Modal.Dialog>
-          </Modal.Container>
-        </Modal.Backdrop>
-      </Modal>
+      <PModal
+        isOpen={isMobileOperationsOpen}
+        onOpenChange={setIsMobileOperationsOpen}
+        intent="action"
+        title={t('operations.title')}
+        ariaLabel={t('operations.title')}
+        classNames={{
+          backdrop: 'lg:hidden',
+          container: 'lg:hidden',
+          dialog: 'flex flex-col overflow-hidden lg:hidden',
+          header: 'shrink-0',
+          body: 'overflow-y-auto px-6 py-6',
+        }}
+        footer={false}
+      >
+        {operationsContent}
+      </PModal>
 
       <section className="border-border bg-surface hidden w-80 shrink-0 flex-col gap-6 rounded-xl border p-6 lg:flex">
         <div className="flex items-center justify-between">

@@ -1,6 +1,6 @@
 'use client';
 
-import { Button, Modal } from '@heroui/react';
+import { Button } from '@heroui/react';
 import { Filter, LoaderCircle } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
@@ -10,6 +10,7 @@ import {
   PersianDateField,
   SearchInput,
 } from '@/components/shared';
+import { PModal } from '@/components/ui';
 import { ICON_SIZE_CLASS } from '@/constants';
 import { cn } from '@/utils';
 import {
@@ -66,7 +67,7 @@ const TicketMobileFilters = ({
     setIsOpen(true);
   };
 
-  const applyFilters = (close: () => void) => {
+  const applyFilters = () => {
     onApplyFilters({
       status: draft.status || null,
       department: draft.department || null,
@@ -75,7 +76,6 @@ const TicketMobileFilters = ({
       createdFrom: draft.createdFrom || null,
       createdTo: draft.createdTo || null,
     });
-    close();
   };
 
   return (
@@ -103,126 +103,92 @@ const TicketMobileFilters = ({
         </div>
       </section>
 
-      <Modal>
-        <Modal.Backdrop
-          isOpen={isOpen}
-          onOpenChange={setIsOpen}
-          variant="opaque"
-          className="bg-backdrop lg:hidden"
-        >
-          <Modal.Container
-            placement="bottom"
-            scroll="inside"
-            size="lg"
-            className="items-end p-0 lg:hidden"
-          >
-            <Modal.Dialog
-              aria-label={t('mobile.dialogAriaLabel')}
-              className="bg-surface max-h-[85dvh] w-full max-w-none rounded-t-xl rounded-b-none shadow-xl"
-            >
-              {({ close }) => (
-                <>
-                  <Modal.Header className="border-separator flex flex-col items-start gap-1 border-b py-4">
-                    <Modal.Heading className="text-title">
-                      {t('mobile.heading')}
-                    </Modal.Heading>
-                    <p className="text-caption text-muted font-normal">
-                      {t('mobile.description')}
-                    </p>
-                  </Modal.Header>
+      <PModal
+        isOpen={isOpen}
+        onOpenChange={setIsOpen}
+        intent="action"
+        title={t('mobile.heading')}
+        description={t('mobile.description')}
+        ariaLabel={t('mobile.dialogAriaLabel')}
+        scroll="inside"
+        size="lg"
+        classNames={{
+          backdrop: 'lg:hidden',
+          container: 'lg:hidden',
+          dialog: 'lg:hidden',
+          header: 'border-separator py-4',
+          body: 'flex flex-col gap-5 py-5',
+          footer: 'border-separator',
+        }}
+        footer={{
+          submit: {
+            onPress: applyFilters,
+            isPending,
+            icon: isPending ? (
+              <LoaderCircle
+                aria-hidden="true"
+                className={cn(ICON_SIZE_CLASS.sm, 'animate-spin')}
+              />
+            ) : null,
+          },
+        }}
+      >
+        <SelectStatus
+          label={t('status.label')}
+          ariaLabel={t('status.ariaLabel')}
+          placeholder={t('status.placeholder')}
+          value={draft.status as TicketStatus}
+          onChange={handleDraftChange('status')}
+          emptyOptionLabel={t('status.allOption')}
+        />
 
-                  <Modal.Body className="flex flex-col gap-5 py-5">
-                    <SelectStatus
-                      label={t('status.label')}
-                      ariaLabel={t('status.ariaLabel')}
-                      placeholder={t('status.placeholder')}
-                      value={draft.status as TicketStatus}
-                      onChange={handleDraftChange('status')}
-                      emptyOptionLabel={t('status.allOption')}
-                    />
+        <SelectDepartment
+          label={t('department.label')}
+          ariaLabel={t('department.ariaLabel')}
+          placeholder={t('department.placeholder')}
+          value={draft.department}
+          onChange={handleDraftChange('department')}
+          emptyOptionLabel={t('department.allOption')}
+        />
 
-                    <SelectDepartment
-                      label={t('department.label')}
-                      ariaLabel={t('department.ariaLabel')}
-                      placeholder={t('department.placeholder')}
-                      value={draft.department}
-                      onChange={handleDraftChange('department')}
-                      emptyOptionLabel={t('department.allOption')}
-                    />
+        <SearchInput
+          label={t('support.label')}
+          ariaLabel={t('support.ariaLabel')}
+          placeholder={t('support.placeholder')}
+          queryValue={draft.support || ''}
+          onValueChange={handleDraftChange('support')}
+          showSearchIcon={false}
+        />
 
-                    <SearchInput
-                      label={t('support.label')}
-                      ariaLabel={t('support.ariaLabel')}
-                      placeholder={t('support.placeholder')}
-                      queryValue={draft.support || ''}
-                      onValueChange={handleDraftChange('support')}
-                      showSearchIcon={false}
-                    />
+        <SearchInput
+          label={t('user.label')}
+          ariaLabel={t('user.ariaLabel')}
+          placeholder={t('user.placeholder')}
+          queryValue={draft.user || ''}
+          onValueChange={handleDraftChange('user')}
+          showSearchIcon={false}
+        />
 
-                    <SearchInput
-                      label={t('user.label')}
-                      ariaLabel={t('user.ariaLabel')}
-                      placeholder={t('user.placeholder')}
-                      queryValue={draft.user || ''}
-                      onValueChange={handleDraftChange('user')}
-                      showSearchIcon={false}
-                    />
-
-                    <div className="space-y-3">
-                      <p className="text-body-sm text-foreground font-medium">
-                        {t('createdDateRange.heading')}
-                      </p>
-                      <div className="grid grid-cols-2 gap-3">
-                        <PersianDateField
-                          label={t('dateRange.from')}
-                          value={draft.createdFrom}
-                          max={draft.createdTo || undefined}
-                          onChange={handleDraftChange('createdFrom')}
-                        />
-                        <PersianDateField
-                          label={t('dateRange.to')}
-                          value={draft.createdTo}
-                          min={draft.createdFrom || undefined}
-                          onChange={handleDraftChange('createdTo')}
-                        />
-                      </div>
-                    </div>
-                  </Modal.Body>
-
-                  <Modal.Footer className="border-separator border-t pt-4 pb-[calc(16px+env(safe-area-inset-bottom))]">
-                    <div className="flex w-full items-center justify-end gap-2">
-                      <Button
-                        variant="outline"
-                        size="md"
-                        onPress={close}
-                        className="border-field-border h-11 rounded-md"
-                      >
-                        {t('mobile.cancel')}
-                      </Button>
-
-                      <Button
-                        variant="primary"
-                        size="md"
-                        isPending={isPending}
-                        onPress={() => applyFilters(close)}
-                        className="h-11 rounded-md px-5"
-                      >
-                        {isPending ? (
-                          <LoaderCircle
-                            aria-hidden="true"
-                            className={cn(ICON_SIZE_CLASS.sm, 'animate-spin')}
-                          />
-                        ) : null}
-                        {t('mobile.apply')}
-                      </Button>
-                    </div>
-                  </Modal.Footer>
-                </>
-              )}
-            </Modal.Dialog>
-          </Modal.Container>
-        </Modal.Backdrop>
-      </Modal>
+        <div className="space-y-3">
+          <p className="text-body-sm text-foreground font-medium">
+            {t('createdDateRange.heading')}
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            <PersianDateField
+              label={t('dateRange.from')}
+              value={draft.createdFrom}
+              max={draft.createdTo || undefined}
+              onChange={handleDraftChange('createdFrom')}
+            />
+            <PersianDateField
+              label={t('dateRange.to')}
+              value={draft.createdTo}
+              min={draft.createdFrom || undefined}
+              onChange={handleDraftChange('createdTo')}
+            />
+          </div>
+        </div>
+      </PModal>
     </>
   );
 };

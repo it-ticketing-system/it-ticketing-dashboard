@@ -1,10 +1,11 @@
 'use client';
 
-import { Modal, Skeleton } from '@heroui/react';
+import { Skeleton } from '@heroui/react';
 import { ArrowLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { clientTicketServices } from '@/apis/services/tickets/client';
 import { TicketStatusChip } from '@/components/shared';
+import { PModal } from '@/components/ui';
 import { QUERY_KEYS } from '@/constants';
 import { useGetRequest } from '@/hooks';
 
@@ -177,25 +178,19 @@ const HistoryModals = ({
   };
 
   return (
-    <Modal>
-      <Modal.Backdrop
-        isOpen={!!activeHistory}
-        onOpenChange={(isOpen) => !isOpen && onClose()}
-      >
-        <Modal.Container>
-          <Modal.Dialog className="bg-surface rounded-xl shadow-xl">
-            <Modal.Header className="border-border border-b px-6 py-4">
-              <Modal.Heading className="text-h3">
-                {activeHistory ? titles[activeHistory] : ''}
-              </Modal.Heading>
-            </Modal.Header>
-            <Modal.Body className="max-h-[70vh] overflow-y-auto px-6 py-4">
-              {renderContent()}
-            </Modal.Body>
-          </Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
-    </Modal>
+    <PModal
+      isOpen={!!activeHistory}
+      onOpenChange={(isOpen) => !isOpen && onClose()}
+      intent="content"
+      title={activeHistory ? titles[activeHistory] : ''}
+      ariaLabel={activeHistory ? titles[activeHistory] : t('empty')}
+      classNames={{
+        body: 'max-h-[70vh] overflow-y-auto px-6 py-4',
+      }}
+      footer={false}
+    >
+      {renderContent()}
+    </PModal>
   );
 };
 
