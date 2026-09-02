@@ -1,12 +1,12 @@
 import { cn } from '@/utils';
 
-export type NotificationBadgeProps = {
+type NotificationBadgeProps = {
   count: number;
   className?: string;
 };
 
-export const getNotificationBadgeLabel = (count: number): string => {
-  return count > 99 ? '99+' : String(count);
+export const getNotificationBadgeLabel = (count: number) => {
+  return count > 99 ? '۹۹+' : new Intl.NumberFormat('fa-IR').format(count);
 };
 
 const NotificationBadge = ({ count, className }: NotificationBadgeProps) => {
@@ -17,7 +17,7 @@ const NotificationBadge = ({ count, className }: NotificationBadgeProps) => {
   return (
     <span
       className={cn(
-        'bg-danger-500 text-badge absolute flex min-w-5 items-center justify-center rounded-full border-2 border-white px-1 font-bold text-white',
+        'bg-danger text-badge border-surface absolute flex min-w-5 items-center justify-center rounded-full border-2 px-1 text-white',
         className,
       )}
     >

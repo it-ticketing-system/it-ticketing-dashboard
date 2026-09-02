@@ -1,7 +1,7 @@
 'use client';
 
-import { Button, Card, CardContent, Tabs } from '@heroui/react';
-import { RotateCcw } from 'lucide-react';
+import { Card, CardContent, Tabs } from '@heroui/react';
+import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { clientReportServices } from '@/apis/services/reports/client';
 import {
@@ -9,7 +9,7 @@ import {
   SelectSupport,
   TableErrorState,
 } from '@/components/shared';
-import { ICON_SIZE_CLASS, QUERY_KEYS } from '@/constants';
+import { QUERY_KEYS } from '@/constants';
 import { useGetRequest, useQueryState } from '@/hooks';
 import ExportReportModal from './export-report-modal';
 import ReportSummaryCards from './report-summary-cards';
@@ -19,7 +19,6 @@ import {
   TicketTrendChart,
 } from './reports-charts';
 import {
-  REPORT_FILTER_QUERY_KEYS,
   createReportsParams,
   parseReportsFilters,
   type ReportsFiltersValue,
@@ -27,6 +26,9 @@ import {
 import type { ReportRange } from '@/models';
 
 const RANGE_OPTIONS: ReportRange[] = ['today', 'week', 'month', 'year'];
+const ReportMobileFilters = dynamic(() => import('./report-mobile-filters'), {
+  ssr: false,
+});
 
 type ReportsClientProps = {
   initialSearchParams: PageSearchParams;
@@ -35,7 +37,7 @@ type ReportsClientProps = {
 const ReportsClient = ({ initialSearchParams }: ReportsClientProps) => {
   const t = useTranslations('reports');
   const tCommon = useTranslations('common');
-  const { getQuery, updateQueries, removeQueries } = useQueryState();
+  const { getQuery, updateQueries } = useQueryState();
   const initialFilters = parseReportsFilters(initialSearchParams);
   const filters = parseReportsFilters({
     range: getQuery('range') ?? initialFilters.range,
@@ -84,73 +86,72 @@ const ReportsClient = ({ initialSearchParams }: ReportsClientProps) => {
     });
   };
 
-  const resetFilters = () => {
-    removeQueries(REPORT_FILTER_QUERY_KEYS, {
-      history: 'replace',
-      scroll: false,
-      strategy: 'native',
-    });
-  };
-
-  const hasActiveFilters =
-    filters.range !== 'month' || Boolean(filters.department || filters.support);
+  const activeFilterCount =
+    Number(filters.range !== 'month') +
+    Number(Boolean(filters.department)) +
+    Number(Boolean(filters.support));
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="flex justify-end">
-        <ExportReportModal
-          defaultDepartmentId={filters.department}
-          defaultSupportId={filters.support}
-        />
-      </div>
-
       <Card className="border-neutral-200/80 shadow-xs">
-        <CardContent className="grid gap-4 lg:grid-cols-[1fr_220px_220px_auto] lg:items-end">
-          <Tabs
-            selectedKey={filters.range}
-            onSelectionChange={(key) =>
-              updateFilter({ range: key as ReportRange })
-            }
-            variant="secondary"
-            aria-label={t('filters.range.ariaLabel')}
-          >
-            <Tabs.List className="grid w-full grid-cols-4">
-              {RANGE_OPTIONS.map((range) => (
-                <Tabs.Tab key={range} id={range} className="justify-center">
-                  {t(`ranges.${range}`)}
-                </Tabs.Tab>
-              ))}
-            </Tabs.List>
-          </Tabs>
+        <CardContent className="space-y-4">
+          <div className="flex items-center gap-3 lg:hidden">
+            <ReportMobileFilters
+              filters={filters}
+              activeFilterCount={activeFilterCount}
+              onApplyFilters={updateFilter}
+            />
 
-          <SelectDepartment
-            label={t('filters.department.label')}
-            placeholder={t('filters.department.placeholder')}
-            ariaLabel={t('filters.department.ariaLabel')}
-            value={filters.department}
-            onChange={(department) =>
-              updateFilter({ department: department || '', support: '' })
-            }
-          />
+            <ExportReportModal
+              defaultDepartmentId={filters.department}
+              defaultSupportId={filters.support}
+            />
+          </div>
 
-          <SelectSupport
-            label={t('filters.support.label')}
-            placeholder={t('filters.support.placeholder')}
-            ariaLabel={t('filters.support.ariaLabel')}
-            departmentId={filters.department}
-            value={filters.support}
-            onChange={(support) => updateFilter({ support: support || '' })}
-          />
+          <div className="hidden gap-4 lg:grid lg:grid-cols-[1fr_220px_220px_auto] lg:items-end">
+            <Tabs
+              selectedKey={filters.range}
+              onSelectionChange={(key) =>
+                updateFilter({ range: key as ReportRange })
+              }
+              variant="secondary"
+              aria-label={t('filters.range.ariaLabel')}
+            >
+              <Tabs.List className="grid w-full grid-cols-4">
+                {RANGE_OPTIONS.map((range) => (
+                  <Tabs.Tab key={range} id={range} className="justify-center">
+                    {t(`ranges.${range}`)}
+                  </Tabs.Tab>
+                ))}
+              </Tabs.List>
+            </Tabs>
 
-          <Button
-            variant="outline"
-            isDisabled={!hasActiveFilters}
-            onPress={resetFilters}
-            className="border-field-border h-11"
-          >
-            <RotateCcw aria-hidden="true" className={ICON_SIZE_CLASS.sm} />
-            {t('actions.reset')}
-          </Button>
+            <SelectDepartment
+              label={t('filters.department.label')}
+              placeholder={t('filters.department.placeholder')}
+              ariaLabel={t('filters.department.ariaLabel')}
+              value={filters.department}
+              onChange={(department) =>
+                updateFilter({ department: department || '', support: '' })
+              }
+              emptyOptionLabel={t('filters.department.allOption')}
+            />
+
+            <SelectSupport
+              label={t('filters.support.label')}
+              placeholder={t('filters.support.placeholder')}
+              ariaLabel={t('filters.support.ariaLabel')}
+              departmentId={filters.department}
+              value={filters.support}
+              onChange={(support) => updateFilter({ support: support || '' })}
+              emptyOptionLabel={t('filters.support.allOption')}
+            />
+
+            <ExportReportModal
+              defaultDepartmentId={filters.department}
+              defaultSupportId={filters.support}
+            />
+          </div>
         </CardContent>
       </Card>
 

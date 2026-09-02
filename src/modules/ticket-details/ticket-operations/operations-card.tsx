@@ -1,9 +1,10 @@
 'use client';
 
-import { Button, Dropdown, Modal } from '@heroui/react';
+import { Button, Dropdown } from '@heroui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { History, Settings } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { clientTicketServices } from '@/apis/services/tickets/client';
@@ -12,7 +13,8 @@ import {
   SelectDepartment,
   SelectSupport,
 } from '@/components/shared';
-import { QUERY_KEYS } from '@/constants';
+import { PModal } from '@/components/ui';
+import { QUERY_KEYS, ROUTES } from '@/constants';
 import { usePostRequest } from '@/hooks';
 import type { TicketDetails } from '../types';
 import type { TicketStatus } from '@/models';
@@ -25,6 +27,7 @@ interface OperationsCardProps {
 
 const OperationsCard = ({ ticket }: OperationsCardProps) => {
   const t = useTranslations('ticketDetails');
+  const router = useRouter();
   const queryClient = useQueryClient();
   const { availableActions } = ticket;
 
@@ -33,6 +36,17 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
   >(null);
   const [isMobileOperationsOpen, setIsMobileOperationsOpen] = useState(false);
 
+  const invalidateTicketQueries = async () => {
+    await Promise.all([
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.tickets.details(ticket.id),
+      }),
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.tickets.lists,
+      }),
+    ]);
+  };
+
   const { mutateAsync: changeStatus, isPending: isChangingStatus } =
     usePostRequest<TicketStatus, void>({
       requestFn: (newStatus: TicketStatus) =>
@@ -40,10 +54,8 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
           status: newStatus,
         }),
       getSuccessDescription: () => t('operations.statusChangedSuccess'),
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: QUERY_KEYS.tickets.details(ticket.id),
-        });
+      onSuccess: async () => {
+        await invalidateTicketQueries();
       },
     });
 
@@ -54,10 +66,9 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
           departmentId,
         }),
       getSuccessDescription: () => t('operations.departmentChangedSuccess'),
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: QUERY_KEYS.tickets.details(ticket.id),
-        });
+      onSuccess: async () => {
+        await invalidateTicketQueries();
+        router.push(ROUTES.tickets);
       },
     });
 
@@ -66,10 +77,8 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
       requestFn: (supportId: string) =>
         clientTicketServices.changeTicketAssignment(ticket.id, { supportId }),
       getSuccessDescription: () => t('operations.assignmentChangedSuccess'),
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: QUERY_KEYS.tickets.details(ticket.id),
-        });
+      onSuccess: async () => {
+        await invalidateTicketQueries();
       },
     });
 
@@ -158,25 +167,23 @@ const OperationsCard = ({ ticket }: OperationsCardProps) => {
         </Button>
       </div>
 
-      <Modal>
-        <Modal.Backdrop
-          isOpen={isMobileOperationsOpen}
-          onOpenChange={setIsMobileOperationsOpen}
-        >
-          <Modal.Container placement="bottom" className="lg:hidden">
-            <Modal.Dialog className="bg-surface flex max-h-[85vh] flex-col overflow-hidden rounded-t-xl rounded-b-none">
-              <Modal.Header className="border-border shrink-0 border-b px-6 py-4">
-                <Modal.Heading className="text-h3">
-                  {t('operations.title')}
-                </Modal.Heading>
-              </Modal.Header>
-              <Modal.Body className="overflow-y-auto px-6 py-6">
-                {operationsContent}
-              </Modal.Body>
-            </Modal.Dialog>
-          </Modal.Container>
-        </Modal.Backdrop>
-      </Modal>
+      <PModal
+        isOpen={isMobileOperationsOpen}
+        onOpenChange={setIsMobileOperationsOpen}
+        intent="action"
+        title={t('operations.title')}
+        ariaLabel={t('operations.title')}
+        classNames={{
+          backdrop: 'lg:hidden',
+          container: 'lg:hidden',
+          dialog: 'flex flex-col overflow-hidden lg:hidden',
+          header: 'shrink-0',
+          body: 'overflow-y-auto px-6 py-6',
+        }}
+        footer={false}
+      >
+        {operationsContent}
+      </PModal>
 
       <section className="border-border bg-surface hidden w-80 shrink-0 flex-col gap-6 rounded-xl border p-6 lg:flex">
         <div className="flex items-center justify-between">

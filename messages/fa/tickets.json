@@ -32,22 +32,24 @@
     "status": {
       "label": "وضعیت",
       "ariaLabel": "فیلتر وضعیت",
-      "placeholder": "همه وضعیت‌ها"
+      "placeholder": "همه وضعیت‌ها",
+      "allOption": "همه"
     },
     "department": {
       "label": "دپارتمان",
       "ariaLabel": "فیلتر دپارتمان",
-      "placeholder": "همه دپارتمان‌ها"
+      "placeholder": "همه دپارتمان‌ها",
+      "allOption": "همه"
     },
     "support": {
       "label": "شناسه پشتیبان",
       "ariaLabel": "فیلتر پشتیبان",
-      "placeholder": "جستجوی شناسه پشتیبان..."
+      "placeholder": "جستجوی شناسه پشتیبان یا نام"
     },
     "user": {
       "label": "شناسه کاربر",
       "ariaLabel": "فیلتر کاربر",
-      "placeholder": "جستجوی شناسه کاربر..."
+      "placeholder": "جستجوی شناسه کاربر یا نام"
     },
     "dateRange": {
       "heading": "بازه زمانی",
@@ -69,18 +71,14 @@
     },
     "search": {
       "ariaLabel": "جستجو",
-      "placeholder": "جستجو در تیکت‌ها...",
+      "placeholder": "جست‌وجو بر اساس شماره تیکت یا عنوان",
       "clearAriaLabel": "پاک کردن جستجو"
-    },
-    "actions": {
-      "reset": "حذف فیلترها"
     },
     "mobile": {
       "openAriaLabel": "باز کردن فیلترها",
       "dialogAriaLabel": "دیالوگ فیلترها",
       "heading": "فیلتر تیکت‌ها",
       "description": "فیلتر مورد نظر خود را اعمال کنید",
-      "reset": "بازنشانی",
       "cancel": "انصراف",
       "apply": "اعمال"
     }

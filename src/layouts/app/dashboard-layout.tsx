@@ -30,7 +30,7 @@ export const DashboardLayout: FCC = ({ children }) => {
       <aside
         className={cn(
           'bg-surface hidden h-full shrink-0 border-e border-neutral-200/80 transition-all duration-300 ease-in-out lg:flex',
-          collapsed ? 'w-20' : 'w-64',
+          collapsed ? 'w-16' : 'w-52',
         )}
       >
         <DashboardSidebar collapsed={collapsed} />

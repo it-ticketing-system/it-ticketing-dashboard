@@ -7,8 +7,6 @@ export type FilterDraft = {
   user: string;
   createdFrom: string;
   createdTo: string;
-  updatedFrom: string;
-  updatedTo: string;
 };
 
 export type TicketFiltersValue = FilterDraft & {
@@ -34,8 +32,6 @@ export const EMPTY_FILTER_DRAFT: FilterDraft = {
   user: '',
   createdFrom: '',
   createdTo: '',
-  updatedFrom: '',
-  updatedTo: '',
 };
 
 export const createTicketFilterPatch = (

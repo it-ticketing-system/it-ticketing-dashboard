@@ -80,7 +80,7 @@ const UserMenu = () => {
 
       <Dropdown.Popover
         placement="bottom left"
-        className="dir-rtl min-w-56 rounded-xl border border-neutral-200 bg-white p-2 shadow-lg"
+        className="min-w-56 rounded-xl border border-neutral-200 bg-white p-2 shadow-lg"
       >
         <Dropdown.Menu
           aria-label={tHeader('userMenu')}

@@ -1,7 +1,7 @@
 'use client';
 
 import { Button } from '@heroui/react';
-import { Plus, RotateCcw } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
@@ -24,10 +24,9 @@ import {
 import type { SupportTableData } from './support-table/types';
 import type { ApiRequestError } from '@/apis/core/api-error';
 
-const SupportMobileFilters = dynamic(
-  () => import('./support-mobile-filters'),
-  { ssr: false },
-);
+const SupportMobileFilters = dynamic(() => import('./support-mobile-filters'), {
+  ssr: false,
+});
 
 type SupportsClientProps = {
   initialFilters: SupportsFiltersValue & { page: number };
@@ -71,11 +70,6 @@ const SupportsClient = ({
       ? initialSupportsError
       : null);
 
-  const hasActiveFilters =
-    Boolean(filters.search) ||
-    Boolean(filters.departmentId) ||
-    Boolean(filters.availabilityStatus);
-
   const updateFilters = (
     patch: Partial<SupportsFiltersValue & { page: number }>,
   ) => {
@@ -113,23 +107,6 @@ const SupportsClient = ({
     });
   };
 
-  const handleResetFilters = () => {
-    updateQueries(
-      {
-        search: undefined,
-        departmentId: undefined,
-        availabilityStatus: undefined,
-        page: undefined,
-      },
-      {
-        clear: ['search', 'departmentId', 'availabilityStatus', 'page'],
-        history: 'replace',
-        scroll: false,
-        strategy: 'native',
-      },
-    );
-  };
-
   const handlePageChange = (nextPage: number) => {
     setQuery('page', nextPage === 1 ? null : nextPage, {
       history: 'push',
@@ -145,7 +122,7 @@ const SupportsClient = ({
   return (
     <div className="flex flex-col gap-4">
       <div className="border-border bg-surface flex flex-col gap-4 rounded-xl border p-4 shadow-sm sm:flex-row sm:items-center">
-        <div className="flex-1 flex gap-2 w-full">
+        <div className="flex w-full flex-1 gap-2">
           <SearchInput
             label=""
             ariaLabel={t('searchAriaLabel')}
@@ -157,33 +134,33 @@ const SupportsClient = ({
           <Button
             onPress={() => router.push(ROUTES.supportAdd)}
             variant="primary"
-            className="sm:hidden px-3 min-w-0"
+            className="min-w-0 px-3 sm:hidden"
             isIconOnly
             aria-label={t('addSupport')}
           >
             <Plus className={ICON_SIZE_CLASS.sm} />
           </Button>
         </div>
-        
+
         <div className="sm:hidden">
-          <SupportMobileFilters filters={filters} onApplyFilters={updateFilters} />
+          <SupportMobileFilters
+            filters={filters}
+            onApplyFilters={updateFilters}
+          />
         </div>
 
-        <div className="hidden sm:flex flex-row items-center gap-4 w-full sm:w-auto">
+        <div className="hidden w-full flex-row items-center gap-4 sm:flex sm:w-auto">
           <div className="w-64">
             <SelectDepartment
               ariaLabel={t('departmentPlaceholder')}
-              value={
-                filters.departmentId ? String(filters.departmentId) : null
-              }
+              value={filters.departmentId ? String(filters.departmentId) : null}
               onChange={(departmentId) =>
                 updateFilters({
-                  departmentId: departmentId
-                    ? Number(departmentId)
-                    : undefined,
+                  departmentId: departmentId ? Number(departmentId) : undefined,
                 })
               }
               placeholder={t('departmentPlaceholder')}
+              emptyOptionLabel={t('allOption')}
             />
           </div>
           <div className="w-64">
@@ -196,19 +173,9 @@ const SupportsClient = ({
                 })
               }
               placeholder={t('availabilityPlaceholder')}
+              emptyOptionLabel={t('allOption')}
             />
           </div>
-          {hasActiveFilters && (
-            <Button
-              variant="outline"
-              onPress={handleResetFilters}
-              className="border-field-border text-danger h-11 px-3"
-              aria-label={t('reset')}
-            >
-              <RotateCcw aria-hidden="true" className={ICON_SIZE_CLASS.sm} />
-              <span className="hidden xl:inline">{t('reset')}</span>
-            </Button>
-          )}
           <Button
             onPress={() => router.push(ROUTES.supportAdd)}
             variant="primary"

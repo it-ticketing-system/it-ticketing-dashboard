@@ -22,38 +22,24 @@ type MyTicketsFiltersProps = {
   value: TicketFiltersValue;
   isPending: boolean;
   onChange: (patch: TicketFiltersPatch) => void;
-  onReset: () => void;
 };
 
 const MyTicketsFilters = ({
   value,
   isPending,
   onChange,
-  onReset,
 }: MyTicketsFiltersProps) => {
   const t = useTranslations('tickets.filters');
   const { isDesktop } = useMediaQuery();
-  const {
-    search,
-    status,
-    department,
-    support,
-    user,
-    createdFrom,
-    createdTo,
-    updatedFrom,
-    updatedTo,
-  } = value;
+  const { search, status, department, support, user, createdFrom, createdTo } =
+    value;
 
   const activeFilterCount =
     Number(Boolean(status)) +
     Number(Boolean(department)) +
     Number(Boolean(support)) +
     Number(Boolean(user)) +
-    Number(Boolean(createdFrom || createdTo)) +
-    Number(Boolean(updatedFrom || updatedTo));
-
-  const hasActiveFilters = Boolean(search) || activeFilterCount > 0;
+    Number(Boolean(createdFrom || createdTo));
 
   const searchControl = (
     <SearchInput
@@ -89,11 +75,6 @@ const MyTicketsFilters = ({
           <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
           <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
           <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
-          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
-
-          <div className="mt-1 flex justify-end lg:col-span-2 xl:col-span-4">
-            <div className="border-border bg-primary-50 h-11 w-[160px] animate-pulse rounded-md border" />
-          </div>
         </section>
       </>
     );
@@ -113,8 +94,6 @@ const MyTicketsFilters = ({
               user={user || ''}
               createdFrom={createdFrom || ''}
               createdTo={createdTo || ''}
-              updatedFrom={updatedFrom || ''}
-              updatedTo={updatedTo || ''}
               activeFilterCount={activeFilterCount}
               isPending={isPending}
               onApplyFilters={onChange}
@@ -126,11 +105,8 @@ const MyTicketsFilters = ({
       {isDesktop && (
         <TicketDesktopFilters
           value={value}
-          isPending={isPending}
-          hasActiveFilters={hasActiveFilters}
           searchControl={searchControl}
           onChange={onChange}
-          onReset={onReset}
         />
       )}
     </>

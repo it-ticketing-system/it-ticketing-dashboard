@@ -32,7 +32,7 @@ import {
 interface MessageComposerProps {
   ticketId: string;
   isDisabled: boolean;
-  disabledReason: 'closed' | 'notAssigned';
+  disabledReason: 'closed' | 'noPermission' | 'onLeave' | 'notAssigned';
 }
 
 const MessageComposer = ({
@@ -176,6 +176,31 @@ const MessageComposer = ({
   const isSubmitDisabled = isDisabled || isPending || !message.trim();
 
   if (isDisabled) {
+    const disabledContent = {
+      closed: {
+        title: t('closed.title'),
+        description: t('closed.description'),
+        placeholder: t('closed.placeholder'),
+      },
+      noPermission: {
+        title: t('noPermission.title'),
+        description: t('noPermission.description'),
+        placeholder: t('noPermission.placeholder'),
+      },
+      onLeave: {
+        title: t('onLeave.title'),
+        description: t('onLeave.description'),
+        placeholder: t('onLeave.placeholder'),
+      },
+      notAssigned: {
+        title: t('notAssigned.title'),
+        description: t('notAssigned.description'),
+        placeholder: t('notAssigned.placeholder'),
+      },
+    } ;
+
+    const content = disabledContent[disabledReason];
+
     return (
       <div className="w-full min-w-0 space-y-3">
         <div className="border-warning-200 bg-warning-soft flex items-start gap-3 rounded-lg border p-3">
@@ -189,11 +214,11 @@ const MessageComposer = ({
 
           <div>
             <p className="text-body-sm text-foreground font-semibold">
-              {t(`${disabledReason}.title`)}
+              {content.title}
             </p>
 
             <p className="text-caption text-muted mt-1">
-              {t(`${disabledReason}.description`)}
+              {content.description}
             </p>
           </div>
         </div>
@@ -215,7 +240,7 @@ const MessageComposer = ({
             rows={1}
             fullWidth
             variant="secondary"
-            placeholder={t(`${disabledReason}.placeholder`)}
+            placeholder={content.placeholder}
             className="min-h-11 min-w-0 resize-none rounded-lg"
           />
 

@@ -112,6 +112,7 @@ export const toTicketMessage = (message: TicketMessageDto): ITicketMessage => {
 
   return {
     id: String(message.id),
+    senderId: String(message.sender.id),
     type: isUser ? 'user' : 'support',
     senderName: message.sender.name,
     senderAvatarUrl: message.sender.profileImageUrl

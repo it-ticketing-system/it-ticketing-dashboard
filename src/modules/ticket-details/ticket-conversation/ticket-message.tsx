@@ -9,6 +9,7 @@ import type { TicketSystemMessageTone } from '@/models';
 
 interface TicketMessageProps {
   message: TicketMessage;
+  isOwnMessage?: boolean;
 }
 
 const SYSTEM_STYLES: Record<TicketSystemMessageTone, string> = {
@@ -86,7 +87,10 @@ const SystemMessage = ({ message }: TicketMessageProps) => {
   );
 };
 
-const TicketMessage = ({ message }: TicketMessageProps) => {
+const TicketMessage = ({
+  message,
+  isOwnMessage = false,
+}: TicketMessageProps) => {
   const t = useTranslations('ticketDetails');
 
   if (message.type === 'system') {
@@ -97,9 +101,13 @@ const TicketMessage = ({ message }: TicketMessageProps) => {
 
   const senderName =
     message.senderName ??
-    (isUser ? t('conversation.you') : t('conversation.support'));
+    (isOwnMessage
+      ? t('conversation.you')
+      : isUser
+        ? t('conversation.user')
+        : t('conversation.support'));
 
-  const bubbleClassName = isUser
+  const bubbleClassName = isOwnMessage
     ? 'border-primary-100 bg-accent-soft'
     : 'border-border bg-surface-secondary';
 
@@ -107,10 +115,10 @@ const TicketMessage = ({ message }: TicketMessageProps) => {
     <article
       className={cn(
         'flex w-full items-start gap-3',
-        isUser ? 'justify-start' : 'justify-end',
+        isOwnMessage ? 'justify-start' : 'justify-end',
       )}
     >
-      {isUser ? (
+      {isOwnMessage ? (
         <SenderAvatar src={message.senderAvatarUrl} name={senderName} />
       ) : null}
 
@@ -124,7 +132,7 @@ const TicketMessage = ({ message }: TicketMessageProps) => {
           <span
             className={cn(
               'text-caption font-semibold',
-              isUser ? 'text-accent' : 'text-foreground',
+              isOwnMessage ? 'text-accent' : 'text-foreground',
             )}
           >
             {senderName}
@@ -157,7 +165,7 @@ const TicketMessage = ({ message }: TicketMessageProps) => {
         ) : null}
       </div>
 
-      {!isUser ? (
+      {!isOwnMessage ? (
         <SenderAvatar src={message.senderAvatarUrl} name={senderName} />
       ) : null}
     </article>

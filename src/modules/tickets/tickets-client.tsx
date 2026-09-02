@@ -14,7 +14,6 @@ import { TicketTableData } from './ticket-table/types';
 import {
   areTicketFiltersEqual,
   createTicketsParams,
-  FILTER_QUERY_KEYS,
   parseTicketFilters,
 } from './tickets-query';
 import type { ApiRequestError } from '@/apis/core/api-error';
@@ -30,7 +29,7 @@ const TicketsClient = ({
   initialTickets,
   initialTicketsError,
 }: TicketsClientProps) => {
-  const { getQuery, setQuery, updateQueries, removeQueries } = useQueryState();
+  const { getQuery, setQuery, updateQueries } = useQueryState();
 
   const filters = parseTicketFilters({
     search: getQuery('search') ?? undefined,
@@ -40,8 +39,6 @@ const TicketsClient = ({
     user: getQuery('user') ?? undefined,
     createdFrom: getQuery('createdFrom') ?? undefined,
     createdTo: getQuery('createdTo') ?? undefined,
-    updatedFrom: getQuery('updatedFrom') ?? undefined,
-    updatedTo: getQuery('updatedTo') ?? undefined,
     page: getQuery('page') ?? undefined,
   });
 
@@ -76,8 +73,6 @@ const TicketsClient = ({
     user: filters.user,
     createdFrom: filters.createdFrom,
     createdTo: filters.createdTo,
-    updatedFrom: filters.updatedFrom,
-    updatedTo: filters.updatedTo,
   };
 
   const changeFilters = (patch: TicketFiltersPatch) => {
@@ -88,8 +83,6 @@ const TicketsClient = ({
     const nextUser = getPatchValue(patch, 'user');
     const nextCreatedFrom = getPatchValue(patch, 'createdFrom');
     const nextCreatedTo = getPatchValue(patch, 'createdTo');
-    const nextUpdatedFrom = getPatchValue(patch, 'updatedFrom');
-    const nextUpdatedTo = getPatchValue(patch, 'updatedTo');
     const hasChange =
       (nextSearch !== undefined && nextSearch !== filters.search) ||
       (nextStatus !== undefined && nextStatus !== filters.status) ||
@@ -98,10 +91,7 @@ const TicketsClient = ({
       (nextUser !== undefined && nextUser !== filters.user) ||
       (nextCreatedFrom !== undefined &&
         nextCreatedFrom !== filters.createdFrom) ||
-      (nextCreatedTo !== undefined && nextCreatedTo !== filters.createdTo) ||
-      (nextUpdatedFrom !== undefined &&
-        nextUpdatedFrom !== filters.updatedFrom) ||
-      (nextUpdatedTo !== undefined && nextUpdatedTo !== filters.updatedTo);
+      (nextCreatedTo !== undefined && nextCreatedTo !== filters.createdTo);
 
     if (!hasChange && filters.page === 1) {
       return;
@@ -109,29 +99,6 @@ const TicketsClient = ({
 
     updateQueries(patch, {
       clear: ['page'],
-      history: 'replace',
-      scroll: false,
-      strategy: 'native',
-    });
-  };
-
-  const resetFilters = () => {
-    if (
-      !filters.search &&
-      !filters.status &&
-      !filters.department &&
-      !filters.support &&
-      !filters.user &&
-      !filters.createdFrom &&
-      !filters.createdTo &&
-      !filters.updatedFrom &&
-      !filters.updatedTo &&
-      filters.page === 1
-    ) {
-      return;
-    }
-
-    removeQueries(FILTER_QUERY_KEYS, {
       history: 'replace',
       scroll: false,
       strategy: 'native',
@@ -163,7 +130,6 @@ const TicketsClient = ({
           value={filterValue}
           isPending={ticketsQuery.isFetching}
           onChange={changeFilters}
-          onReset={resetFilters}
         />
       }
     />

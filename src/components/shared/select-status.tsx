@@ -11,6 +11,7 @@ interface SelectStatusProps {
   value?: TicketStatus | null;
   onChange: (value: TicketStatus | null) => void;
   placeholder?: string;
+  emptyOptionLabel?: string;
   label?: string;
   ariaLabel?: string;
   isDisabled?: boolean;
@@ -27,10 +28,13 @@ const STATUS_OPTIONS: TicketStatus[] = [
   'closed',
 ];
 
+const EMPTY_OPTION_VALUE = '__all__';
+
 export const SelectStatus = ({
   value,
   onChange,
   placeholder,
+  emptyOptionLabel,
   label,
   ariaLabel,
   isDisabled,
@@ -44,7 +48,13 @@ export const SelectStatus = ({
     <Select
       value={value || null}
       onChange={(val) => {
-        onChange(val ? (String(val) as TicketStatus) : null);
+        const nextValue = val ? String(val) : '';
+
+        onChange(
+          nextValue && nextValue !== EMPTY_OPTION_VALUE
+            ? (nextValue as TicketStatus)
+            : null,
+        );
       }}
       placeholder={placeholder}
       isDisabled={isDisabled}
@@ -63,6 +73,19 @@ export const SelectStatus = ({
 
       <Select.Popover placement="bottom end">
         <ListBox aria-label={ariaLabel}>
+          {emptyOptionLabel ? (
+            <ListBox.Item
+              key={EMPTY_OPTION_VALUE}
+              id={EMPTY_OPTION_VALUE}
+              textValue={emptyOptionLabel}
+            >
+              <span className="min-w-0 flex-1 truncate">
+                {emptyOptionLabel}
+              </span>
+              <ListBox.ItemIndicator />
+            </ListBox.Item>
+          ) : null}
+
           {STATUS_OPTIONS.map((st) => (
             <ListBox.Item key={st} id={st} textValue={t(st)}>
               <span className="min-w-0 flex-1 truncate">{t(st)}</span>

@@ -7,8 +7,7 @@
   "title": "گزارش‌ها",
   "description": "وضعیت تیکت‌ها، دپارتمان‌ها و عملکرد پشتیبان‌ها را با فیلترهای مدیریتی بررسی کنید.",
   "actions": {
-    "retry": "تلاش دوباره",
-    "reset": "بازنشانی"
+    "retry": "تلاش دوباره"
   },
   "ranges": {
     "today": "امروز",
@@ -34,12 +33,23 @@
     "department": {
       "label": "دپارتمان",
       "ariaLabel": "فیلتر دپارتمان",
-      "placeholder": "همه دپارتمان‌ها"
+      "placeholder": "همه دپارتمان‌ها",
+      "allOption": "همه"
     },
     "support": {
       "label": "پشتیبان",
       "ariaLabel": "فیلتر پشتیبان",
-      "placeholder": "همه پشتیبان‌ها"
+      "placeholder": "همه پشتیبان‌ها",
+      "allOption": "همه"
+    },
+    "mobile": {
+      "title": "فیلترها",
+      "openAriaLabel": "باز کردن فیلترهای گزارش",
+      "dialogAriaLabel": "دیالوگ فیلترهای گزارش",
+      "heading": "فیلتر گزارش‌ها",
+      "description": "بازه و فیلترهای گزارش را انتخاب کنید.",
+      "cancel": "انصراف",
+      "apply": "اعمال"
     }
   },
   "summary": {
