@@ -112,7 +112,7 @@ const TicketsTable = ({
       <TableContainer
         ariaLabel={t('ariaLabel')}
         headerCells={headerCells}
-        items={isLoading ? Array.from({ length: 5 }).map((_, i) => ({ id: `skeleton-${i}` } as unknown as import('@/models').ITicket)) : data.items}
+        items={isLoading ? Array.from({ length: 10 }).map((_, i) => ({ id: `skeleton-${i}` } as unknown as import('@/models').ITicket)) : data.items}
         errorComponent={
           error ? (
             <TableErrorState

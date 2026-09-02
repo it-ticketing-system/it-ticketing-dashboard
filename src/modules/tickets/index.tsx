@@ -13,11 +13,9 @@ const TicketsModule = async ({ searchParams }: TicketsModuleProps) => {
   const ticketsInitialData = await getTicketsInitialData(await searchParams);
 
   return (
-    <div>
       <Suspense fallback={<TicketsClientFallback />}>
         <TicketsClient {...ticketsInitialData} />
       </Suspense>
-    </div>
   );
 };
 

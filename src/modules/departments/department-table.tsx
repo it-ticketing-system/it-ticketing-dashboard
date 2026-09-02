@@ -98,7 +98,7 @@ export const DepartmentsTable = ({
         headerCells={headerCells}
         items={
           isLoading
-            ? Array.from({ length: 5 }).map(
+            ? Array.from({ length: 10 }).map(
                 (_, i) => ({ id: `skeleton-${i}` } as unknown as IDepartmentListItem),
               )
             : data.items

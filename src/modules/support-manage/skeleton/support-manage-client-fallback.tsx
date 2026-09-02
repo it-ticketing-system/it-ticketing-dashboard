@@ -24,7 +24,7 @@ const SupportManageClientFallback = () => {
           <div className="space-y-3">
             <Skeleton className="h-5 w-24 rounded-md" />
             <div className="space-y-2">
-              {Array.from({ length: 5 }).map((_, i) => (
+              {Array.from({ length: 10 }).map((_, i) => (
                 <Skeleton key={i} className="h-6 w-48 rounded-md" />
               ))}
             </div>

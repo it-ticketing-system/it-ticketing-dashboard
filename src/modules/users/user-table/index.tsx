@@ -82,7 +82,7 @@ const UsersTable = ({
       <TableContainer
         ariaLabel={t('ariaLabel')}
         headerCells={headerCells}
-        items={isLoading ? Array.from({ length: 5 }).map((_, i) => ({ id: `skeleton-${i}` } as unknown as IUserListItem)) : data.items}
+        items={isLoading ? Array.from({ length: 10 }).map((_, i) => ({ id: `skeleton-${i}` } as unknown as IUserListItem)) : data.items}
         errorComponent={
           error ? (
             <TableErrorState

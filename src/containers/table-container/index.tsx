@@ -83,7 +83,7 @@ const TablePaginationFallback = () => {
       <div className="bg-primary-50 h-4 w-40 rounded-sm" />
 
       <div className="flex gap-1">
-        {Array.from({ length: 5 }).map((_, index) => (
+        {Array.from({ length: 10 }).map((_, index) => (
           <div key={index} className="bg-primary-50 size-8 rounded-md" />
         ))}
       </div>

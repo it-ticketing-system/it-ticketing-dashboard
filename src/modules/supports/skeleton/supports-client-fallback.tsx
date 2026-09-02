@@ -25,7 +25,7 @@ const SupportsClientFallback = () => {
         </div>
         {/* Table Rows */}
         <div className="flex flex-col gap-2 p-4">
-          {Array.from({ length: 5 }).map((_, i) => (
+          {Array.from({ length: 10}).map((_, i) => (
             <div key={i} className="flex h-12 items-center gap-4">
               <Skeleton className="h-4 w-32 rounded-sm" />
               <Skeleton className="h-4 w-24 rounded-sm" />
@@ -41,7 +41,7 @@ const SupportsClientFallback = () => {
         <div className="border-border flex h-14 items-center justify-between border-t px-4">
           <Skeleton className="h-4 w-24 rounded-sm" />
           <div className="flex gap-1">
-            {Array.from({ length: 5 }).map((_, i) => (
+            {Array.from({ length: 10 }).map((_, i) => (
               <Skeleton key={i} className="size-8 rounded-md" />
             ))}
           </div>

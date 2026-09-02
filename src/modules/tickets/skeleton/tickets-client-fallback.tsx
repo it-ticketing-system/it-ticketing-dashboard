@@ -17,7 +17,7 @@ const TicketsClientFallback = () => {
       </div>
 
       <div className="border-border bg-surface hidden overflow-hidden rounded-xl border shadow-sm lg:block">
-        {Array.from({ length: 5 }).map((_, index) => (
+        {Array.from({ length: 10 }).map((_, index) => (
           <div
             key={index}
             className="border-separator grid h-16 grid-cols-[150px_minmax(260px,1fr)_180px_160px_190px_96px] items-center gap-4 border-b px-4 last:border-b-0"
