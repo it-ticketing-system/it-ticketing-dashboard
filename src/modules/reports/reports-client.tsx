@@ -3,10 +3,7 @@
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { clientReportServices } from '@/apis/services/reports/client';
-import {
-  FilterToolbar,
-  TableErrorState,
-} from '@/components/shared';
+import { FilterToolbar, TableErrorState } from '@/components/shared';
 import { QUERY_KEYS } from '@/constants';
 import { useGetRequest, useQueryState } from '@/hooks';
 import ReportFilterFields from './report-filter-fields';
@@ -123,7 +120,6 @@ const ReportsClient = ({ initialSearchParams }: ReportsClientProps) => {
         <TableErrorState
           title={t('states.cardsErrorTitle')}
           errorMessage={tCommon(cardsRequest.error.messageKey)}
-          retryLabel={t('actions.retry')}
           isRetrying={cardsRequest.isFetching}
           onRetry={() => void cardsRequest.refetch().catch(() => undefined)}
           className="border-border bg-surface rounded-xl border shadow-sm"

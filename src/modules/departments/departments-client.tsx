@@ -106,7 +106,7 @@ export const DepartmentsClient = ({
         </div>
 
         <div className="hidden items-end gap-4 lg:flex">
-          <div className="min-w-0 max-w-md flex-1">
+          <div className="min-w-0 flex-1">
             <SearchInput
               label=""
               ariaLabel={t('searchAriaLabel')}

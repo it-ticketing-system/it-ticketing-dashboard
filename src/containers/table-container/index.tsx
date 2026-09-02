@@ -1,11 +1,12 @@
 'use client';
 
-import { Pagination, Table } from '@heroui/react';
+import { Pagination, Skeleton, Table } from '@heroui/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { Suspense, type ReactNode } from 'react';
-import { ICON_SIZE_CLASS } from '@/constants';
+import { ICON_SIZE_CLASS, PAGE_SIZE } from '@/constants';
 import { useQueryState } from '@/hooks';
+import { cn } from '@/utils';
 import type { PaginationMeta } from '@/apis/core/types/api-response';
 
 type TableKey = string | number;
@@ -14,6 +15,10 @@ export interface TableHeaderOptions<TColumnKey extends TableKey = TableKey> {
   id: TColumnKey;
   label: ReactNode;
   className?: string;
+  cellClassName?: string;
+  cellDir?: 'ltr' | 'rtl' | 'auto';
+  isNowrap?: boolean;
+  skeletonClassName?: string;
   isRowHeader?: boolean;
 }
 
@@ -29,12 +34,21 @@ interface TableContainerProps<
 > {
   ariaLabel: string;
   headerCells: Array<TableHeaderOptions<TColumnKey>>;
+  topContent?: ReactNode;
   errorComponent?: ReactNode;
   emptyComponent?: ReactNode;
   pagination?: TablePaginationOptions;
   paginationFallback?: ReactNode;
   items: TItem[];
-  children: (item: TItem) => ReactNode;
+  isLoading?: boolean;
+  loadingRowCount?: number;
+  className?: string;
+  rowClassName?: string | ((item: TItem) => string);
+  renderCell: (
+    item: TItem,
+    columnKey: TColumnKey,
+    column: TableHeaderOptions<TColumnKey>,
+  ) => ReactNode;
 }
 
 type PaginationToken = number | 'start-ellipsis' | 'end-ellipsis';
@@ -80,15 +94,40 @@ const TablePaginationFallback = () => {
       aria-hidden="true"
       className="flex w-full items-center justify-between"
     >
-      <div className="bg-primary-50 h-4 w-40 rounded-sm" />
+      <Skeleton className="h-4 w-40 rounded-sm" />
 
       <div className="flex gap-1">
         {Array.from({ length: 10 }).map((_, index) => (
-          <div key={index} className="bg-primary-50 size-8 rounded-md" />
+          <Skeleton key={index} className="size-8 rounded-md" />
         ))}
       </div>
     </div>
   );
+};
+
+const DEFAULT_SKELETON_CLASSNAME = 'h-4 w-28 rounded-sm';
+
+const getTableCellClassName = <TColumnKey extends TableKey>(
+  column: TableHeaderOptions<TColumnKey>,
+) => {
+  return cn(column.isNowrap && 'whitespace-nowrap', column.cellClassName);
+};
+
+const createLoadingRows = <TColumnKey extends TableKey>(
+  headerCells: Array<TableHeaderOptions<TColumnKey>>,
+  loadingRowCount: number,
+) => {
+  return Array.from({ length: loadingRowCount }, (_, rowIndex) => (
+    <Table.Row key={`loading-row-${rowIndex}`} id={`loading-row-${rowIndex}`}>
+      {headerCells.map((column) => (
+        <Table.Cell key={column.id} className={getTableCellClassName(column)}>
+          <Skeleton
+            className={cn(DEFAULT_SKELETON_CLASSNAME, column.skeletonClassName)}
+          />
+        </Table.Cell>
+      ))}
+    </Table.Row>
+  ));
 };
 
 const TablePagination = ({
@@ -190,14 +229,18 @@ const TableContainer = <
 >({
   ariaLabel,
   headerCells,
+  topContent,
   errorComponent,
   emptyComponent,
   pagination,
   paginationFallback = <TablePaginationFallback />,
   items,
-  children,
+  isLoading = false,
+  className,
+  rowClassName,
+  renderCell,
 }: TableContainerProps<TItem, TColumnKey>) => {
-  return (
+  const table = (
     <Table variant="secondary">
       <Table.ScrollContainer>
         <Table.Content dir="rtl" aria-label={ariaLabel}>
@@ -215,7 +258,6 @@ const TableContainer = <
           </Table.Header>
 
           <Table.Body
-            items={items}
             renderEmptyState={() => {
               if (errorComponent) {
                 return errorComponent;
@@ -224,10 +266,32 @@ const TableContainer = <
               return emptyComponent ?? null;
             }}
           >
-            {children}
+            {isLoading
+              ? createLoadingRows(headerCells, PAGE_SIZE)
+              : items.map((item) => (
+                  <Table.Row
+                    key={item.id}
+                    id={item.id}
+                    className={
+                      typeof rowClassName === 'function'
+                        ? rowClassName(item)
+                        : rowClassName
+                    }
+                  >
+                    {headerCells.map((column) => (
+                      <Table.Cell
+                        key={column.id}
+                        dir={column.cellDir}
+                        className={getTableCellClassName(column)}
+                      >
+                        {renderCell(item, column.id, column)}
+                      </Table.Cell>
+                    ))}
+                  </Table.Row>
+                ))}
           </Table.Body>
         </Table.Content>
-        </Table.ScrollContainer>
+      </Table.ScrollContainer>
 
       {pagination && pagination.total > 0 && (
         <Table.Footer>
@@ -237,6 +301,17 @@ const TableContainer = <
         </Table.Footer>
       )}
     </Table>
+  );
+
+  if (!topContent && !className) {
+    return table;
+  }
+
+  return (
+    <div className={cn('flex flex-col gap-4', className)}>
+      {topContent}
+      {table}
+    </div>
   );
 };
 

@@ -73,7 +73,8 @@ const baseOptions = {
           family: 'Vazirmatn, sans-serif',
           size: 12,
         },
-        callback: (value: string | number) => numberFormatter.format(Number(value)),
+        callback: (value: string | number) =>
+          numberFormatter.format(Number(value)),
       },
     },
   },
@@ -131,7 +132,6 @@ export const TicketTrendChart = ({
       isEmpty={points.length === 0}
       isLoading={isLoading}
       isRetrying={isRetrying}
-      retryLabel={t('actions.retry')}
       onRetry={onRetry}
     >
       <Line
@@ -184,7 +184,6 @@ export const DepartmentStatisticsChart = ({
       isEmpty={statistics.length === 0}
       isLoading={isLoading}
       isRetrying={isRetrying}
-      retryLabel={t('actions.retry')}
       onRetry={onRetry}
     >
       <Bar
@@ -237,7 +236,6 @@ export const SupportPerformanceChart = ({
       isEmpty={performance.length === 0}
       isLoading={isLoading}
       isRetrying={isRetrying}
-      retryLabel={t('actions.retry')}
       onRetry={onRetry}
     >
       <Bar

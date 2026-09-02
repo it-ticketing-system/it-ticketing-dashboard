@@ -1,6 +1,5 @@
 'use client';
 
-import { TableCell, TableRow, Skeleton } from '@heroui/react';
 import { useTranslations } from 'next-intl';
 import { TableEmptyState, TableErrorState } from '@/components/shared';
 import { TableContainer } from '@/containers';
@@ -10,23 +9,6 @@ import type { TableHeaderOptions } from '@/containers';
 import type { IUserListItem } from '@/models';
 
 type UserTableColumnKey = 'name' | 'username' | 'ticketCount' | 'createdAt';
-
-const UserRowSkeleton = () => (
-  <TableRow>
-    <TableCell>
-      <Skeleton className="h-4 w-32 rounded-sm" />
-    </TableCell>
-    <TableCell>
-      <Skeleton className="h-4 w-24 rounded-sm" />
-    </TableCell>
-    <TableCell>
-      <Skeleton className="h-4 w-12 rounded-sm" />
-    </TableCell>
-    <TableCell>
-      <Skeleton className="h-4 w-28 rounded-sm" />
-    </TableCell>
-  </TableRow>
-);
 
 const UsersTable = ({
   data,
@@ -45,77 +27,66 @@ const UsersTable = ({
       id: 'name',
       label: t('columns.name'),
       isRowHeader: true,
+      skeletonClassName: 'w-32',
     },
     {
       id: 'username',
       label: t('columns.username'),
+      cellClassName: 'text-neutral-500',
+      skeletonClassName: 'w-24',
     },
     {
       id: 'ticketCount',
       label: t('columns.ticketCount'),
+      skeletonClassName: 'w-12',
     },
     {
       id: 'createdAt',
       label: t('columns.createdAt'),
+      isNowrap: true,
+      skeletonClassName: 'w-28',
     },
   ];
 
-  const renderCell = (user: IUserListItem, columnKey: React.Key) => {
+  const renderCell = (user: IUserListItem, columnKey: UserTableColumnKey) => {
     switch (columnKey) {
       case 'name':
-        return <span>{user.name}</span>;
+        return user.name;
       case 'username':
-        return <span className="text-neutral-500">{user.username}</span>;
+        return user.username;
       case 'ticketCount':
-        return <span>{user.ticketCount}</span>;
+        return user.ticketCount;
       case 'createdAt':
-        return <span>{formatPersianDateTime(user.createdAt)}</span>;
+        return formatPersianDateTime(user.createdAt);
       default:
         return null;
     }
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      {topContent}
-
-      <TableContainer
-        ariaLabel={t('ariaLabel')}
-        headerCells={headerCells}
-        items={isLoading ? Array.from({ length: 10 }).map((_, i) => ({ id: `skeleton-${i}` } as unknown as IUserListItem)) : data.items}
-        errorComponent={
-          error ? (
-            <TableErrorState
-              title={commonT('table.error.title')}
-              errorMessage={commonT(error.messageKey)}
-              retryLabel={commonT('table.error.retry')}
-              isRetrying={isPending}
-              onRetry={onRetry}
-            />
-          ) : undefined
-        }
-        emptyComponent={<TableEmptyState title={t('emptyState')} />}
-        pagination={{
-          ...data.meta,
-          isPending,
-          onPageChange,
-        }}
-      >
-        {(item) =>
-          isLoading ? (
-            <UserRowSkeleton />
-          ) : (
-            <TableRow key={item.id}>
-              {headerCells.map((column) => (
-                <TableCell key={column.id}>
-                  {renderCell(item, column.id)}
-                </TableCell>
-              ))}
-            </TableRow>
-          )
-        }
-      </TableContainer>
-    </div>
+    <TableContainer
+      ariaLabel={t('ariaLabel')}
+      headerCells={headerCells}
+      topContent={topContent}
+      items={data.items}
+      isLoading={isLoading}
+      errorComponent={
+        error ? (
+          <TableErrorState
+            errorMessage={commonT(error.messageKey)}
+            isRetrying={isPending}
+            onRetry={onRetry}
+          />
+        ) : undefined
+      }
+      emptyComponent={<TableEmptyState title={t('emptyState')} />}
+      pagination={{
+        ...data.meta,
+        isPending,
+        onPageChange,
+      }}
+      renderCell={renderCell}
+    />
   );
 };
 

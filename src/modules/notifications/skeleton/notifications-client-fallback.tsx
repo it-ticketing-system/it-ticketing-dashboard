@@ -1,3 +1,4 @@
+import { Skeleton } from '@heroui/react';
 import NotificationsTableModeFallback from './notifications-table-mode-fallback';
 
 const NotificationsClientFallback = () => {
@@ -6,10 +7,7 @@ const NotificationsClientFallback = () => {
       <div className="border-border bg-surface rounded-xl border p-3 shadow-sm lg:p-4">
         <div className="-mx-1 flex gap-2 overflow-hidden px-1 pb-1 lg:mx-0 lg:flex-wrap lg:justify-end lg:p-0">
           {Array.from({ length: 10 }).map((_, index) => (
-            <div
-              key={index}
-              className="h-10 w-24 shrink-0 animate-pulse rounded-full bg-neutral-100"
-            />
+            <Skeleton key={index} className="h-10 w-24 shrink-0 rounded-full" />
           ))}
         </div>
       </div>

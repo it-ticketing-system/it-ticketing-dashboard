@@ -15,7 +15,6 @@ type ChartPanelProps = {
   isEmpty?: boolean;
   isLoading?: boolean;
   isRetrying?: boolean;
-  retryLabel?: string;
   onRetry?: () => void;
 };
 
@@ -30,7 +29,6 @@ const ChartPanel = ({
   isEmpty = false,
   isLoading = false,
   isRetrying = false,
-  retryLabel,
   onRetry,
 }: ChartPanelProps) => {
   return (
@@ -48,7 +46,6 @@ const ChartPanel = ({
         <TableErrorState
           title={title}
           errorMessage={errorMessage ?? error.code}
-          retryLabel={retryLabel}
           isRetrying={isRetrying}
           onRetry={onRetry}
           className="min-h-72"

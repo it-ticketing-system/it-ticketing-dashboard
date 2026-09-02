@@ -93,7 +93,7 @@ const UsersClient = ({
         onRetry={retry}
         topContent={
           <FilterToolbar>
-            <div className="flex w-full flex-1 gap-2 sm:max-w-md">
+            <div className="flex w-full flex-1 gap-2">
               <SearchInput
                 label=""
                 ariaLabel={t('searchAriaLabel')}

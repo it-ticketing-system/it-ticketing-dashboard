@@ -9,7 +9,7 @@ export const SidebarSkeleton = ({
   collapsed = false,
 }: SidebarSkeletonProps) => {
   return (
-    <div className="flex h-full min-h-0 animate-pulse flex-col">
+    <div className="flex h-full min-h-0 flex-col">
       <div
         className={cn(
           'flex h-16 shrink-0 items-center border-b border-neutral-200/60',

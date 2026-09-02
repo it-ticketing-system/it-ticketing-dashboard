@@ -1,5 +1,6 @@
 'use client';
 
+import { Skeleton } from '@heroui/react';
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { SearchInput } from '@/components/shared';
@@ -61,20 +62,20 @@ const MyTicketsFilters = ({
           aria-hidden="true"
           className="flex items-center gap-3 lg:hidden"
         >
-          <div className="border-border bg-primary-50 h-11 min-w-0 flex-1 animate-pulse rounded-md border" />
-          <div className="border-border bg-primary-50 size-11 shrink-0 animate-pulse rounded-md border" />
+          <Skeleton className="border-border h-11 min-w-0 flex-1 rounded-md border" />
+          <Skeleton className="border-border size-11 shrink-0 rounded-md border" />
         </section>
 
         <section
           aria-hidden="true"
           className="border-border bg-surface hidden gap-4 rounded-xl border p-4 shadow-sm lg:grid lg:grid-cols-2 xl:grid-cols-4"
         >
-          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border lg:col-span-2 xl:col-span-2" />
-          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
-          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
-          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
-          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
-          <div className="border-border bg-primary-50 h-11 animate-pulse rounded-md border" />
+          <Skeleton className="border-border h-11 rounded-md border lg:col-span-2 xl:col-span-2" />
+          <Skeleton className="border-border h-11 rounded-md border" />
+          <Skeleton className="border-border h-11 rounded-md border" />
+          <Skeleton className="border-border h-11 rounded-md border" />
+          <Skeleton className="border-border h-11 rounded-md border" />
+          <Skeleton className="border-border h-11 rounded-md border" />
         </section>
       </>
     );

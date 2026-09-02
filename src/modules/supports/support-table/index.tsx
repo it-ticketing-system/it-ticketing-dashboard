@@ -1,10 +1,14 @@
 'use client';
 
-import { TableCell, TableRow, Skeleton, Button } from '@heroui/react';
+import { Button } from '@heroui/react';
 import { Pencil } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { TableEmptyState, TableErrorState, SupportStatusChip } from '@/components/shared';
+import {
+  TableEmptyState,
+  TableErrorState,
+  SupportStatusChip,
+} from '@/components/shared';
 import { ICON_SIZE_CLASS, ROUTES } from '@/constants';
 import { TableContainer } from '@/containers';
 import { formatPersianDateTime } from '@/utils';
@@ -12,33 +16,14 @@ import type { SupportsTableProps } from './types';
 import type { TableHeaderOptions } from '@/containers';
 import type { ISupportListItem } from '@/models';
 
-type SupportTableColumnKey = 'name' | 'username' | 'departments' | 'availabilityStatus' | 'activeTicketCount' | 'lastActivityAt' | 'actions';
-
-const SupportRowSkeleton = () => (
-  <TableRow>
-    <TableCell>
-      <Skeleton className="h-4 w-32 rounded-sm" />
-    </TableCell>
-    <TableCell>
-      <Skeleton className="h-4 w-24 rounded-sm" />
-    </TableCell>
-    <TableCell>
-      <Skeleton className="h-4 w-40 rounded-sm" />
-    </TableCell>
-    <TableCell>
-      <Skeleton className="h-6 w-16 rounded-full" />
-    </TableCell>
-    <TableCell>
-      <Skeleton className="h-4 w-12 rounded-sm" />
-    </TableCell>
-    <TableCell>
-      <Skeleton className="h-4 w-28 rounded-sm" />
-    </TableCell>
-    <TableCell>
-      <Skeleton className="h-8 w-8 rounded-md" />
-    </TableCell>
-  </TableRow>
-);
+type SupportTableColumnKey =
+  | 'name'
+  | 'username'
+  | 'departments'
+  | 'availabilityStatus'
+  | 'activeTicketCount'
+  | 'lastActivityAt'
+  | 'actions';
 
 const SupportsTable = ({
   data,
@@ -55,27 +40,59 @@ const SupportsTable = ({
   const statusT = useTranslations('supports.status');
 
   const headerCells: Array<TableHeaderOptions<SupportTableColumnKey>> = [
-    { id: 'name', label: t('columns.name'), isRowHeader: true },
-    { id: 'username', label: t('columns.username') },
-    { id: 'departments', label: t('columns.departments') },
-    { id: 'availabilityStatus', label: t('columns.availabilityStatus') },
-    { id: 'activeTicketCount', label: t('columns.activeTicketCount') },
-    { id: 'lastActivityAt', label: t('columns.lastActivityAt') },
-    { id: 'actions', label: t('columns.actions') },
+    {
+      id: 'name',
+      label: t('columns.name'),
+      isRowHeader: true,
+      cellClassName: 'font-medium',
+      skeletonClassName: 'w-32',
+    },
+    {
+      id: 'username',
+      label: t('columns.username'),
+      cellClassName: 'text-neutral-500',
+      skeletonClassName: 'w-24',
+    },
+    {
+      id: 'departments',
+      label: t('columns.departments'),
+      cellClassName: 'text-neutral-700',
+      skeletonClassName: 'w-40',
+    },
+    {
+      id: 'availabilityStatus',
+      label: t('columns.availabilityStatus'),
+      skeletonClassName: 'h-6 w-16 rounded-full',
+    },
+    {
+      id: 'activeTicketCount',
+      label: t('columns.activeTicketCount'),
+      skeletonClassName: 'w-12',
+    },
+    {
+      id: 'lastActivityAt',
+      label: t('columns.lastActivityAt'),
+      isNowrap: true,
+      skeletonClassName: 'w-28',
+    },
+    {
+      id: 'actions',
+      label: t('columns.actions'),
+      skeletonClassName: 'h-8 w-8 rounded-md',
+    },
   ];
 
-  const renderCell = (support: ISupportListItem, columnKey: React.Key) => {
+  const renderCell = (
+    support: ISupportListItem,
+    columnKey: SupportTableColumnKey,
+  ) => {
     switch (columnKey) {
       case 'name':
-        return <span className="font-medium">{support.name}</span>;
+        return support.name;
       case 'username':
-        return <span className="text-neutral-500">{support.username}</span>;
+        return support.username;
       case 'departments':
-        return (
-          <span className="text-neutral-700">
-            {support.departments.map((d) => d.name).join('، ')}
-          </span>
-        );
+        return support.departments.map((d) => d.name).join('، ');
       case 'availabilityStatus':
         return (
           <SupportStatusChip
@@ -84,9 +101,11 @@ const SupportsTable = ({
           />
         );
       case 'activeTicketCount':
-        return <span>{support.activeTicketCount}</span>;
+        return support.activeTicketCount;
       case 'lastActivityAt':
-        return <span>{support.lastActivityAt ? formatPersianDateTime(support.lastActivityAt) : '-'}</span>;
+        return support.lastActivityAt
+          ? formatPersianDateTime(support.lastActivityAt)
+          : '-';
       case 'actions':
         return (
           <Button
@@ -105,52 +124,29 @@ const SupportsTable = ({
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      {topContent}
-
-      <TableContainer
-        ariaLabel={t('ariaLabel')}
-        headerCells={headerCells}
-        items={
-          isLoading
-            ? Array.from({ length: 10 }).map(
-                (_, i) => ({ id: `skeleton-${i}` } as unknown as ISupportListItem),
-              )
-            : data.items
-        }
-        errorComponent={
-          error ? (
-            <TableErrorState
-              title={commonT('table.error.title')}
-              errorMessage={commonT(error.messageKey)}
-              retryLabel={commonT('table.error.retry')}
-              isRetrying={isPending}
-              onRetry={onRetry}
-            />
-          ) : undefined
-        }
-        emptyComponent={<TableEmptyState title={t('emptyState')} />}
-        pagination={{
-          ...data.meta,
-          isPending,
-          onPageChange,
-        }}
-      >
-        {(item) =>
-          isLoading ? (
-            <SupportRowSkeleton />
-          ) : (
-            <TableRow key={item.id}>
-              {headerCells.map((column) => (
-                <TableCell key={column.id}>
-                  {renderCell(item, column.id)}
-                </TableCell>
-              ))}
-            </TableRow>
-          )
-        }
-      </TableContainer>
-    </div>
+    <TableContainer
+      ariaLabel={t('ariaLabel')}
+      headerCells={headerCells}
+      topContent={topContent}
+      items={data.items}
+      isLoading={isLoading}
+      errorComponent={
+        error ? (
+          <TableErrorState
+            errorMessage={commonT(error.messageKey)}
+            isRetrying={isPending}
+            onRetry={onRetry}
+          />
+        ) : undefined
+      }
+      emptyComponent={<TableEmptyState title={t('emptyState')} />}
+      pagination={{
+        ...data.meta,
+        isPending,
+        onPageChange,
+      }}
+      renderCell={renderCell}
+    />
   );
 };
 

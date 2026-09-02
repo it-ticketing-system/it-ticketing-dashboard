@@ -2,13 +2,13 @@
 
 import { Button } from '@heroui/react';
 import { AlertCircle, Inbox, RefreshCw } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { ICON_SIZE_CLASS } from '@/constants';
 import { cn } from '@/utils';
 
 export interface TableErrorStateProps {
-  title: string;
+  title?: string;
   errorMessage: string;
-  retryLabel?: string;
   className?: string;
   isRetrying?: boolean;
   onRetry?: () => void;
@@ -26,11 +26,13 @@ const stateClassName =
 export const TableErrorState = ({
   title,
   errorMessage,
-  retryLabel,
   className,
   isRetrying = false,
   onRetry,
 }: TableErrorStateProps) => {
+  const t = useTranslations('common.table.error');
+  const errorTitle = title ?? t('title');
+
   return (
     <div className={cn(stateClassName, className)}>
       <div className="bg-danger-50 text-danger flex size-12 items-center justify-center rounded-full">
@@ -38,7 +40,7 @@ export const TableErrorState = ({
       </div>
 
       <div className="space-y-1">
-        <p className="text-title text-foreground">{title}</p>
+        <p className="text-title text-foreground">{errorTitle}</p>
         <p className="text-body-sm text-muted">{errorMessage}</p>
       </div>
 
@@ -51,7 +53,7 @@ export const TableErrorState = ({
           className="mt-1 h-10"
         >
           <RefreshCw aria-hidden="true" className={ICON_SIZE_CLASS.sm} />
-          {retryLabel ?? 'تلاش مجدد'}
+          {t('retry')}
         </Button>
       )}
     </div>

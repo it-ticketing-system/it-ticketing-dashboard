@@ -1,6 +1,6 @@
 'use client';
 
-import { TableCell, TableRow, Skeleton, Button } from '@heroui/react';
+import { Button } from '@heroui/react';
 import { Pencil } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
@@ -24,24 +24,8 @@ interface DepartmentsTableProps {
   onRetry: () => void;
 }
 
-type DepartmentTableColumnKey = 'name' | 'supportCount' | 'ticketCount' | 'actions';
-
-const DepartmentRowSkeleton = () => (
-  <TableRow>
-    <TableCell>
-      <Skeleton className="h-4 w-32 rounded-sm" />
-    </TableCell>
-    <TableCell>
-      <Skeleton className="h-4 w-12 rounded-sm" />
-    </TableCell>
-    <TableCell>
-      <Skeleton className="h-4 w-12 rounded-sm" />
-    </TableCell>
-    <TableCell>
-      <Skeleton className="h-8 w-8 rounded-md" />
-    </TableCell>
-  </TableRow>
-);
+type DepartmentTableColumnKey =
+  'name' | 'supportCount' | 'ticketCount' | 'actions';
 
 export const DepartmentsTable = ({
   data,
@@ -58,20 +42,43 @@ export const DepartmentsTable = ({
   const commonT = useTranslations('common');
 
   const headerCells: Array<TableHeaderOptions<DepartmentTableColumnKey>> = [
-    { id: 'name', label: t('name'), isRowHeader: true },
-    { id: 'supportCount', label: t('supportCount') },
-    { id: 'ticketCount', label: t('ticketCount') },
-    { id: 'actions', label: t('actions') },
+    {
+      id: 'name',
+      label: t('name'),
+      isRowHeader: true,
+      cellClassName: 'font-medium',
+      skeletonClassName: 'w-32',
+    },
+    {
+      id: 'supportCount',
+      label: t('supportCount'),
+      cellClassName: 'text-neutral-700',
+      skeletonClassName: 'w-12',
+    },
+    {
+      id: 'ticketCount',
+      label: t('ticketCount'),
+      cellClassName: 'text-neutral-700',
+      skeletonClassName: 'w-12',
+    },
+    {
+      id: 'actions',
+      label: t('actions'),
+      skeletonClassName: 'h-8 w-8 rounded-md',
+    },
   ];
 
-  const renderCell = (department: IDepartmentListItem, columnKey: React.Key) => {
+  const renderCell = (
+    department: IDepartmentListItem,
+    columnKey: DepartmentTableColumnKey,
+  ) => {
     switch (columnKey) {
       case 'name':
-        return <span className="font-medium">{department.name}</span>;
+        return department.name;
       case 'supportCount':
-        return <span className="text-neutral-700">{department.supportCount}</span>;
+        return department.supportCount;
       case 'ticketCount':
-        return <span className="text-neutral-700">{department.ticketCount}</span>;
+        return department.ticketCount;
       case 'actions':
         return (
           <Button
@@ -90,51 +97,30 @@ export const DepartmentsTable = ({
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      {topContent}
-
-      <TableContainer
-        ariaLabel={t('name')}
-        headerCells={headerCells}
-        items={
-          isLoading
-            ? Array.from({ length: 10 }).map(
-                (_, i) => ({ id: `skeleton-${i}` } as unknown as IDepartmentListItem),
-              )
-            : data.items
-        }
-        errorComponent={
-          error ? (
-            <TableErrorState
-              title={commonT('table.error.title')}
-              errorMessage={commonT(error.messageKey as Parameters<typeof commonT>[0])}
-              retryLabel={commonT('table.error.retry')}
-              isRetrying={isPending}
-              onRetry={onRetry}
-            />
-          ) : undefined
-        }
-        emptyComponent={<TableEmptyState title={tRoot('emptyState')} />}
-        pagination={{
-          ...data.meta,
-          isPending,
-          onPageChange,
-        }}
-      >
-        {(item: IDepartmentListItem) =>
-          isLoading ? (
-            <DepartmentRowSkeleton />
-          ) : (
-            <TableRow key={item.id}>
-              {headerCells.map((column) => (
-                <TableCell key={column.id}>
-                  {renderCell(item, column.id)}
-                </TableCell>
-              ))}
-            </TableRow>
-          )
-        }
-      </TableContainer>
-    </div>
+    <TableContainer
+      ariaLabel={t('name')}
+      headerCells={headerCells}
+      topContent={topContent}
+      items={data.items}
+      isLoading={isLoading}
+      errorComponent={
+        error ? (
+          <TableErrorState
+            errorMessage={commonT(
+              error.messageKey as Parameters<typeof commonT>[0],
+            )}
+            isRetrying={isPending}
+            onRetry={onRetry}
+          />
+        ) : undefined
+      }
+      emptyComponent={<TableEmptyState title={tRoot('emptyState')} />}
+      pagination={{
+        ...data.meta,
+        isPending,
+        onPageChange,
+      }}
+      renderCell={renderCell}
+    />
   );
 };
