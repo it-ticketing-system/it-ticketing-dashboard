@@ -21,6 +21,7 @@ export type ApiErrorMessageKey =
   | 'errors.departmentNotFound'
   | 'errors.ticketNotFound'
   | 'errors.ticketClosed'
+  | 'errors.supportOnLeave'
   | 'errors.actionNotAllowed'
   | 'errors.invalidStatusTransition'
   | 'errors.supportNotInDepartment'
@@ -43,6 +44,7 @@ const API_ERROR_MESSAGE_KEYS = {
   TICKET_NOT_FOUND: 'errors.ticketNotFound',
   FORBIDDEN: 'errors.forbidden',
   TICKET_CLOSED: 'errors.ticketClosed',
+  SUPPORT_ON_LEAVE: 'errors.supportOnLeave',
   ACTION_NOT_ALLOWED: 'errors.actionNotAllowed',
   INVALID_STATUS_TRANSITION: 'errors.invalidStatusTransition',
   SUPPORT_NOT_IN_DEPARTMENT: 'errors.supportNotInDepartment',
