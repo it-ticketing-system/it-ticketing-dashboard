@@ -58,7 +58,10 @@ const TicketConversation = ({
               <TicketMessage
                 key={message.id}
                 message={message}
-                isOwnMessage={message.senderId === String(user?.id)}
+                isOwnMessage={
+                  message.senderId === String(user?.id) &&
+                  message.senderRole === user?.role
+                }
               />
             ))
           ) : (

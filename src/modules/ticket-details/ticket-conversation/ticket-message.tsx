@@ -1,7 +1,7 @@
 import { Avatar } from '@heroui/react';
 import { Bell, Info, Settings } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { FileAttachmentLink } from '@/components/shared';
+import { FileAttachmentLink, MetaChip } from '@/components/shared';
 import { ICON_SIZE_CLASS } from '@/constants';
 import { cn, getUserInitials } from '@/utils';
 import type { TicketMessage } from '../types';
@@ -98,6 +98,9 @@ const TicketMessage = ({
   }
 
   const isUser = message.type === 'user';
+  const senderRole = message.senderRole;
+  const shouldShowSenderRole =
+    (senderRole === 'ADMIN' || senderRole === 'SUPPORT') && !isOwnMessage;
 
   const senderName =
     message.senderName ??
@@ -129,14 +132,26 @@ const TicketMessage = ({
         )}
       >
         <header className="mb-2 flex items-center justify-between gap-4">
-          <span
-            className={cn(
-              'text-caption font-semibold',
-              isOwnMessage ? 'text-accent' : 'text-foreground',
-            )}
-          >
-            {senderName}
-          </span>
+          <div className="flex min-w-0 flex-wrap items-center gap-2">
+            <span
+              className={cn(
+                'text-caption font-semibold',
+                isOwnMessage ? 'text-accent' : 'text-foreground',
+              )}
+            >
+              {senderName}
+            </span>
+
+            {shouldShowSenderRole ? (
+              <MetaChip>
+                {t(
+                  `conversation.senderRoles.${senderRole}` as Parameters<
+                    typeof t
+                  >[0],
+                )}
+              </MetaChip>
+            ) : null}
+          </div>
 
           <time dir="ltr" className="text-caption text-muted shrink-0">
             {message.createdAtLabel}

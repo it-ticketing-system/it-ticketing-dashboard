@@ -42,7 +42,17 @@
     "changedBy": "تغییر دهنده",
     "date": "تاریخ",
     "from": "از",
-    "to": "به"
+    "to": "به",
+    "actors": {
+      "user": "کاربر",
+      "support": "پشتیبان",
+      "admin": "مدیر",
+      "system": "سیستم"
+    },
+    "assignmentTypes": {
+      "assignSupport": "تخصیص دستی",
+      "assignAuto": "تخصیص خودکار"
+    }
   },
   "conversation": {
     "title": "تاریخچه گفتگو",
@@ -50,6 +60,10 @@
     "you": "شما",
     "user": "کاربر",
     "support": "پشتیبانی",
+    "senderRoles": {
+      "ADMIN": "مدیر",
+      "SUPPORT": "پشتیبان"
+    },
     "attachments": "پیوست‌ها"
   },
   "composer": {

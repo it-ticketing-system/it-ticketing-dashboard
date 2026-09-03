@@ -3,12 +3,16 @@ import type { IUploadedFile } from './file';
 export type TicketStatus =
   'open' | 'inProgress' | 'waitingUser' | 'resolved' | 'closed';
 type TicketMessageType = 'user' | 'support' | 'system';
+export type TicketMessageSenderRole = 'USER' | 'SUPPORT' | 'ADMIN';
 export type TicketSystemMessageTone = 'info' | 'warning' | 'neutral';
+export type TicketHistoryActorRole = 'user' | 'support' | 'admin' | 'system';
+export type TicketAssignmentType = 'assignSupport' | 'assignAuto';
 
 export interface ITicketMessage {
   id: string;
   type: TicketMessageType;
   senderId: string;
+  senderRole?: TicketMessageSenderRole;
   senderName?: string;
   senderAvatarUrl?: string;
   body: string;
@@ -51,6 +55,7 @@ export interface ITicketStatusHistory {
   oldStatus: TicketStatus;
   newStatus: TicketStatus;
   changedByName: string;
+  changedByRole: TicketHistoryActorRole;
   createdAtLabel: string;
 }
 
@@ -58,7 +63,9 @@ export interface ITicketAssignmentHistory {
   id: string;
   fromSupportName?: string;
   toSupportName?: string;
+  assignmentType?: TicketAssignmentType;
   changedByName: string;
+  changedByRole: TicketHistoryActorRole;
   createdAtLabel: string;
 }
 
@@ -67,5 +74,6 @@ export interface ITicketDepartmentHistory {
   oldDepartmentName: string;
   newDepartmentName: string;
   changedByName: string;
+  changedByRole: TicketHistoryActorRole;
   createdAtLabel: string;
 }

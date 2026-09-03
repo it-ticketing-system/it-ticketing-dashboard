@@ -4,7 +4,7 @@ import { Skeleton } from '@heroui/react';
 import { ArrowLeft } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { clientTicketServices } from '@/apis/services/tickets/client';
-import { TicketStatusChip } from '@/components/shared';
+import { MetaChip, TicketStatusChip } from '@/components/shared';
 import { PModal } from '@/components/ui';
 import { QUERY_KEYS } from '@/constants';
 import { useGetRequest } from '@/hooks';
@@ -22,6 +22,12 @@ const HistoryModals = ({
 }: HistoryModalsProps) => {
   const t = useTranslations('ticketDetails.historyModals');
   const tStatuses = useTranslations('common.statuses');
+
+  const getChangedByLabel = (item: {
+    changedByName: string;
+    changedByRole: 'user' | 'support' | 'admin' | 'system';
+  }) =>
+    item.changedByRole === 'system' ? t('actors.system') : item.changedByName;
 
   const { data: statusHistory, isLoading: isLoadingStatus } = useGetRequest({
     queryKey: QUERY_KEYS.tickets.statusHistory(ticketId),
@@ -78,9 +84,12 @@ const HistoryModals = ({
               className="border-border flex flex-col gap-2 rounded-lg border p-3"
             >
               <div className="flex items-center justify-between">
-                <span className="text-body-sm font-medium">
-                  {item.changedByName}
-                </span>
+                <div className="flex min-w-0 flex-wrap items-center gap-2">
+                  <span className="text-body-sm font-medium">
+                    {getChangedByLabel(item)}
+                  </span>
+                  <MetaChip>{t(`actors.${item.changedByRole}`)}</MetaChip>
+                </div>
                 <span className="text-caption text-muted" dir="ltr">
                   {item.createdAtLabel}
                 </span>
@@ -115,9 +124,12 @@ const HistoryModals = ({
               className="border-border flex flex-col gap-2 rounded-lg border p-3"
             >
               <div className="flex items-center justify-between">
-                <span className="text-body-sm font-medium">
-                  {item.changedByName}
-                </span>
+                <div className="flex min-w-0 flex-wrap items-center gap-2">
+                  <span className="text-body-sm font-medium">
+                    {getChangedByLabel(item)}
+                  </span>
+                  <MetaChip>{t(`actors.${item.changedByRole}`)}</MetaChip>
+                </div>
                 <span className="text-caption text-muted" dir="ltr">
                   {item.createdAtLabel}
                 </span>
@@ -148,9 +160,17 @@ const HistoryModals = ({
               className="border-border flex flex-col gap-2 rounded-lg border p-3"
             >
               <div className="flex items-center justify-between">
-                <span className="text-body-sm font-medium">
-                  {item.changedByName}
-                </span>
+                <div className="flex min-w-0 flex-wrap items-center gap-2">
+                  <span className="text-body-sm font-medium">
+                    {getChangedByLabel(item)}
+                  </span>
+                  <MetaChip>{t(`actors.${item.changedByRole}`)}</MetaChip>
+                  {item.assignmentType ? (
+                    <MetaChip tone="neutral">
+                      {t(`assignmentTypes.${item.assignmentType}`)}
+                    </MetaChip>
+                  ) : null}
+                </div>
                 <span className="text-caption text-muted" dir="ltr">
                   {item.createdAtLabel}
                 </span>

@@ -11,6 +11,8 @@ import type {
   SendTicketMessageRequestDto,
   TicketMessageDto,
   TicketStatusDto,
+  TicketHistoryActorRoleDto,
+  TicketAssignmentTypeDto,
   ChangeTicketStatusResultDto,
   ChangeTicketAssignmentResultDto,
   ChangeTicketDepartmentResultDto,
@@ -23,6 +25,8 @@ import type {
   ITicket,
   ITicketMessage,
   TicketStatus,
+  TicketHistoryActorRole,
+  TicketAssignmentType,
   ITicketStatusHistory,
   ITicketAssignmentHistory,
   ITicketDepartmentHistory,
@@ -43,6 +47,18 @@ const TICKET_STATUS_DTO_MAP = {
   resolved: 'RESOLVED',
   closed: 'CLOSED',
 } as const satisfies Record<TicketStatus, TicketStatusDto>;
+
+const TICKET_HISTORY_ACTOR_ROLE_MAP = {
+  USER: 'user',
+  SUPPORT: 'support',
+  ADMIN: 'admin',
+  SYSTEM: 'system',
+} as const satisfies Record<TicketHistoryActorRoleDto, TicketHistoryActorRole>;
+
+const TICKET_ASSIGNMENT_TYPE_MAP = {
+  ASSIGN_SUPPORT: 'assignSupport',
+  ASSIGN_AUTO: 'assignAuto',
+} as const satisfies Record<TicketAssignmentTypeDto, TicketAssignmentType>;
 
 export const toGetManagementTicketsRequestDto = (
   params: GetManagementTicketsRequest,
@@ -113,6 +129,7 @@ export const toTicketMessage = (message: TicketMessageDto): ITicketMessage => {
   return {
     id: String(message.id),
     senderId: String(message.sender.id),
+    senderRole: message.sender.role,
     type: isUser ? 'user' : 'support',
     senderName: message.sender.name,
     senderAvatarUrl: message.sender.profileImageUrl
@@ -138,6 +155,7 @@ export const toTicketStatusHistory = (
   oldStatus: TICKET_STATUS_MAP[history.oldStatus],
   newStatus: TICKET_STATUS_MAP[history.newStatus],
   changedByName: history.changedBy.name,
+  changedByRole: TICKET_HISTORY_ACTOR_ROLE_MAP[history.changedBy.role],
   createdAtLabel: formatPersianDateTime(history.changedAt || history.createdAt),
 });
 
@@ -147,7 +165,11 @@ export const toTicketAssignmentHistory = (
   id: String(history.id),
   fromSupportName: history.oldSupport?.name || history.fromSupport?.name,
   toSupportName: history.newSupport?.name || history.toSupport?.name,
+  assignmentType: history.assignmentType
+    ? TICKET_ASSIGNMENT_TYPE_MAP[history.assignmentType]
+    : undefined,
   changedByName: history.changedBy.name,
+  changedByRole: TICKET_HISTORY_ACTOR_ROLE_MAP[history.changedBy.role],
   createdAtLabel: formatPersianDateTime(history.changedAt || history.createdAt),
 });
 
@@ -158,5 +180,6 @@ export const toTicketDepartmentHistory = (
   oldDepartmentName: history.oldDepartment.name,
   newDepartmentName: history.newDepartment.name,
   changedByName: history.changedBy.name,
+  changedByRole: TICKET_HISTORY_ACTOR_ROLE_MAP[history.changedBy.role],
   createdAtLabel: formatPersianDateTime(history.changedAt || history.createdAt),
 });

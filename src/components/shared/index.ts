@@ -9,6 +9,7 @@ export { TableErrorState, TableEmptyState } from './table-states';
 export { default as ChartPanel } from './chart-panel';
 export { default as FileAttachmentLink } from './file-attachment-link';
 export { default as FilterToolbar } from './filter-toolbar';
+export { default as MetaChip } from './meta-chip';
 export { default as MobileFilterTrigger } from './mobile-filter-trigger';
 export { default as PersianDateField } from './persian-date-field';
 export { default as SelectedFilesList } from './selected-files-list';
