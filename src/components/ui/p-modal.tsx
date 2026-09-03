@@ -2,6 +2,7 @@
 
 import { Button, Modal } from '@heroui/react';
 import { useTranslations } from 'next-intl';
+import { useMediaQuery } from '@/hooks';
 import { cn } from '@/utils';
 import type { FormEventHandler, ReactNode } from 'react';
 
@@ -54,6 +55,18 @@ type PModalProps = {
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'cover' | 'full';
 };
 
+const ACTION_DESKTOP_SIZE_CLASS: Record<
+  NonNullable<PModalProps['size']>,
+  string
+> = {
+  xs: 'lg:max-w-xs',
+  sm: 'lg:max-w-sm',
+  md: 'lg:max-w-md',
+  lg: 'lg:max-w-lg',
+  cover: 'lg:h-full lg:min-h-full lg:max-w-none',
+  full: 'lg:h-full lg:min-h-full lg:max-w-none lg:rounded-none lg:shadow-none',
+};
+
 const PModal = ({
   isOpen,
   onOpenChange,
@@ -70,7 +83,16 @@ const PModal = ({
   size,
 }: PModalProps) => {
   const tCommon = useTranslations('common');
+  const { isDesktop } = useMediaQuery();
   const isActionModal = intent === 'action';
+  const placement = isActionModal
+    ? isDesktop
+      ? 'center'
+      : 'bottom'
+    : undefined;
+  const actionDesktopSizeClass = isActionModal
+    ? ACTION_DESKTOP_SIZE_CLASS[size ?? 'md']
+    : undefined;
   const resolvedFooter =
     footer === undefined && isActionModal
       ? {
@@ -90,7 +112,7 @@ const PModal = ({
     return (
       <Modal.Footer
         className={cn(
-          'border-border border-t px-6 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))]',
+          'border-border shrink-0 border-t px-6 pt-4 pb-[calc(16px+env(safe-area-inset-bottom))]',
           classNames?.footer,
         )}
       >
@@ -145,7 +167,7 @@ const PModal = ({
       <>
         <Modal.Header
           className={cn(
-            'border-border flex flex-col items-start gap-1 border-b px-6 py-4',
+            'border-border flex shrink-0 flex-col items-start gap-1 border-b px-6 py-4',
             classNames?.header,
           )}
         >
@@ -156,7 +178,10 @@ const PModal = ({
         </Modal.Header>
 
         <Modal.Body
-          className={cn('overflow-y-auto px-6 py-5', classNames?.body)}
+          className={cn(
+            'min-h-0 flex-1 overflow-y-auto px-6 py-5',
+            classNames?.body,
+          )}
         >
           {children}
         </Modal.Body>
@@ -167,7 +192,11 @@ const PModal = ({
 
     if (form) {
       return (
-        <form onSubmit={form.onSubmit} noValidate={form.noValidate}>
+        <form
+          onSubmit={form.onSubmit}
+          noValidate={form.noValidate}
+          className="flex min-h-0 flex-1 flex-col overflow-hidden"
+        >
           {content}
         </form>
       );
@@ -185,11 +214,11 @@ const PModal = ({
         className={cn('bg-backdrop', classNames?.backdrop)}
       >
         <Modal.Container
-          placement={isActionModal ? 'bottom' : undefined}
+          placement={placement}
           scroll={scroll}
           size={size}
           className={cn(
-            isActionModal && 'items-end p-0',
+            isActionModal && 'items-end p-0 lg:items-center lg:p-10',
             classNames?.container,
           )}
         >
@@ -198,7 +227,10 @@ const PModal = ({
             className={cn(
               'bg-surface shadow-xl',
               isActionModal
-                ? 'max-h-[85dvh] w-full max-w-none rounded-t-xl rounded-b-none'
+                ? cn(
+                    'flex max-h-[85dvh] w-full max-w-none flex-col overflow-hidden rounded-t-xl rounded-b-none lg:max-h-[calc(100dvh-5rem)] lg:rounded-xl',
+                    actionDesktopSizeClass,
+                  )
                 : 'rounded-xl',
               classNames?.dialog,
             )}
