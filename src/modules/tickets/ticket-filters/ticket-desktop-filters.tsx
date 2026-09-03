@@ -7,6 +7,7 @@ import {
   FilterToolbar,
   SelectStatus,
   SelectDepartment,
+  SelectSupport,
   PersianDateField,
   SearchInput,
 } from '@/components/shared';
@@ -37,6 +38,13 @@ const TicketDesktopFilters = ({
     (key: keyof TicketFiltersValue) => (val: string | null) => {
       onChange({ [key]: val });
     };
+
+  const handleDepartmentChange = (val: string | null) => {
+    onChange({
+      department: val,
+      support: null,
+    });
+  };
 
   const resetCreatedDateRange = () => {
     onChange({ createdFrom: null, createdTo: null });
@@ -69,17 +77,17 @@ const TicketDesktopFilters = ({
         ariaLabel={t('department.ariaLabel')}
         placeholder={t('department.placeholder')}
         value={department}
-        onChange={handleFilterChange('department')}
+        onChange={handleDepartmentChange}
         emptyOptionLabel={t('department.allOption')}
       />
 
-      <SearchInput
+      <SelectSupport
         ariaLabel={t('support.ariaLabel')}
         placeholder={t('support.placeholder')}
-        queryValue={support || ''}
-        onValueChange={handleFilterChange('support')}
-        className="h-11"
-        showSearchIcon={false}
+        departmentId={department}
+        value={support}
+        onChange={handleFilterChange('support')}
+        emptyOptionLabel={t('support.allOption')}
       />
 
       <SearchInput

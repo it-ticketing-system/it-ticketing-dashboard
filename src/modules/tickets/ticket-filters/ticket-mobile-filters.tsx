@@ -7,6 +7,7 @@ import {
   MobileFilterTrigger,
   SelectStatus,
   SelectDepartment,
+  SelectSupport,
   PersianDateField,
   SearchInput,
 } from '@/components/shared';
@@ -54,6 +55,14 @@ const TicketMobileFilters = ({
         [key]: value || '',
       }));
     };
+
+  const handleDepartmentChange = (value: string | null) => {
+    setDraft((previous) => ({
+      ...previous,
+      department: value || '',
+      support: '',
+    }));
+  };
 
   const openFilters = () => {
     setDraft({
@@ -137,17 +146,18 @@ const TicketMobileFilters = ({
           ariaLabel={t('department.ariaLabel')}
           placeholder={t('department.placeholder')}
           value={draft.department}
-          onChange={handleDraftChange('department')}
+          onChange={handleDepartmentChange}
           emptyOptionLabel={t('department.allOption')}
         />
 
-        <SearchInput
+        <SelectSupport
           label={t('support.label')}
           ariaLabel={t('support.ariaLabel')}
           placeholder={t('support.placeholder')}
-          queryValue={draft.support || ''}
-          onValueChange={handleDraftChange('support')}
-          showSearchIcon={false}
+          departmentId={draft.department}
+          value={draft.support}
+          onChange={handleDraftChange('support')}
+          emptyOptionLabel={t('support.allOption')}
         />
 
         <SearchInput

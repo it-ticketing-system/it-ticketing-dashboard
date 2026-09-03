@@ -55,7 +55,6 @@ export const createTicketsParams = (
   Omit<GetManagementTicketsRequest, 'page' | 'perPage'> => {
   const departmentId = toPositiveInteger(filters.department);
   const supportId = toPositiveInteger(filters.support);
-  const userId = toPositiveInteger(filters.user);
   const status = isTicketStatus(filters.status) ? filters.status : undefined;
 
   return {
@@ -65,7 +64,7 @@ export const createTicketsParams = (
     status,
     departmentId,
     supportId,
-    userId,
+    user: filters.user.trim() || undefined,
     createdFrom: filters.createdFrom || undefined,
     createdTo: filters.createdTo || undefined,
   };

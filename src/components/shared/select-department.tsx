@@ -90,7 +90,7 @@ export const SelectDepartment = ({
           ) : null}
 
           {(departments || []).map((dep) => (
-            <ListBox.Item key={dep.id} id={dep.id} textValue={dep.name}>
+            <ListBox.Item key={dep.id} id={String(dep.id)} textValue={dep.name}>
               <span className="min-w-0 flex-1 truncate">{dep.name}</span>
               <ListBox.ItemIndicator />
             </ListBox.Item>

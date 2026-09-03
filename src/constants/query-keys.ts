@@ -17,8 +17,12 @@ export const QUERY_KEYS = {
       search?: string;
       status?: string;
       departmentId?: number;
-      from?: string;
-      to?: string;
+      supportId?: number;
+      user?: string;
+      createdFrom?: string;
+      createdTo?: string;
+      updatedFrom?: string;
+      updatedTo?: string;
     }) => [...TICKET_LISTS_QUERY_KEY, params] as const,
     details: (ticketId: string) => ['tickets', 'details', ticketId] as const,
     statusHistory: (ticketId: string) =>

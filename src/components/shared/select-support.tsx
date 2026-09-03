@@ -94,7 +94,7 @@ export const SelectSupport = ({
           ) : null}
 
           {(supports || []).map((sup) => (
-            <ListBox.Item key={sup.id} id={sup.id} textValue={sup.name}>
+            <ListBox.Item key={sup.id} id={String(sup.id)} textValue={sup.name}>
               <span className="min-w-0 flex-1 truncate">{sup.name}</span>
               <ListBox.ItemIndicator />
             </ListBox.Item>

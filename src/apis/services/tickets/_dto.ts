@@ -36,7 +36,7 @@ export interface GetManagementTicketsRequestDto {
   departmentId?: number;
   status?: TicketStatusDto;
   supportId?: number;
-  userId?: number;
+  user?: string;
   createdFrom?: string;
   createdTo?: string;
   updatedFrom?: string;
@@ -58,6 +58,18 @@ interface TicketMessageSenderDto {
   role: 'USER' | 'SUPPORT' | 'ADMIN';
   profileImageUrl: string | null;
 }
+
+export type TicketHistoryActorRoleDto = 'USER' | 'SUPPORT' | 'ADMIN' | 'SYSTEM';
+
+type TicketHistoryActorDto = {
+  id: number | null;
+  name: string;
+  username?: string;
+  role: TicketHistoryActorRoleDto;
+  profileImageUrl?: string | null;
+};
+
+export type TicketAssignmentTypeDto = 'ASSIGN_SUPPORT' | 'ASSIGN_AUTO';
 
 export interface TicketMessageDto {
   id: number;
@@ -111,7 +123,7 @@ export interface ChangeTicketStatusResultDto {
   id: number;
   oldStatus: TicketStatusDto;
   newStatus: TicketStatusDto;
-  changedBy: TicketMessageSenderDto;
+  changedBy: TicketHistoryActorDto;
   createdAt: string; // The API docs uses changedAt in some, createdAt in others. I'll map it securely
   changedAt?: string;
 }
@@ -122,7 +134,8 @@ export interface ChangeTicketAssignmentResultDto {
   newSupport?: TicketSupportDto | null;
   fromSupport?: TicketSupportDto | null;
   toSupport?: TicketSupportDto | null;
-  changedBy: TicketMessageSenderDto;
+  assignmentType?: TicketAssignmentTypeDto;
+  changedBy: TicketHistoryActorDto;
   createdAt: string;
   changedAt?: string;
 }
@@ -131,7 +144,7 @@ export interface ChangeTicketDepartmentResultDto {
   id: number;
   oldDepartment: TicketDepartmentDto;
   newDepartment: TicketDepartmentDto;
-  changedBy: TicketMessageSenderDto;
+  changedBy: TicketHistoryActorDto;
   createdAt: string;
   changedAt?: string;
 }

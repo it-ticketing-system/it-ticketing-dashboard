@@ -15,7 +15,7 @@ export interface GetManagementTicketsRequest {
   departmentId?: number;
   status?: TicketStatus;
   supportId?: number;
-  userId?: number;
+  user?: string;
   createdFrom?: string;
   createdTo?: string;
   updatedFrom?: string;
