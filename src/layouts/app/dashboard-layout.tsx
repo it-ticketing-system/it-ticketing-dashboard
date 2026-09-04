@@ -3,6 +3,7 @@
 import { X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
+import { PushPermissionModal } from '@/components/shared';
 import { ICON_SIZE_CLASS } from '@/constants';
 import { cn } from '@/utils';
 import { DashboardHeader } from './header/dashboard-header';
@@ -75,6 +76,8 @@ export const DashboardLayout: FCC = ({ children }) => {
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        <PushPermissionModal />
+
         <DashboardHeader
           collapsed={collapsed}
           onToggleCollapse={toggleCollapse}

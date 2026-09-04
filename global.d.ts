@@ -6,6 +6,7 @@ import departments from './messages/fa/departments.json';
 import mainLayout from './messages/fa/mainLayout.json';
 import notifications from './messages/fa/notifications.json';
 import profile from './messages/fa/profile.json';
+import push from './messages/fa/push.json';
 import reports from './messages/fa/reports.json';
 import supports from './messages/fa/supports.json';
 import ticketDetails from './messages/fa/ticketDetails.json';
@@ -24,6 +25,7 @@ type Messages = {
   departments: typeof departments;
   notifications: typeof notifications;
   profile: typeof profile;
+  push: typeof push;
   reports: typeof reports;
 };
 

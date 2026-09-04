@@ -1,5 +1,6 @@
 'use client';
 
+import { PushPermission } from '@/components/shared';
 import { useAuth } from '@/hooks';
 import AccountSecurity from './account-security';
 import LogoutSection from './logout-section';
@@ -29,6 +30,7 @@ const ProfileModule = () => {
     <section className="grid w-full flex-1 grid-cols-1 gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(16rem,19rem)] lg:items-start lg:gap-6">
       <div className="flex min-w-0 flex-col gap-4 lg:gap-6">
         <ProfileEditor user={user} onProfileRefresh={refresh} />
+        <PushPermission />
         <AccountSecurity />
       </div>
 

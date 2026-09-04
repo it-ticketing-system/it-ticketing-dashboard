@@ -9,7 +9,7 @@ import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { clientAuthServices } from '@/apis/services/auth/client';
 import { PasswordField } from '@/components/shared';
-import { QUERY_KEYS, ROUTES } from '@/constants';
+import { PUSH_NOTIFICATION_PROMPT, QUERY_KEYS, ROUTES } from '@/constants';
 import { usePostRequest } from '@/hooks';
 import { createLoginSchema, type LoginFormValues } from './login.schema';
 import type { LoginResult } from '@/apis/services/auth/client';
@@ -58,6 +58,10 @@ const LoginModule = () => {
       }),
 
     onSuccess: async () => {
+      window.sessionStorage.setItem(
+        PUSH_NOTIFICATION_PROMPT.afterLoginPromptKey,
+        '1',
+      );
       await queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.auth.me,
       });
