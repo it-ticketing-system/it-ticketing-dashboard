@@ -7,6 +7,7 @@ import { clientAuthServices } from '@/apis/services/auth/client';
 import { QUERY_KEYS, ROUTES } from '@/constants';
 import { AuthContext } from '@/contexts';
 import { useGetRequest } from '@/hooks';
+import { removeCurrentBrowserPushSubscription } from '@/utils';
 
 const AuthProvider: FCC = ({ children }) => {
   const router = useRouter();
@@ -95,6 +96,7 @@ const AuthProvider: FCC = ({ children }) => {
     try {
       setIsLoggingOut(true);
 
+      await removeCurrentBrowserPushSubscription().catch(() => undefined);
       await clientAuthServices.logout().catch(() => undefined);
       queryClient.clear();
       reset();

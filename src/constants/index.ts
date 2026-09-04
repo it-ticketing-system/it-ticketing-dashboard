@@ -3,6 +3,10 @@ export { ROUTES } from './routes';
 export { AUTH_COOKIE_NAME } from './auth';
 export { QUERY_KEYS } from './query-keys';
 export {
+  PUSH_NOTIFICATION_PROMPT,
+  PUSH_NOTIFICATION_SERVICE_WORKER,
+} from './push-notifications';
+export {
   DEFAULT_ICON_SIZE,
   DEFAULT_ICON_STROKE_WIDTH,
   ICON_SIZE_CLASS,
@@ -22,4 +26,3 @@ export {
   PROFILE_IMAGE_ALLOWED_EXTENSIONS,
   PROFILE_IMAGE_MAX_SIZE,
 } from './profile';
-

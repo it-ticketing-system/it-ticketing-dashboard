@@ -12,6 +12,8 @@ export { default as FilterToolbar } from './filter-toolbar';
 export { default as MetaChip } from './meta-chip';
 export { default as MobileFilterTrigger } from './mobile-filter-trigger';
 export { default as PersianDateField } from './persian-date-field';
+export { default as PushPermission } from './push-permission';
+export { default as PushPermissionModal } from './push-permission-modal';
 export { default as SelectedFilesList } from './selected-files-list';
 export { default as ToolbarAddButton } from './toolbar-add-button';
 export * from './role-guard';
